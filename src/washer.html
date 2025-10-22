@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#3B82F6">
+    <title>🚗 Washer App - CarWash Pro</title>
+    <meta name="description" content="Γρήγορη καταχώρηση πλύσεων οχημάτων">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/washer-manifest.json">
+    
+    <!-- Icons -->
+    <link rel="apple-touch-icon" href="/icon-192.png">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+        
+        p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .features {
+            margin-top: 40px;
+            text-align: left;
+        }
+        
+        .feature {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            margin-right: 15px;
+        }
+        
+        .feature-text {
+            flex: 1;
+        }
+        
+        .feature h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .feature p {
+            font-size: 0.9rem;
+            color: #666;
+            margin: 0;
+        }
+        
+        .install-prompt {
+            margin-top: 30px;
+            padding: 20px;
+            background: #e8f5e9;
+            border-radius: 10px;
+            border: 2px dashed #4caf50;
+        }
+        
+        .install-prompt h3 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+        
+        .install-steps {
+            text-align: left;
+            font-size: 0.95rem;
+            color: #1b5e20;
+        }
+        
+        .install-steps li {
+            margin: 8px 0;
+            margin-left: 20px;
+        }
+        
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>🚗 Washer App</h1>
+            <p>Γρήγορη Καταχώρηση Πλύσεων</p>
+            
+            <a href="#" onclick="redirectToWasherApp()" class="btn">
+                Άνοιγμα Εφαρμογής →
+            </a>
+            
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-text">
+                        <h3>Γρήγορο</h3>
+                        <p>Καταχώρηση σε < 30 δευτερόλεπτα</p>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">📱</div>
+                    <div class="feature-text">
+                        <h3>Mobile-Friendly</h3>
+                        <p>Βελτιστοποιημένο για κινητά & tablets</p>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-text">
+                        <h3>Απλό Interface</h3>
+                        <p>Μεγάλα κουμπιά, εύκολη χρήση</p>
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🔄</div>
+                    <div class="feature-text">
+                        <h3>Auto-Sync</h3>
+                        <p>Αυτόματη συγχρονισμός με το σύστημα</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="install-prompt">
+                <h3>📲 Εγκατάσταση σαν App</h3>
+                <ol class="install-steps">
+                    <li><strong>iOS:</strong> Safari → Share → "Add to Home Screen"</li>
+                    <li><strong>Android:</strong> Chrome → Menu → "Add to Home screen"</li>
+                    <li>Τώρα η εφαρμογή είναι στην αρχική σας οθόνη!</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function redirectToWasherApp() {
+            // In production, this would redirect to the actual Washer App route
+            // For now, it redirects to the main app with a washer query param
+            window.location.href = '/?app=washer';
+        }
+        
+        // Check if standalone mode (installed as PWA)
+        if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+            // Automatically redirect to washer app if installed
+            setTimeout(() => {
+                redirectToWasherApp();
+            }, 1000);
+        }
+        
+        // Service Worker registration (for PWA)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(reg => console.log('Service Worker registered'))
+                .catch(err => console.log('Service Worker registration failed'));
+        }
+    </script>
+</body>
+</html>
