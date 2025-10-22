@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from './components/ui/card';
-import { Button } from './components/ui/button';
-import { Input } from './components/ui/input';
-import { Label } from './components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './components/ui/select';
-import { Badge } from './components/ui/badge';
-import { Alert, AlertDescription } from './components/ui/alert';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { CheckCircle2, Car, Clock, User, Calendar } from 'lucide-react';
-import { companies, workTypeLabels } from './lib/mockData';
-import { WorkEntry, WorkType } from './types';
+import { companies, workTypeLabels } from '@/components/lib/mockData';
+import { WorkEntry, WorkType } from '@/components/types';
 
 // Lightweight Washer App για γρήγορη καταχώρηση πλύσεων
 export default function WasherApp() {
