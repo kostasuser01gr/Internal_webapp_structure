@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Button } from './components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from './components/ui/sheet';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './components/ui/select';
+import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { 
   LayoutDashboard, 
   Car, 
@@ -20,20 +20,20 @@ import {
   CalendarDays,
   Activity
 } from 'lucide-react';
-import { DashboardStats } from './components/DashboardStats';
-import { VehicleTable } from './components/VehicleTable';
-import { VehicleForm } from './components/VehicleForm';
-import { VehicleHistory } from './components/VehicleHistory';
-import { ChatBot } from './components/ChatBot';
-import { BulkOperations } from './components/BulkOperations';
-import { ReportsAnalytics } from './components/ReportsAnalytics';
-import { WorkEntryForm } from './components/WorkEntryForm';
-import { TeamChat } from './components/TeamChat';
-import { StaffManagement } from './components/StaffManagement';
-import { ShiftManagement } from './components/ShiftManagement';
-import { ReservationUpload } from './components/ReservationUpload';
-import { LeaveRequests } from './components/LeaveRequests';
-import { HealthCheck } from './components/HealthCheck';
+import { DashboardStats } from '@/components/DashboardStats';
+import { VehicleTable } from '@/components/VehicleTable';
+import { VehicleForm } from '@/components/VehicleForm';
+import { VehicleHistory } from '@/components/VehicleHistory';
+import { ChatBot } from '@/components/ChatBot';
+import { BulkOperations } from '@/components/BulkOperations';
+import { ReportsAnalytics } from '@/components/ReportsAnalytics';
+import { WorkEntryForm } from '@/components/WorkEntryForm';
+import { TeamChat } from '@/components/TeamChat';
+import { StaffManagement } from '@/components/StaffManagement';
+import { ShiftManagement } from '@/components/ShiftManagement';
+import { ReservationUpload } from '@/components/ReservationUpload';
+import { LeaveRequests } from '@/components/LeaveRequests';
+import { HealthCheck } from '@/components/HealthCheck';
 import { 
   mockVehicles, 
   mockDashboardStats, 
@@ -43,9 +43,9 @@ import {
   mockShifts,
   mockReservations,
   mockLeaveRequests
-} from './lib/mockData';
-import { Vehicle, WorkEntry, Staff, Shift, Reservation, LeaveRequest } from './types';
-import { generateId } from './lib/utils';
+} from '@/components/lib/mockData';
+import { Vehicle, WorkEntry, Staff, Shift, Reservation, LeaveRequest } from '@/components/types';
+import { generateId } from '@/components/lib/utils';
 
 type View = 
   | 'dashboard' 
@@ -261,9 +261,12 @@ export default function App() {
     if (morningRes.length > 0) {
       const staffNeeded = Math.ceil(morningRes.length / 3); // 3 reservations per staff
       for (let i = 0; i < Math.min(staffNeeded, activeStaff.length); i++) {
+        const staff = activeStaff[staffIndex % activeStaff.length];
+        if (!staff) continue;
+        
         newShifts.push({
           id: generateId(),
-          staffId: activeStaff[staffIndex % activeStaff.length].id,
+          staffId: staff.id,
           date: date,
           startTime: '08:00',
           endTime: '14:00',
@@ -280,9 +283,12 @@ export default function App() {
     if (afternoonRes.length > 0) {
       const staffNeeded = Math.ceil(afternoonRes.length / 3);
       for (let i = 0; i < Math.min(staffNeeded, activeStaff.length); i++) {
+        const staff = activeStaff[staffIndex % activeStaff.length];
+        if (!staff) continue;
+        
         newShifts.push({
           id: generateId(),
-          staffId: activeStaff[staffIndex % activeStaff.length].id,
+          staffId: staff.id,
           date: date,
           startTime: '14:00',
           endTime: '20:00',
