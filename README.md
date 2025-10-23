@@ -31,7 +31,7 @@ Modern, responsive, and installable **Progressive Web App (PWA)** for vehicle wa
 
 ```bash
 # Install dependencies
-npm install --legacy-peer-deps
+npm install
 
 # Start development server
 npm run dev
@@ -75,3 +75,37 @@ vercel --prod
 ---
 
 **Built with ❤️ using Next.js, TypeScript, and Tailwind CSS**
+
+---
+
+## 📝 Recent Upgrades
+
+### React 19 & DayPicker v9 Migration (October 2025)
+
+**Πρόβλημα (Problem):**
+- Το Vercel αποτυγχάνει στο `npm install` λόγω peer dependency conflict
+- Το `react-day-picker@8.x` δεν υποστήριζε React 19
+
+**Λύση (Solution):**
+- ✅ Αναβάθμιση σε `react-day-picker@9.11.1` (υποστηρίζει React 19)
+- ✅ Αναβάθμιση `date-fns` σε `^4.1.0`
+- ✅ Αφαίρεση `--legacy-peer-deps` από CI και local development
+- ✅ Ενημέρωση Calendar component API για v9
+
+**Αλλαγές (Changes):**
+- Το `npm install` τώρα λειτουργεί χωρίς flags
+- Το Vercel deployment δουλεύει χωρίς peer conflicts
+- Τα date pickers λειτουργούν όπως πριν
+
+**Deployment στο Vercel:**
+```bash
+# Χωρίς --legacy-peer-deps πλέον!
+npm install
+npm run build
+
+# Deploy preview
+vercel
+
+# Deploy production
+vercel --prod
+```
