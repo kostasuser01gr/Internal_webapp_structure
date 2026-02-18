@@ -95,7 +95,7 @@ export function VehicleForm({ vehicle, onSubmit, onCancel }: VehicleFormProps) {
             <Label htmlFor="status">Κατάσταση</Label>
             <Select
               value={formData.status}
-              onValueChange={(value: any) => setFormData({ ...formData, status: value })}
+              onValueChange={(value: Vehicle['status']) => setFormData({ ...formData, status: value })}
             >
               <SelectTrigger>
                 <SelectValue />

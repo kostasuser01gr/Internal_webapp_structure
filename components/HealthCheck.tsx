@@ -147,7 +147,7 @@ export function HealthCheck({
     return grouped;
   };
 
-  const groupIssuesBySeverity = (issues: HealthCheckIssue[]) => {
+  const _groupIssuesBySeverity = (issues: HealthCheckIssue[]) => {
     const grouped = new Map<string, HealthCheckIssue[]>();
     issues.forEach(issue => {
       if (!grouped.has(issue.severity)) {

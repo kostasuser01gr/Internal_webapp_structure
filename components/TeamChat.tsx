@@ -29,7 +29,7 @@ export function TeamChat() {
   const [selectedChannel, setSelectedChannel] = useState<ChatChannel | null>(mockChatChannels[0] || null);
   const [messages, setMessages] = useState<TeamMessage[]>(selectedChannel ? (mockTeamMessages[selectedChannel.id] || []) : []);
   const [inputValue, setInputValue] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
+  const [isTyping, _setIsTyping] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
 

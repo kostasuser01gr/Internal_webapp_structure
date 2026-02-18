@@ -5,7 +5,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Upload, Download, FileSpreadsheet, CheckCircle2, XCircle, AlertCircle } from 'lucide-react';
-import { Reservation } from '@/components/types';
+import { Reservation, WorkType } from '@/components/types';
 import { companies } from '@/components/lib/mockData';
 
 interface ReservationUploadProps {
@@ -13,10 +13,10 @@ interface ReservationUploadProps {
 }
 
 export function ReservationUpload({ onImport }: ReservationUploadProps) {
-  const [parsedData, setParsedData] = useState<any[]>([]);
+  const [parsedData, setParsedData] = useState<Record<string, string>[]>([]);
   const [validData, setValidData] = useState<Partial<Reservation>[]>([]);
   const [errors, setErrors] = useState<string[]>([]);
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [_isProcessing, setIsProcessing] = useState(false);
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -37,7 +37,7 @@ export function ReservationUpload({ onImport }: ReservationUploadProps) {
       const headers = lines[0]?.split(/[,;\t]/).map(h => h.trim().toLowerCase()) || [];
       const data = lines.slice(1).map(line => {
         const values = line.split(/[,;\t]/);
-        const row: any = {};
+        const row: Record<string, string> = {};
         headers.forEach((header, index) => {
           row[header] = values[index]?.trim() || '';
         });
@@ -53,7 +53,7 @@ export function ReservationUpload({ onImport }: ReservationUploadProps) {
     }
   };
 
-  const validateAndConvert = (data: any[]) => {
+  const validateAndConvert = (data: Record<string, string>[]) => {
     const valid: Partial<Reservation>[] = [];
     const errorsList: string[] = [];
 
@@ -162,7 +162,7 @@ export function ReservationUpload({ onImport }: ReservationUploadProps) {
           companyId: company.id,
           reservationDate,
           timeSlot: timeSlot || '09:00-10:00',
-          workType: mappedWorkType as any,
+          workType: mappedWorkType as WorkType,
           estimatedDuration: 45,
           status: 'pending',
           uploadedFrom: 'excel',

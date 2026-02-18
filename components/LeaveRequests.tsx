@@ -148,7 +148,7 @@ export function LeaveRequests({
                 <Label>Τύπος Άδειας</Label>
                 <Select 
                   value={formData.type} 
-                  onValueChange={(value: any) => setFormData({ ...formData, type: value })}
+                  onValueChange={(value: LeaveRequest['type']) => setFormData({ ...formData, type: value })}
                 >
                   <SelectTrigger>
                     <SelectValue />

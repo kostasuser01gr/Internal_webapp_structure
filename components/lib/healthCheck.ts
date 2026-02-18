@@ -9,7 +9,7 @@ import {
   HealthCheckStatus
 } from '../types';
 import { generateId } from './utils';
-import { format, isAfter, isBefore, isWithinInterval, parseISO } from 'date-fns';
+import { format, isAfter, isBefore, isWithinInterval } from 'date-fns';
 
 export class HealthCheckService {
   /**
@@ -161,7 +161,7 @@ export class HealthCheckService {
       shiftMap.get(key)!.push(shift.id);
     });
 
-    shiftMap.forEach((ids, key) => {
+    shiftMap.forEach((ids, _key) => {
       if (ids.length > 1) {
         issues.push({
           id: generateId(),
@@ -316,7 +316,7 @@ export class HealthCheckService {
     vehicles: Vehicle[],
     staff: Staff[],
     shifts: Shift[],
-    reservations: Reservation[]
+    _reservations: Reservation[]
   ): HealthCheckIssue[] {
     const issues: HealthCheckIssue[] = [];
 
@@ -382,9 +382,9 @@ export class HealthCheckService {
    */
   private static checkPerformance(
     vehicles: Vehicle[],
-    staff: Staff[],
-    shifts: Shift[],
-    reservations: Reservation[]
+    _staff: Staff[],
+    _shifts: Shift[],
+    _reservations: Reservation[]
   ): HealthCheckIssue[] {
     const issues: HealthCheckIssue[] = [];
 
@@ -433,7 +433,7 @@ export class HealthCheckService {
   ): HealthCheckIssue[] {
     const issues: HealthCheckIssue[] = [];
 
-    const activeWashers = staff.filter(s => s.role === 'washer' && s.status === 'active');
+    const _activeWashers = staff.filter(s => s.role === 'washer' && s.status === 'active');
 
     // Check if there are days with too many reservations and not enough staff
     const today = new Date();
@@ -528,9 +528,9 @@ export class HealthCheckService {
   private static calculatePerformanceScore(
     issues: HealthCheckIssue[],
     vehicles: Vehicle[],
-    staff: Staff[],
+    _staff: Staff[],
     shifts: Shift[],
-    reservations: Reservation[]
+    _reservations: Reservation[]
   ): number {
     let score = 100;
 
