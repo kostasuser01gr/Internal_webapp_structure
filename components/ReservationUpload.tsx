@@ -1,12 +1,26 @@
-import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Badge } from '@/components/ui/badge';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Upload, Download, FileSpreadsheet, CheckCircle2, XCircle, AlertCircle } from 'lucide-react';
-import { Reservation, WorkType } from '@/components/types';
-import { companies } from '@/components/lib/mockData';
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Upload,
+  Download,
+  FileSpreadsheet,
+  CheckCircle2,
+  XCircle,
+  AlertCircle,
+} from "lucide-react";
+import { Reservation, WorkType } from "@/components/types";
+import { companies } from "@/components/lib/mockData";
 
 interface ReservationUploadProps {
   onImport: (reservations: Partial<Reservation>[]) => void;
@@ -24,22 +38,22 @@ export function ReservationUpload({ onImport }: ReservationUploadProps) {
 
     setIsProcessing(true);
     setErrors([]);
-    
+
     try {
       const text = await file.text();
-      const lines = text.split('\n').filter(line => line.trim());
-      
+      const lines = text.split("\n").filter((line) => line.trim());
+
       if (lines.length === 0) {
-        throw new Error('Το αρχείο είναι κενό');
+        throw new Error("Το αρχείο είναι κενό");
       }
 
       // Parse CSV/Excel (simplified)
-      const headers = lines[0]?.split(/[,;\t]/).map(h => h.trim().toLowerCase()) || [];
-      const data = lines.slice(1).map(line => {
+      const headers = lines[0]?.split(/[,;\t]/).map((h) => h.trim().toLowerCase()) || [];
+      const data = lines.slice(1).map((line) => {
         const values = line.split(/[,;\t]/);
         const row: Record<string, string> = {};
         headers.forEach((header, index) => {
-          row[header] = values[index]?.trim() || '';
+          row[header] = values[index]?.trim() || "";
         });
         return row;
       });
@@ -60,38 +74,21 @@ export function ReservationUpload({ onImport }: ReservationUploadProps) {
     data.forEach((row, index) => {
       try {
         // Try to detect column names (flexible)
-        const licensePlate = 
-          row['license plate'] || 
-          row['licensePlate'] || 
-          row['plate'] || 
-          row['αριθμός κυκλοφορίας'] || 
-          row['πινακίδα'] || 
-          '';
+        const licensePlate =
+          row["license plate"] ||
+          row["licensePlate"] ||
+          row["plate"] ||
+          row["αριθμός κυκλοφορίας"] ||
+          row["πινακίδα"] ||
+          "";
 
-        const companyName = 
-          row['company'] || 
-          row['εταιρεία'] || 
-          row['company name'] || 
-          '';
+        const companyName = row["company"] || row["εταιρεία"] || row["company name"] || "";
 
-        const date = 
-          row['date'] || 
-          row['reservation date'] || 
-          row['ημερομηνία'] || 
-          '';
+        const date = row["date"] || row["reservation date"] || row["ημερομηνία"] || "";
 
-        const timeSlot = 
-          row['time'] || 
-          row['time slot'] || 
-          row['ώρα'] || 
-          '';
+        const timeSlot = row["time"] || row["time slot"] || row["ώρα"] || "";
 
-        const workType = 
-          row['type'] || 
-          row['work type'] || 
-          row['service'] || 
-          row['τύπος'] || 
-          '';
+        const workType = row["type"] || row["work type"] || row["service"] || row["τύπος"] || "";
 
         // Validate required fields
         if (!licensePlate) {
@@ -110,9 +107,7 @@ export function ReservationUpload({ onImport }: ReservationUploadProps) {
         }
 
         // Find company ID
-        const company = companies.find(
-          c => c.name.toLowerCase() === companyName.toLowerCase()
-        );
+        const company = companies.find((c) => c.name.toLowerCase() === companyName.toLowerCase());
 
         if (!company) {
           errorsList.push(`Γραμμή ${index + 2}: Άγνωστη εταιρεία "${companyName}"`);
@@ -123,17 +118,17 @@ export function ReservationUpload({ onImport }: ReservationUploadProps) {
         let reservationDate: Date;
         try {
           // Support multiple date formats
-          if (date.includes('/')) {
-            const [day, month, year] = date.split('/');
+          if (date.includes("/")) {
+            const [day, month, year] = date.split("/");
             reservationDate = new Date(`${year}-${month}-${day}`);
-          } else if (date.includes('-')) {
+          } else if (date.includes("-")) {
             reservationDate = new Date(date);
           } else {
-            throw new Error('Invalid date format');
+            throw new Error("Invalid date format");
           }
 
           if (isNaN(reservationDate.getTime())) {
-            throw new Error('Invalid date');
+            throw new Error("Invalid date");
           }
         } catch {
           errorsList.push(`Γραμμή ${index + 2}: Μη έγκυρη ημερομηνία "${date}"`);
@@ -142,30 +137,30 @@ export function ReservationUpload({ onImport }: ReservationUploadProps) {
 
         // Map work type
         const workTypeMap: Record<string, string> = {
-          'premium': 'premium-full',
-          'full': 'premium-full',
-          'exterior': 'exterior-only',
-          'εξωτερικό': 'exterior-only',
-          'interior': 'interior-only',
-          'εσωτερικό': 'interior-only',
-          'disinfection': 'disinfection',
-          'απολύμανση': 'disinfection',
-          'wax': 'wax',
-          'κερί': 'wax',
-          'detailing': 'detailing',
+          premium: "premium-full",
+          full: "premium-full",
+          exterior: "exterior-only",
+          εξωτερικό: "exterior-only",
+          interior: "interior-only",
+          εσωτερικό: "interior-only",
+          disinfection: "disinfection",
+          απολύμανση: "disinfection",
+          wax: "wax",
+          κερί: "wax",
+          detailing: "detailing",
         };
 
-        const mappedWorkType = workTypeMap[workType.toLowerCase()] || 'exterior-only';
+        const mappedWorkType = workTypeMap[workType.toLowerCase()] || "exterior-only";
 
         valid.push({
           vehicleLicensePlate: licensePlate.toUpperCase(),
           companyId: company.id,
           reservationDate,
-          timeSlot: timeSlot || '09:00-10:00',
+          timeSlot: timeSlot || "09:00-10:00",
           workType: mappedWorkType as WorkType,
           estimatedDuration: 45,
-          status: 'pending',
-          uploadedFrom: 'excel',
+          status: "pending",
+          uploadedFrom: "excel",
         });
       } catch (error) {
         errorsList.push(`Γραμμή ${index + 2}: ${error}`);
@@ -187,12 +182,12 @@ export function ReservationUpload({ onImport }: ReservationUploadProps) {
     const template = `License Plate,Company,Date,Time Slot,Work Type
 ΑΒΓ-1234,Goldcar,21/10/2025,09:00-10:00,premium
 ΧΨΖ-5678,Europcar,21/10/2025,10:00-11:00,exterior`;
-    
-    const blob = new Blob([template], { type: 'text/csv' });
+
+    const blob = new Blob([template], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = 'reservations_template.csv';
+    a.download = "reservations_template.csv";
     a.click();
   };
 
@@ -249,11 +244,21 @@ export function ReservationUpload({ onImport }: ReservationUploadProps) {
             <div>
               <h4 className="font-medium mb-2">Απαιτούμενες Στήλες:</h4>
               <ul className="space-y-1 text-sm text-gray-600">
-                <li>• <strong>License Plate</strong> / Αριθμός Κυκλοφορίας (π.χ. ΑΒΓ-1234)</li>
-                <li>• <strong>Company</strong> / Εταιρεία (Goldcar ή Europcar)</li>
-                <li>• <strong>Date</strong> / Ημερομηνία (DD/MM/YYYY ή YYYY-MM-DD)</li>
-                <li>• <strong>Time Slot</strong> / Ώρα (προαιρετικό, π.χ. 09:00-10:00)</li>
-                <li>• <strong>Work Type</strong> / Τύπος (premium, exterior, interior, κλπ.)</li>
+                <li>
+                  • <strong>License Plate</strong> / Αριθμός Κυκλοφορίας (π.χ. ΑΒΓ-1234)
+                </li>
+                <li>
+                  • <strong>Company</strong> / Εταιρεία (Goldcar ή Europcar)
+                </li>
+                <li>
+                  • <strong>Date</strong> / Ημερομηνία (DD/MM/YYYY ή YYYY-MM-DD)
+                </li>
+                <li>
+                  • <strong>Time Slot</strong> / Ώρα (προαιρετικό, π.χ. 09:00-10:00)
+                </li>
+                <li>
+                  • <strong>Work Type</strong> / Τύπος (premium, exterior, interior, κλπ.)
+                </li>
               </ul>
             </div>
 
@@ -272,8 +277,9 @@ export function ReservationUpload({ onImport }: ReservationUploadProps) {
             <Alert>
               <AlertCircle className="h-4 w-4" />
               <AlertDescription>
-                Το σύστημα είναι ευέλικτο και αναγνωρίζει στήλες με διάφορα ονόματα (Αγγλικά/Ελληνικά).
-                Μπορείτε να χρησιμοποιήσετε κόμμα (,), ερωτηματικό (;) ή tab ως διαχωριστικό.
+                Το σύστημα είναι ευέλικτο και αναγνωρίζει στήλες με διάφορα ονόματα
+                (Αγγλικά/Ελληνικά). Μπορείτε να χρησιμοποιήσετε κόμμα (,), ερωτηματικό (;) ή tab ως
+                διαχωριστικό.
               </AlertDescription>
             </Alert>
           </div>
@@ -312,9 +318,7 @@ export function ReservationUpload({ onImport }: ReservationUploadProps) {
                       {errors.slice(0, 5).map((error, i) => (
                         <li key={i}>• {error}</li>
                       ))}
-                      {errors.length > 5 && (
-                        <li>... και {errors.length - 5} ακόμα</li>
-                      )}
+                      {errors.length > 5 && <li>... και {errors.length - 5} ακόμα</li>}
                     </ul>
                   </AlertDescription>
                 </Alert>
@@ -339,18 +343,24 @@ export function ReservationUpload({ onImport }: ReservationUploadProps) {
                         <TableRow key={i}>
                           <TableCell>{res.vehicleLicensePlate}</TableCell>
                           <TableCell>
-                            <Badge style={{ 
-                              backgroundColor: `${companies.find(c => c.id === res.companyId)?.color}20`,
-                              color: companies.find(c => c.id === res.companyId)?.color 
-                            }}>
-                              {companies.find(c => c.id === res.companyId)?.name}
+                            <Badge
+                              style={{
+                                backgroundColor: `${companies.find((c) => c.id === res.companyId)?.color}20`,
+                                color: companies.find((c) => c.id === res.companyId)?.color,
+                              }}
+                            >
+                              {companies.find((c) => c.id === res.companyId)?.name}
                             </Badge>
                           </TableCell>
                           <TableCell>
-                            {res.reservationDate ? new Date(res.reservationDate).toLocaleDateString('el-GR') : '-'}
+                            {res.reservationDate
+                              ? new Date(res.reservationDate).toLocaleDateString("el-GR")
+                              : "-"}
                           </TableCell>
                           <TableCell>{res.timeSlot}</TableCell>
-                          <TableCell><Badge variant="outline">{res.workType}</Badge></TableCell>
+                          <TableCell>
+                            <Badge variant="outline">{res.workType}</Badge>
+                          </TableCell>
                           <TableCell>
                             <Badge className="bg-green-100 text-green-800">
                               <CheckCircle2 className="h-3 w-3 mr-1" />
@@ -368,11 +378,14 @@ export function ReservationUpload({ onImport }: ReservationUploadProps) {
                   )}
 
                   <div className="flex justify-end gap-2">
-                    <Button variant="outline" onClick={() => {
-                      setParsedData([]);
-                      setValidData([]);
-                      setErrors([]);
-                    }}>
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setParsedData([]);
+                        setValidData([]);
+                        setErrors([]);
+                      }}
+                    >
                       Ακύρωση
                     </Button>
                     <Button onClick={handleImport} disabled={validData.length === 0}>

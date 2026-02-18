@@ -11,6 +11,7 @@
 ### 1️⃣ Dashboard - Επισκόπηση
 
 **Χαρακτηριστικά:**
+
 - 6 stats cards με real-time μετρήσεις
 - Συνολικά οχήματα, καταχωρήσεις σήμερα, εκκρεμείς εργασίες
 - Μέσος χρόνος εργασίας, έσοδα ημέρας
@@ -18,6 +19,7 @@
 - Company switcher (AutoClean Premium / SpeedWash Express / Όλες)
 
 **Use Cases:**
+
 - Γρήγορη επισκόπηση της ημέρας
 - Monitoring απόδοσης
 - Σύγκριση μεταξύ εταιρειών
@@ -27,6 +29,7 @@
 ### 2️⃣ Διαχείριση Οχημάτων
 
 **Χαρακτηριστικά:**
+
 - Πλήρης λίστα με πίνακα
 - Φίλτρα: Αναζήτηση, Εταιρεία, Κατάσταση
 - Πληροφορίες: Αρ. κυκλοφορίας, εταιρεία, κατάσταση, ημερομηνία, σημειώσεις
@@ -34,6 +37,7 @@
 - Color-coded εταιρείες και status badges
 
 **Use Cases:**
+
 - Εύρεση συγκεκριμένου οχήματος
 - Μαζική προβολή καταστάσεων
 - Γρήγορη επεξεργασία
@@ -43,6 +47,7 @@
 ### 3️⃣ Καταχώρηση Οχήματος
 
 **Χαρακτηριστικά:**
+
 - Αριθμός κυκλοφορίας (required)
 - Επιλογή εταιρείας (required)
 - Κατάσταση (pending, active, completed, maintenance)
@@ -50,6 +55,7 @@
 - Σημειώσεις
 
 **Use Cases:**
+
 - Καταχώρηση νέου οχήματος
 - Mobile-friendly για field workers
 - Επεξεργασία υπάρχοντος οχήματος
@@ -59,6 +65,7 @@
 ### 4️⃣ Ιστορικό Οχήματος
 
 **Χαρακτηριστικά:**
+
 - Πλήρες ιστορικό πλύσεων
 - Στατιστικά: Σύνολο εργασιών, κόστος, χρόνος
 - Timeline view με όλες τις εργασίες
@@ -66,6 +73,7 @@
 - Κουμπί "Νέα Εργασία"
 
 **Use Cases:**
+
 - Tracking ιστορικού πελάτη
 - Ανάλυση patterns
 - Proof of work
@@ -75,6 +83,7 @@
 ### 5️⃣ Καταχώρηση Εργασίας
 
 **Χαρακτηριστικά:**
+
 - Τεχνικός (required)
 - Τύπος εργασίας (dropdown με 6 επιλογές)
 - Auto-calculate χρόνου & κόστους βάσει τύπου
@@ -82,6 +91,7 @@
 - Σημειώσεις
 
 **Τύποι Εργασιών:**
+
 - Premium Πλήρης: 75 λεπτά, €45
 - Εξωτερικό Μόνο: 30 λεπτά, €20
 - Εσωτερικό Μόνο: 45 λεπτά, €25
@@ -90,6 +100,7 @@
 - Detailing: 120 λεπτά, €80
 
 **Use Cases:**
+
 - Γρήγορη καταχώρηση ολοκληρωμένης εργασίας
 - Tracking χρόνου & κόστους
 - Performance metrics για τεχνικούς
@@ -99,6 +110,7 @@
 ### 6️⃣ AI Chatbot
 
 **Χαρακτηριστικά:**
+
 - Floating button (πάντα προσβάσιμο)
 - Minimize/Maximize
 - Context-aware responses
@@ -106,6 +118,7 @@
 - Mock AI responses (production: OpenAI integration)
 
 **Δυνατότητες AI:**
+
 - Στατιστικά & αναλύσεις ("πόσα οχήματα σήμερα;")
 - Προτάσεις εργασιών βάσει ιστορικού
 - Υπολογισμοί χρόνου & κόστους
@@ -114,6 +127,7 @@
 - Dashboard insights
 
 **Use Cases:**
+
 - Quick queries χωρίς navigation
 - Intelligent suggestions
 - Data analysis on-demand
@@ -126,27 +140,32 @@
 **4 Tabs:**
 
 **Import:**
+
 - CSV/Excel upload
 - Μέχρι 5,000 εγγραφές
 - Template download
 - Validation & preview
 
 **Export:**
+
 - Φίλτρα: Εταιρεία, Κατάσταση, Περίοδος
 - Formats: CSV, Excel, PDF
 - Πλήρης αναφορά
 
 **Bulk Edit:**
+
 - Αλλαγή εταιρείας πολλών οχημάτων
 - Αλλαγή κατάστασης
 - Μαζική προσθήκη σημειώσεων
 
 **Bulk Delete:**
+
 - Διαγραφή με φίλτρα
 - Safety warnings
 - Μη αναστρέψιμη ενέργεια
 
 **Use Cases:**
+
 - Migration από παλιό σύστημα
 - End-of-day cleanup
 - Batch operations
@@ -159,27 +178,32 @@
 **3 Tabs:**
 
 **Ημερήσια Απόδοση:**
+
 - Bar chart: Οχήματα & Έσοδα ανά ημέρα
 - Dual Y-axis
 - 7-day view
 
 **Τύποι Εργασιών:**
+
 - Pie chart: Κατανομή εργασιών
 - Color-coded
 - Percentages & counts
 
 **Σύγκριση Εταιρειών:**
+
 - Line chart: 6-month trend
 - Comparison AutoClean vs SpeedWash
 - Growth metrics
 
 **Performance Metrics (Cards):**
+
 - Μέση Ανάπτυξη: +15.3%
 - Μείωση Χρόνου: -8.5%
 - Αύξηση Εσόδων: +22.7%
 - Ικανοποίηση: 94%
 
 **Use Cases:**
+
 - Performance review
 - Trend analysis
 - Business intelligence
@@ -190,21 +214,25 @@
 ### 9️⃣ Team Chat ⭐ NEW!
 
 **Layout:**
+
 - 3-column design (Sidebar | Chat | Members)
 - Responsive (mobile: single column)
 
 **Channels:**
+
 - Γενικά (pinned)
 - AutoClean Premium (pinned)
 - SpeedWash Express
 - Τεχνική Υποστήριξη
 
 **Direct Messages:**
+
 - 1-on-1 conversations
 - Online status indicators
 - Typing indicators
 
 **Features:**
+
 - Real-time messaging
 - Message reactions (emoji)
 - Search channels
@@ -216,6 +244,7 @@
 - Members panel με roles
 
 **Use Cases:**
+
 - Team coordination
 - Quick questions
 - Shift handovers
@@ -229,6 +258,7 @@
 ### Tech Stack
 
 **Frontend:**
+
 - React + TypeScript
 - Tailwind CSS
 - Shadcn/ui components
@@ -236,18 +266,22 @@
 - Lucide Icons
 
 **State Management:**
+
 - React useState/useEffect
 - Local state (μπορεί να γίνει Zustand/Redux)
 
 **Data:**
+
 - Mock data (development)
 - Production: Supabase PostgreSQL
 
 **AI:**
+
 - Mock responses (development)
 - Production: OpenAI GPT-4 API
 
 **Real-time Chat:**
+
 - Mock (development)
 - Production: Supabase Realtime / Socket.io
 
@@ -286,21 +320,26 @@
 ### Data Types
 
 **Vehicle:**
+
 - ID, License Plate, Company, Status, Image, Notes
 - Timestamps (created, updated)
 
 **Work Entry:**
+
 - ID, Vehicle ID, Date, Technician, Work Type
 - Duration, Cost, Notes, Images, Company
 
 **Team User:**
+
 - ID, Name, Avatar, Role, Status, Last Seen
 
 **Team Message:**
+
 - ID, Channel, Sender, Content, Timestamp
 - Reactions, Attachments, Edited flag
 
 **Chat Channel:**
+
 - ID, Name, Type, Description, Participants
 - Unread count, Pinned status
 
@@ -353,6 +392,7 @@ vercel
 ```
 
 **Environment Variables:**
+
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `NEXT_PUBLIC_OPENAI_API_KEY`
@@ -436,16 +476,19 @@ vercel
 ### Key Features by Priority
 
 **P0 (Critical):**
+
 - Vehicle tracking ⭐⭐⭐⭐⭐
 - Work entry logging ⭐⭐⭐⭐⭐
 - Dashboard stats ⭐⭐⭐⭐⭐
 
 **P1 (Important):**
+
 - Team chat ⭐⭐⭐⭐
 - AI assistant ⭐⭐⭐⭐
 - Reports ⭐⭐⭐⭐
 
 **P2 (Nice to have):**
+
 - Bulk operations ⭐⭐⭐
 - Advanced analytics ⭐⭐⭐
 
@@ -456,23 +499,27 @@ vercel
 ### KPIs to Track
 
 **Operational:**
+
 - Average wash time per vehicle
 - Daily throughput (vehicles/day)
 - Revenue per day/week/month
 - Technician productivity
 
 **Quality:**
+
 - Customer satisfaction
 - Repeat customers
 - Error rate
 - Rework percentage
 
 **Team:**
+
 - Response time σε team chat
 - Message activity
 - User engagement
 
 **System:**
+
 - Page load time < 2s
 - API response time < 500ms
 - Uptime > 99.9%
@@ -533,21 +580,25 @@ vercel
 ### New User Training (1 hour)
 
 **Session 1 (15 min)**: Dashboard & Navigation
+
 - Overview of interface
 - Understanding stats
 - Company switcher
 
 **Session 2 (15 min)**: Vehicle Management
+
 - Adding vehicles
 - Searching & filtering
 - Editing & deleting
 
 **Session 3 (15 min)**: Work Logging
+
 - Creating work entries
 - Types of work
 - Adding notes
 
 **Session 4 (15 min)**: Team Chat & AI
+
 - Sending messages
 - Using channels
 - AI assistant queries

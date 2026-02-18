@@ -1,15 +1,15 @@
-import { 
-  Vehicle, 
-  Staff, 
-  Shift, 
-  Reservation, 
+import {
+  Vehicle,
+  Staff,
+  Shift,
+  Reservation,
   LeaveRequest,
   HealthCheckIssue,
   HealthCheckResult,
-  HealthCheckStatus
-} from '../types';
-import { generateId } from './utils';
-import { format, isAfter, isBefore, isWithinInterval } from 'date-fns';
+  HealthCheckStatus,
+} from "../types";
+import { generateId } from "./utils";
+import { format, isAfter, isBefore, isWithinInterval } from "date-fns";
 
 export class HealthCheckService {
   /**
@@ -44,16 +44,22 @@ export class HealthCheckService {
       totalStaff: staff.length,
       totalShifts: shifts.length,
       totalReservations: reservations.length,
-      duplicates: issues.filter(i => i.title.toLowerCase().includes('duplicate')).length,
-      conflicts: issues.filter(i => i.category === 'conflicts').length,
-      performanceScore: this.calculatePerformanceScore(issues, vehicles, staff, shifts, reservations)
+      duplicates: issues.filter((i) => i.title.toLowerCase().includes("duplicate")).length,
+      conflicts: issues.filter((i) => i.category === "conflicts").length,
+      performanceScore: this.calculatePerformanceScore(
+        issues,
+        vehicles,
+        staff,
+        shifts,
+        reservations
+      ),
     };
 
     return {
       status,
       lastCheck: new Date(),
       issues,
-      metrics
+      metrics,
     };
   }
 
@@ -64,8 +70,8 @@ export class HealthCheckService {
     const issues: HealthCheckIssue[] = [];
     const plateMap = new Map<string, string[]>();
 
-    vehicles.forEach(vehicle => {
-      const normalizedPlate = vehicle.licensePlate.trim().toUpperCase().replace(/\s+/g, '');
+    vehicles.forEach((vehicle) => {
+      const normalizedPlate = vehicle.licensePlate.trim().toUpperCase().replace(/\s+/g, "");
       if (!plateMap.has(normalizedPlate)) {
         plateMap.set(normalizedPlate, []);
       }
@@ -76,13 +82,13 @@ export class HealthCheckService {
       if (ids.length > 1) {
         issues.push({
           id: generateId(),
-          category: 'data-integrity',
-          severity: 'critical',
+          category: "data-integrity",
+          severity: "critical",
           title: `Διπλότυπη Πινακίδα: ${plate}`,
           description: `Βρέθηκαν ${ids.length} οχήματα με την ίδια πινακίδα. Αυτό μπορεί να προκαλέσει σύγχυση στην καταγραφή.`,
           affectedItems: ids,
           autoFixable: true,
-          timestamp: new Date()
+          timestamp: new Date(),
         });
       }
     });
@@ -98,9 +104,9 @@ export class HealthCheckService {
     const emailMap = new Map<string, string[]>();
     const phoneMap = new Map<string, string[]>();
 
-    staff.forEach(member => {
+    staff.forEach((member) => {
       const normalizedEmail = member.email.trim().toLowerCase();
-      const normalizedPhone = member.phone.trim().replace(/\s+/g, '');
+      const normalizedPhone = member.phone.trim().replace(/\s+/g, "");
 
       if (!emailMap.has(normalizedEmail)) {
         emailMap.set(normalizedEmail, []);
@@ -117,13 +123,13 @@ export class HealthCheckService {
       if (ids.length > 1) {
         issues.push({
           id: generateId(),
-          category: 'data-integrity',
-          severity: 'critical',
+          category: "data-integrity",
+          severity: "critical",
           title: `Διπλότυπο Email: ${email}`,
           description: `Βρέθηκαν ${ids.length} μέλη προσωπικού με το ίδιο email.`,
           affectedItems: ids,
           autoFixable: true,
-          timestamp: new Date()
+          timestamp: new Date(),
         });
       }
     });
@@ -132,13 +138,13 @@ export class HealthCheckService {
       if (ids.length > 1) {
         issues.push({
           id: generateId(),
-          category: 'data-integrity',
-          severity: 'warning',
+          category: "data-integrity",
+          severity: "warning",
           title: `Διπλότυπο Τηλέφωνο: ${phone}`,
           description: `Βρέθηκαν ${ids.length} μέλη προσωπικού με το ίδιο τηλέφωνο.`,
           affectedItems: ids,
           autoFixable: false,
-          timestamp: new Date()
+          timestamp: new Date(),
         });
       }
     });
@@ -153,8 +159,8 @@ export class HealthCheckService {
     const issues: HealthCheckIssue[] = [];
     const shiftMap = new Map<string, string[]>();
 
-    shifts.forEach(shift => {
-      const key = `${shift.staffId}-${format(shift.date, 'yyyy-MM-dd')}-${shift.startTime}-${shift.endTime}`;
+    shifts.forEach((shift) => {
+      const key = `${shift.staffId}-${format(shift.date, "yyyy-MM-dd")}-${shift.startTime}-${shift.endTime}`;
       if (!shiftMap.has(key)) {
         shiftMap.set(key, []);
       }
@@ -165,13 +171,13 @@ export class HealthCheckService {
       if (ids.length > 1) {
         issues.push({
           id: generateId(),
-          category: 'data-integrity',
-          severity: 'warning',
+          category: "data-integrity",
+          severity: "warning",
           title: `Διπλότυπη Βάρδια`,
           description: `Βρέθηκαν ${ids.length} ίδιες βάρδιες. Αυτό μπορεί να προκαλέσει προβλήματα στην κατανομή εργασίας.`,
           affectedItems: ids,
           autoFixable: true,
-          timestamp: new Date()
+          timestamp: new Date(),
         });
       }
     });
@@ -187,7 +193,7 @@ export class HealthCheckService {
     const staffShifts = new Map<string, Shift[]>();
 
     // Group shifts by staff
-    shifts.forEach(shift => {
+    shifts.forEach((shift) => {
       if (!staffShifts.has(shift.staffId)) {
         staffShifts.set(shift.staffId, []);
       }
@@ -196,17 +202,17 @@ export class HealthCheckService {
 
     // Check for overlaps
     staffShifts.forEach((memberShifts, staffId) => {
-      const staffMember = staff.find(s => s.id === staffId);
-      
+      const staffMember = staff.find((s) => s.id === staffId);
+
       for (let i = 0; i < memberShifts.length; i++) {
         for (let j = i + 1; j < memberShifts.length; j++) {
           const shift1 = memberShifts[i];
           const shift2 = memberShifts[j];
-          
+
           if (!shift1 || !shift2) continue;
 
           // Check if same day
-          if (format(shift1.date, 'yyyy-MM-dd') === format(shift2.date, 'yyyy-MM-dd')) {
+          if (format(shift1.date, "yyyy-MM-dd") === format(shift2.date, "yyyy-MM-dd")) {
             const overlap = this.checkTimeOverlap(
               shift1.startTime,
               shift1.endTime,
@@ -217,13 +223,13 @@ export class HealthCheckService {
             if (overlap) {
               issues.push({
                 id: generateId(),
-                category: 'conflicts',
-                severity: 'critical',
-                title: `Επικαλυπτόμενες Βάρδιες για ${staffMember?.name || 'Άγνωστο'}`,
-                description: `Οι βάρδιες επικαλύπτονται στις ${format(shift1.date, 'dd/MM/yyyy')}: ${shift1.startTime}-${shift1.endTime} και ${shift2.startTime}-${shift2.endTime}`,
+                category: "conflicts",
+                severity: "critical",
+                title: `Επικαλυπτόμενες Βάρδιες για ${staffMember?.name || "Άγνωστο"}`,
+                description: `Οι βάρδιες επικαλύπτονται στις ${format(shift1.date, "dd/MM/yyyy")}: ${shift1.startTime}-${shift1.endTime} και ${shift2.startTime}-${shift2.endTime}`,
                 affectedItems: [shift1.id, shift2.id],
                 autoFixable: false,
-                timestamp: new Date()
+                timestamp: new Date(),
               });
             }
           }
@@ -244,30 +250,30 @@ export class HealthCheckService {
   ): HealthCheckIssue[] {
     const issues: HealthCheckIssue[] = [];
 
-    const approvedLeaves = leaveRequests.filter(lr => lr.status === 'approved');
+    const approvedLeaves = leaveRequests.filter((lr) => lr.status === "approved");
 
-    approvedLeaves.forEach(leave => {
-      const staffMember = staff.find(s => s.id === leave.staffId);
-      const conflictingShifts = shifts.filter(shift => {
+    approvedLeaves.forEach((leave) => {
+      const staffMember = staff.find((s) => s.id === leave.staffId);
+      const conflictingShifts = shifts.filter((shift) => {
         if (shift.staffId !== leave.staffId) return false;
-        
+
         const shiftDate = shift.date;
         return isWithinInterval(shiftDate, {
           start: leave.startDate,
-          end: leave.endDate
+          end: leave.endDate,
         });
       });
 
       if (conflictingShifts.length > 0) {
         issues.push({
           id: generateId(),
-          category: 'conflicts',
-          severity: 'critical',
-          title: `Σύγκρουση Άδειας με Βάρδια για ${staffMember?.name || 'Άγνωστο'}`,
-          description: `Υπάρχουν ${conflictingShifts.length} προγραμματισμένες βάρδιες κατά τη διάρκεια της εγκεκριμένης άδειας (${format(leave.startDate, 'dd/MM/yyyy')} - ${format(leave.endDate, 'dd/MM/yyyy')})`,
-          affectedItems: [leave.id, ...conflictingShifts.map(s => s.id)],
+          category: "conflicts",
+          severity: "critical",
+          title: `Σύγκρουση Άδειας με Βάρδια για ${staffMember?.name || "Άγνωστο"}`,
+          description: `Υπάρχουν ${conflictingShifts.length} προγραμματισμένες βάρδιες κατά τη διάρκεια της εγκεκριμένης άδειας (${format(leave.startDate, "dd/MM/yyyy")} - ${format(leave.endDate, "dd/MM/yyyy")})`,
+          affectedItems: [leave.id, ...conflictingShifts.map((s) => s.id)],
           autoFixable: true,
-          timestamp: new Date()
+          timestamp: new Date(),
         });
       }
     });
@@ -285,24 +291,24 @@ export class HealthCheckService {
     const issues: HealthCheckIssue[] = [];
     const assignedReservationIds = new Set<string>();
 
-    shifts.forEach(shift => {
-      shift.assignedReservations.forEach(resId => assignedReservationIds.add(resId));
+    shifts.forEach((shift) => {
+      shift.assignedReservations.forEach((resId) => assignedReservationIds.add(resId));
     });
 
     const orphanedReservations = reservations.filter(
-      res => res.status === 'confirmed' && !assignedReservationIds.has(res.id)
+      (res) => res.status === "confirmed" && !assignedReservationIds.has(res.id)
     );
 
     if (orphanedReservations.length > 0) {
       issues.push({
         id: generateId(),
-        category: 'data-integrity',
-        severity: 'warning',
+        category: "data-integrity",
+        severity: "warning",
         title: `${orphanedReservations.length} Κρατήσεις χωρίς Ανάθεση`,
         description: `Βρέθηκαν επιβεβαιωμένες κρατήσεις που δεν έχουν ανατεθεί σε καμία βάρδια.`,
-        affectedItems: orphanedReservations.map(r => r.id),
+        affectedItems: orphanedReservations.map((r) => r.id),
         autoFixable: true,
-        timestamp: new Date()
+        timestamp: new Date(),
       });
     }
 
@@ -321,56 +327,58 @@ export class HealthCheckService {
     const issues: HealthCheckIssue[] = [];
 
     // Check for invalid vehicle statuses
-    const invalidVehicles = vehicles.filter(v => !['active', 'pending', 'completed', 'maintenance'].includes(v.status));
+    const invalidVehicles = vehicles.filter(
+      (v) => !["active", "pending", "completed", "maintenance"].includes(v.status)
+    );
     if (invalidVehicles.length > 0) {
       issues.push({
         id: generateId(),
-        category: 'data-integrity',
-        severity: 'warning',
+        category: "data-integrity",
+        severity: "warning",
         title: `Μη Έγκυρες Καταστάσεις Οχημάτων`,
         description: `${invalidVehicles.length} οχήματα έχουν μη έγκυρη κατάσταση.`,
-        affectedItems: invalidVehicles.map(v => v.id),
+        affectedItems: invalidVehicles.map((v) => v.id),
         autoFixable: true,
-        timestamp: new Date()
+        timestamp: new Date(),
       });
     }
 
     // Check for inactive staff with scheduled future shifts
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    
-    const inactiveStaff = staff.filter(s => s.status === 'inactive');
-    inactiveStaff.forEach(staffMember => {
+
+    const inactiveStaff = staff.filter((s) => s.status === "inactive");
+    inactiveStaff.forEach((staffMember) => {
       const futureShifts = shifts.filter(
-        shift => shift.staffId === staffMember.id && isAfter(shift.date, today)
+        (shift) => shift.staffId === staffMember.id && isAfter(shift.date, today)
       );
 
       if (futureShifts.length > 0) {
         issues.push({
           id: generateId(),
-          category: 'data-integrity',
-          severity: 'warning',
+          category: "data-integrity",
+          severity: "warning",
           title: `Ανενεργό Προσωπικό με Μελλοντικές Βάρδιες`,
           description: `Το μέλος ${staffMember.name} είναι ανενεργό αλλά έχει ${futureShifts.length} προγραμματισμένες βάρδιες.`,
-          affectedItems: [staffMember.id, ...futureShifts.map(s => s.id)],
+          affectedItems: [staffMember.id, ...futureShifts.map((s) => s.id)],
           autoFixable: true,
-          timestamp: new Date()
+          timestamp: new Date(),
         });
       }
     });
 
     // Check for missing company assignments in vehicles
-    const vehiclesWithoutCompany = vehicles.filter(v => !v.companyId);
+    const vehiclesWithoutCompany = vehicles.filter((v) => !v.companyId);
     if (vehiclesWithoutCompany.length > 0) {
       issues.push({
         id: generateId(),
-        category: 'data-integrity',
-        severity: 'info',
+        category: "data-integrity",
+        severity: "info",
         title: `Οχήματα χωρίς Εταιρεία`,
         description: `${vehiclesWithoutCompany.length} οχήματα δεν έχουν ανατεθεί σε εταιρεία.`,
-        affectedItems: vehiclesWithoutCompany.map(v => v.id),
+        affectedItems: vehiclesWithoutCompany.map((v) => v.id),
         autoFixable: false,
-        timestamp: new Date()
+        timestamp: new Date(),
       });
     }
 
@@ -392,31 +400,33 @@ export class HealthCheckService {
     if (vehicles.length > 4000) {
       issues.push({
         id: generateId(),
-        category: 'performance',
-        severity: 'warning',
+        category: "performance",
+        severity: "warning",
         title: `Μεγάλος Αριθμός Οχημάτων`,
         description: `Έχετε ${vehicles.length} οχήματα. Συνιστάται αρχειοθέτηση των παλαιότερων για βελτίωση απόδοσης.`,
         affectedItems: [],
         autoFixable: false,
-        timestamp: new Date()
+        timestamp: new Date(),
       });
     }
 
     // Check for very old data
     const sixMonthsAgo = new Date();
     sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
-    
-    const oldVehicles = vehicles.filter(v => isBefore(v.createdAt, sixMonthsAgo) && v.status === 'completed');
+
+    const oldVehicles = vehicles.filter(
+      (v) => isBefore(v.createdAt, sixMonthsAgo) && v.status === "completed"
+    );
     if (oldVehicles.length > 500) {
       issues.push({
         id: generateId(),
-        category: 'performance',
-        severity: 'info',
+        category: "performance",
+        severity: "info",
         title: `Παλαιά Ολοκληρωμένα Οχήματα`,
         description: `${oldVehicles.length} οχήματα έχουν ολοκληρωθεί πριν από 6+ μήνες και μπορούν να αρχειοθετηθούν.`,
-        affectedItems: oldVehicles.map(v => v.id),
+        affectedItems: oldVehicles.map((v) => v.id),
         autoFixable: true,
-        timestamp: new Date()
+        timestamp: new Date(),
       });
     }
 
@@ -433,7 +443,7 @@ export class HealthCheckService {
   ): HealthCheckIssue[] {
     const issues: HealthCheckIssue[] = [];
 
-    const _activeWashers = staff.filter(s => s.role === 'washer' && s.status === 'active');
+    const _activeWashers = staff.filter((s) => s.role === "washer" && s.status === "active");
 
     // Check if there are days with too many reservations and not enough staff
     const today = new Date();
@@ -443,46 +453,50 @@ export class HealthCheckService {
       return date;
     });
 
-    next7Days.forEach(date => {
-      const dateStr = format(date, 'yyyy-MM-dd');
+    next7Days.forEach((date) => {
+      const dateStr = format(date, "yyyy-MM-dd");
       const dayReservations = reservations.filter(
-        r => format(r.reservationDate, 'yyyy-MM-dd') === dateStr && r.status !== 'cancelled'
+        (r) => format(r.reservationDate, "yyyy-MM-dd") === dateStr && r.status !== "cancelled"
       );
       const dayShifts = shifts.filter(
-        s => format(s.date, 'yyyy-MM-dd') === dateStr && s.status !== 'cancelled'
+        (s) => format(s.date, "yyyy-MM-dd") === dateStr && s.status !== "cancelled"
       );
 
       if (dayReservations.length > 0 && dayShifts.length === 0) {
         issues.push({
           id: generateId(),
-          category: 'conflicts',
-          severity: 'critical',
-          title: `Κρατήσεις χωρίς Προσωπικό - ${format(date, 'dd/MM/yyyy')}`,
+          category: "conflicts",
+          severity: "critical",
+          title: `Κρατήσεις χωρίς Προσωπικό - ${format(date, "dd/MM/yyyy")}`,
           description: `Υπάρχουν ${dayReservations.length} κρατήσεις αλλά δεν υπάρχουν προγραμματισμένες βάρδιες.`,
-          affectedItems: dayReservations.map(r => r.id),
+          affectedItems: dayReservations.map((r) => r.id),
           autoFixable: true,
-          timestamp: new Date()
+          timestamp: new Date(),
         });
       }
 
       // Check if too many reservations for available staff
       const totalMinutes = dayReservations.reduce((sum, r) => sum + r.estimatedDuration, 0);
       const availableMinutes = dayShifts.reduce((sum, s) => {
-        const start = parseInt(s.startTime.split(':')[0] || '0') * 60 + parseInt(s.startTime.split(':')[1] || '0');
-        const end = parseInt(s.endTime.split(':')[0] || '0') * 60 + parseInt(s.endTime.split(':')[1] || '0');
+        const start =
+          parseInt(s.startTime.split(":")[0] || "0") * 60 +
+          parseInt(s.startTime.split(":")[1] || "0");
+        const end =
+          parseInt(s.endTime.split(":")[0] || "0") * 60 + parseInt(s.endTime.split(":")[1] || "0");
         return sum + (end - start);
       }, 0);
 
-      if (totalMinutes > availableMinutes * 0.9) { // 90% capacity
+      if (totalMinutes > availableMinutes * 0.9) {
+        // 90% capacity
         issues.push({
           id: generateId(),
-          category: 'conflicts',
-          severity: 'warning',
-          title: `Υπερφόρτωση Προσωπικού - ${format(date, 'dd/MM/yyyy')}`,
-          description: `Η εκτιμώμενη διάρκεια εργασιών (${Math.round(totalMinutes/60)}h) ξεπερνά το 90% της διαθέσιμης χωρητικότητας (${Math.round(availableMinutes/60)}h).`,
+          category: "conflicts",
+          severity: "warning",
+          title: `Υπερφόρτωση Προσωπικού - ${format(date, "dd/MM/yyyy")}`,
+          description: `Η εκτιμώμενη διάρκεια εργασιών (${Math.round(totalMinutes / 60)}h) ξεπερνά το 90% της διαθέσιμης χωρητικότητας (${Math.round(availableMinutes / 60)}h).`,
           affectedItems: [],
           autoFixable: false,
-          timestamp: new Date()
+          timestamp: new Date(),
         });
       }
     });
@@ -500,7 +514,7 @@ export class HealthCheckService {
     end2: string
   ): boolean {
     const toMinutes = (time: string) => {
-      const [hours, minutes] = time.split(':').map(Number);
+      const [hours, minutes] = time.split(":").map(Number);
       return (hours || 0) * 60 + (minutes || 0);
     };
 
@@ -509,17 +523,17 @@ export class HealthCheckService {
     const s2 = toMinutes(start2);
     const e2 = toMinutes(end2);
 
-    return (s1 < e2 && e1 > s2);
+    return s1 < e2 && e1 > s2;
   }
 
   /**
    * Determine overall status based on issues
    */
   private static determineOverallStatus(issues: HealthCheckIssue[]): HealthCheckStatus {
-    if (issues.some(i => i.severity === 'critical')) return 'critical';
-    if (issues.some(i => i.severity === 'warning')) return 'warning';
-    if (issues.some(i => i.severity === 'info')) return 'info';
-    return 'healthy';
+    if (issues.some((i) => i.severity === "critical")) return "critical";
+    if (issues.some((i) => i.severity === "warning")) return "warning";
+    if (issues.some((i) => i.severity === "info")) return "info";
+    return "healthy";
   }
 
   /**
@@ -535,15 +549,15 @@ export class HealthCheckService {
     let score = 100;
 
     // Deduct points for issues
-    issues.forEach(issue => {
+    issues.forEach((issue) => {
       switch (issue.severity) {
-        case 'critical':
+        case "critical":
           score -= 15;
           break;
-        case 'warning':
+        case "warning":
           score -= 5;
           break;
-        case 'info':
+        case "info":
           score -= 1;
           break;
       }

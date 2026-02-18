@@ -1,31 +1,31 @@
-import { Badge } from '@/components/ui/badge';
-import { getCompanyById } from '@/components/lib/utils';
+import { Badge } from "@/components/ui/badge";
+import { getCompanyById } from "@/components/lib/utils";
 
 interface CompanyBadgeProps {
   companyId: string;
   showDot?: boolean;
-  variant?: 'default' | 'outline';
+  variant?: "default" | "outline";
   className?: string;
 }
 
-export function CompanyBadge({ 
-  companyId, 
-  showDot = true, 
-  variant = 'outline',
-  className = '' 
+export function CompanyBadge({
+  companyId,
+  showDot = true,
+  variant = "outline",
+  className = "",
 }: CompanyBadgeProps) {
   const company = getCompanyById(companyId);
-  
+
   if (!company) {
     return <Badge variant={variant}>N/A</Badge>;
   }
 
   return (
-    <Badge 
+    <Badge
       variant={variant}
       className={`inline-flex items-center gap-2 ${className}`}
       style={
-        variant === 'default' 
+        variant === "default"
           ? {
               backgroundColor: `${company.color}20`,
               color: company.color,
@@ -35,10 +35,7 @@ export function CompanyBadge({
       }
     >
       {showDot && (
-        <span
-          className="w-2 h-2 rounded-full"
-          style={{ backgroundColor: company.color }}
-        />
+        <span className="w-2 h-2 rounded-full" style={{ backgroundColor: company.color }} />
       )}
       <span>{company.name}</span>
     </Badge>

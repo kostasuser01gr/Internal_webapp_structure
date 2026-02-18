@@ -7,9 +7,11 @@
 ## 1. 👥 Staff Management (Διαχείριση Προσωπικού)
 
 ### Τι Κάνει
+
 Πλήρης διαχείριση του προσωπικού του πλυντηρίου με roles, δεξιότητες και status tracking.
 
 ### Features
+
 - ✅ CRUD operations για προσωπικό
 - ✅ 3 roles: Washer, Manager, Admin
 - ✅ Skills assignment (τύποι εργασίας που μπορούν να κάνουν)
@@ -19,6 +21,7 @@
 - ✅ Contact information (email, phone)
 
 ### Χρήση
+
 ```
 Navigation → Προσωπικό
 - Κλικ "Νέο Μέλος"
@@ -28,6 +31,7 @@ Navigation → Προσωπικό
 ```
 
 ### File
+
 `/components/StaffManagement.tsx`
 
 ---
@@ -35,9 +39,11 @@ Navigation → Προσωπικό
 ## 2. 📅 Shift Management (Διαχείριση Βάρδιων)
 
 ### Τι Κάνει
+
 **Αυτόματη δημιουργία βάρδιων** βασισμένη σε κρατήσεις, διαθεσιμότητα προσωπικού και δεξιότητες.
 
 ### Features
+
 - ✅ Auto-generation algorithm
 - ✅ Ημερήσια/εβδομαδιαία προβολή
 - ✅ Calendar view με date picker
@@ -48,27 +54,29 @@ Navigation → Προσωπικό
 - ✅ Workload balancing
 
 ### Algorithm
+
 ```typescript
 1. Φιλτράρισμα διαθέσιμου προσωπικού
    - Status: Active
    - Όχι σε άδεια
-   
+
 2. Group κρατήσεις ανά time slot
    - Morning: 08:00-12:00
    - Afternoon: 12:00-16:00
    - Evening: 16:00-20:00
-   
+
 3. Υπολογισμός αναγκών
    - 3 reservations per washer per shift
-   
+
 4. Matching δεξιοτήτων
    - Ανάθεση βάσει skills
-   
+
 5. Δημιουργία βάρδιων
    - Balanced distribution
 ```
 
 ### Χρήση
+
 ```
 Navigation → Βάρδιες
 - Επιλογή ημερομηνίας
@@ -78,6 +86,7 @@ Navigation → Βάρδιες
 ```
 
 ### File
+
 `/components/ShiftManagement.tsx`
 
 ---
@@ -85,9 +94,11 @@ Navigation → Βάρδιες
 ## 3. 📤 Reservation Upload (Μαζική Εισαγωγή Κρατήσεων)
 
 ### Τι Κάνει
+
 Import κρατήσεων από **Excel/CSV αρχεία** με αυτόματη επικύρωση και mapping.
 
 ### Features
+
 - ✅ Flexible Excel/CSV parsing
 - ✅ Multiple delimiter support (`,`, `;`, tab)
 - ✅ Smart column detection (English/Greek headers)
@@ -98,6 +109,7 @@ Import κρατήσεων από **Excel/CSV αρχεία** με αυτόματ�
 - ✅ Batch import (unlimited rows)
 
 ### Supported Formats
+
 ```csv
 # English
 License Plate,Company,Date,Time Slot,Work Type
@@ -109,6 +121,7 @@ License Plate,Company,Date,Time Slot,Work Type
 ```
 
 ### Validation Rules
+
 - Required: License Plate, Company, Date
 - Company must be: Goldcar or Europcar
 - Date format: DD/MM/YYYY or YYYY-MM-DD
@@ -116,6 +129,7 @@ License Plate,Company,Date,Time Slot,Work Type
 - Work type mapping (premium → premium-full, etc.)
 
 ### Χρήση
+
 ```
 Navigation → Κρατήσεις
 1. Download template (optional)
@@ -126,6 +140,7 @@ Navigation → Κρατήσεις
 ```
 
 ### File
+
 `/components/ReservationUpload.tsx`
 
 ---
@@ -133,9 +148,11 @@ Navigation → Κρατήσεις
 ## 4. 🏖️ Leave Requests (Αιτήματα Αδειών)
 
 ### Τι Κάνει
+
 Διαχείριση αιτημάτων αδειών με approval workflow και αυτόματη προσαρμογή βάρδιών.
 
 ### Features
+
 - ✅ 4 τύποι αδειών: Vacation, Sick, Personal, Emergency
 - ✅ Date range selection
 - ✅ Approval/Reject workflow
@@ -146,14 +163,15 @@ Navigation → Κρατήσεις
 
 ### Leave Types
 
-| Type | Greek | Approval Speed |
-|------|-------|---------------|
-| Vacation | Άδεια | 2-3 days |
-| Sick | Ασθένεια | Immediate |
-| Personal | Προσωπική | 1-2 days |
-| Emergency | Έκτακτη | Immediate |
+| Type      | Greek     | Approval Speed |
+| --------- | --------- | -------------- |
+| Vacation  | Άδεια     | 2-3 days       |
+| Sick      | Ασθένεια  | Immediate      |
+| Personal  | Προσωπική | 1-2 days       |
+| Emergency | Έκτακτη   | Immediate      |
 
 ### Workflow
+
 ```
 1. Staff submits request
    ↓
@@ -166,13 +184,16 @@ Navigation → Κρατήσεις
 ```
 
 ### Auto-Impact
+
 Όταν εγκριθεί άδεια:
+
 - Shifts του staff → Cancelled
 - Re-run shift algorithm
 - Reassign workload
 - Notify affected staff
 
 ### Χρήση
+
 ```
 Navigation → Αιτήματα Αδειών
 - Κλικ "Νέο Αίτημα"
@@ -182,6 +203,7 @@ Navigation → Αιτήματα Αδειών
 ```
 
 ### File
+
 `/components/LeaveRequests.tsx`
 
 ---
@@ -189,9 +211,11 @@ Navigation → Αιτήματα Αδειών
 ## 5. 📱 Washer App (Ξεχωριστή Εφαρμογή Πλυντών)
 
 ### Τι Είναι
+
 **Standalone mobile app** για τους πλύντες - ultra-simplified για γρήγορη καταχώρηση.
 
 ### Features
+
 - ✅ Large touch-friendly buttons
 - ✅ 3-step process (Input → Confirm → Success)
 - ✅ Auto-duration calculation
@@ -202,12 +226,13 @@ Navigation → Αιτήματα Αδειών
 - ✅ PWA support
 
 ### Speed Optimization
+
 ```
 Target: < 30 seconds per wash
 
 Breakdown:
 - License plate: 5s
-- Company select: 2s  
+- Company select: 2s
 - Work type: 3s
 - Confirm: 5s
 - Submit: 2s
@@ -216,6 +241,7 @@ Total: 17s ✓
 ```
 
 ### UI Flow
+
 ```
 Screen 1: Input
 ├── License Plate (large input)
@@ -236,6 +262,7 @@ Screen 3: Success
 ```
 
 ### Πώς να Χρησιμοποιηθεί
+
 ```
 Method 1: Separate URL
   https://your-domain.com/washer
@@ -249,12 +276,13 @@ Method 3: PWA
 ```
 
 ### Integration
+
 ```typescript
 // Connects to main app via API
 POST /api/work-entries
 {
   licensePlate, companyId,
-  workType, duration, 
+  workType, duration,
   technicianName, notes
 }
 
@@ -264,6 +292,7 @@ POST /api/work-entries
 ```
 
 ### File
+
 `/WasherApp.tsx`
 
 ---
@@ -276,28 +305,28 @@ POST /api/work-entries
 
 ```typescript
 // Company helpers
-getCompanyById(id)
-getCompanyName(id)
-getCompanyColor(id)
+getCompanyById(id);
+getCompanyName(id);
+getCompanyColor(id);
 
 // Calculations
-calculateTotalCost(entries)
-calculateTotalDuration(entries)
-calculateAverageDuration(entries)
+calculateTotalCost(entries);
+calculateTotalDuration(entries);
+calculateAverageDuration(entries);
 
 // Formatting
-formatCurrency(amount)      // €123.45
-formatDate(date)            // 21/10/2025
-formatDateTime(date)        // 21/10/2025, 14:30
-getTimeAgo(date)            // "2 ώρες πριν"
-truncateText(text, length)
+formatCurrency(amount); // €123.45
+formatDate(date); // 21/10/2025
+formatDateTime(date); // 21/10/2025, 14:30
+getTimeAgo(date); // "2 ώρες πριν"
+truncateText(text, length);
 
 // Validation
-isValidLicensePlate(plate)  // Greek format
+isValidLicensePlate(plate); // Greek format
 
 // Utilities
-generateId()                // Unique ID
-getInitials(name)           // "ΓΠ"
+generateId(); // Unique ID
+getInitials(name); // "ΓΠ"
 ```
 
 ### `/components/CompanyBadge.tsx`
@@ -305,8 +334,8 @@ getInitials(name)           // "ΓΠ"
 Reusable component για company display:
 
 ```tsx
-<CompanyBadge 
-  companyId="1" 
+<CompanyBadge
+  companyId="1"
   showDot={true}
   variant="outline"
 />
@@ -362,40 +391,70 @@ Reusable component για company display:
 ```typescript
 // Staff
 type Staff = {
-  id, name, email, phone,
-  role, status, companyId,
-  skills, createdAt
-}
+  id;
+  name;
+  email;
+  phone;
+  role;
+  status;
+  companyId;
+  skills;
+  createdAt;
+};
 
 // Reservation
 type Reservation = {
-  id, vehicleLicensePlate, companyId,
-  reservationDate, timeSlot, workType,
-  estimatedDuration, status, uploadedFrom
-}
+  id;
+  vehicleLicensePlate;
+  companyId;
+  reservationDate;
+  timeSlot;
+  workType;
+  estimatedDuration;
+  status;
+  uploadedFrom;
+};
 
 // Shift
 type Shift = {
-  id, staffId, date,
-  startTime, endTime, type,
-  status, assignedReservations,
-  autoGenerated, notes
-}
+  id;
+  staffId;
+  date;
+  startTime;
+  endTime;
+  type;
+  status;
+  assignedReservations;
+  autoGenerated;
+  notes;
+};
 
 // Leave Request
 type LeaveRequest = {
-  id, staffId, startDate, endDate,
-  type, status, reason,
-  approvedBy, createdAt
-}
+  id;
+  staffId;
+  startDate;
+  endDate;
+  type;
+  status;
+  reason;
+  approvedBy;
+  createdAt;
+};
 
 // Shift Change Request
 type ShiftChangeRequest = {
-  id, staffId, shiftId,
-  requestType, targetStaffId,
-  proposedStartTime, proposedEndTime,
-  reason, status, createdAt
-}
+  id;
+  staffId;
+  shiftId;
+  requestType;
+  targetStaffId;
+  proposedStartTime;
+  proposedEndTime;
+  reason;
+  status;
+  createdAt;
+};
 ```
 
 ---
@@ -429,6 +488,7 @@ After (10 items):
 ### Empty States
 
 Όλα τα components έχουν τώρα:
+
 - Empty state με icon
 - Descriptive message
 - Call-to-action button
@@ -437,6 +497,7 @@ After (10 items):
 ### Company Display
 
 Consistent σε όλο το app:
+
 ```
 [●] Goldcar  (orange dot + name)
 [●] Europcar (green dot + name)
@@ -507,7 +568,7 @@ Consistent σε όλο το app:
 1. Πλύντες
    - Access Washer App
    - Start logging washes
-   
+
 2. Managers
    - Monitor Dashboard
    - Approve leave requests
@@ -519,18 +580,21 @@ Consistent σε όλο το app:
 ## 🎯 Key Benefits
 
 ### For Managers
+
 - ⏱️ **90% time saved** on shift planning
 - 📊 **Real-time** visibility
 - 🤖 **Automated** scheduling
 - 📈 **Better** resource utilization
 
 ### For Washers
+
 - 📱 **Mobile-first** experience
 - ⚡ **Ultra-fast** logging (< 30s)
 - 👁️ **Clear** shift visibility
 - 📅 **Easy** leave requests
 
 ### For Business
+
 - 💰 **Cost** optimization
 - 📊 **Data-driven** decisions
 - 🎯 **Efficient** operations
@@ -541,23 +605,27 @@ Consistent σε όλο το app:
 ## 🔮 Future Enhancements
 
 ### Phase 1 (Current) ✅
+
 - All features implemented
 - Mock data operational
 - UI/UX polished
 
 ### Phase 2 (Next 2 weeks)
+
 - [ ] Supabase integration
 - [ ] Real user auth
 - [ ] Live data sync
 - [ ] API endpoints
 
 ### Phase 3 (Month 2)
+
 - [ ] Push notifications
 - [ ] Offline mode (Washer App)
 - [ ] Advanced AI scheduling
 - [ ] Performance analytics
 
 ### Phase 4 (Month 3)
+
 - [ ] Customer portal
 - [ ] Online booking
 - [ ] Payment integration
@@ -568,11 +636,13 @@ Consistent σε όλο το app:
 ## 📞 Need Help?
 
 ### Documentation
+
 - Start with [README.md](./README.md)
 - Feature-specific: Check relevant guide
 - Technical: [IMPLEMENTATION_GUIDE.md](./IMPLEMENTATION_GUIDE.md)
 
 ### Support Channels
+
 - 💬 Team Chat → #τεχνική-υποστήριξη
 - 🤖 AI Chatbot → Ask questions
 - 📧 Email → support@carwash.com
@@ -583,6 +653,7 @@ Consistent σε όλο το app:
 ## ✅ Checklist για Production
 
 ### Before Go-Live
+
 - [ ] Add real staff data
 - [ ] Upload actual reservations
 - [ ] Test shift generation
@@ -595,6 +666,7 @@ Consistent σε όλο το app:
 - [ ] Performance testing
 
 ### Launch Day
+
 - [ ] Deploy to production
 - [ ] Monitor closely
 - [ ] Collect feedback

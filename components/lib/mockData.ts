@@ -1,9 +1,22 @@
 // Mock data for demonstration purposes
-import { Company, Vehicle, WorkEntry, DashboardStats, TeamUser, TeamMessage, ChatChannel, Staff, Reservation, Shift, LeaveRequest, ShiftChangeRequest } from '../types';
+import {
+  Company,
+  Vehicle,
+  WorkEntry,
+  DashboardStats,
+  TeamUser,
+  TeamMessage,
+  ChatChannel,
+  Staff,
+  Reservation,
+  Shift,
+  LeaveRequest,
+  ShiftChangeRequest,
+} from "../types";
 
 export const companies: Company[] = [
-  { id: '1', name: 'Goldcar', color: '#F59E0B' },
-  { id: '2', name: 'Europcar', color: '#10B981' },
+  { id: "1", name: "Goldcar", color: "#F59E0B" },
+  { id: "2", name: "Europcar", color: "#10B981" },
 ];
 
 // Empty vehicles - new ones will be added
@@ -24,19 +37,19 @@ export const mockDashboardStats: DashboardStats = {
 };
 
 export const workTypeLabels: Record<string, string> = {
-  'premium-full': 'Premium Πλήρης',
-  'exterior-only': 'Εξωτερικό Μόνο',
-  'interior-only': 'Εσωτερικό Μόνο',
-  'disinfection': 'Απολύμανση',
-  'wax': 'Κερί',
-  'detailing': 'Detailing',
+  "premium-full": "Premium Πλήρης",
+  "exterior-only": "Εξωτερικό Μόνο",
+  "interior-only": "Εσωτερικό Μόνο",
+  disinfection: "Απολύμανση",
+  wax: "Κερί",
+  detailing: "Detailing",
 };
 
 export const statusLabels: Record<string, string> = {
-  'active': 'Ενεργό',
-  'pending': 'Εκκρεμεί',
-  'completed': 'Ολοκληρώθηκε',
-  'maintenance': 'Συντήρηση',
+  active: "Ενεργό",
+  pending: "Εκκρεμεί",
+  completed: "Ολοκληρώθηκε",
+  maintenance: "Συντήρηση",
 };
 
 // Team Chat Mock Data - Empty (new users will be added)
