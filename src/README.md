@@ -19,10 +19,12 @@
 ## 🎯 Επισκόπηση
 
 Πλήρες web-based σύστημα διαχείρισης για πλυντήρια οχημάτων που εξυπηρετούν δύο εταιρείες:
+
 - 🟠 **Goldcar**
 - 🟢 **Europcar**
 
 ### Δυνατότητες
+
 - Διαχείριση **μέχρι 5.000 οχημάτων**
 - Επεξεργασία **μέχρι 5.000 καταχωρήσεων/ημέρα**
 - **Mobile-first** responsive design
@@ -34,12 +36,14 @@
 ## ✨ Features
 
 ### 1. 📊 Dashboard & Analytics
+
 - Real-time στατιστικά
 - Επισκόπηση δραστηριοτήτων
 - KPIs & metrics
 - Charts & graphs
 
 ### 2. 🚗 Vehicle Management
+
 - CRUD operations για οχήματα
 - Αριθμός κυκλοφορίας tracking
 - Φωτογραφίες οχημάτων
@@ -47,6 +51,7 @@
 - Στοιχεία εταιρείας
 
 ### 3. 👥 Staff Management **[NEW]**
+
 - Διαχείριση προσωπικού
 - Roles: Washer, Manager, Admin
 - Skills tracking
@@ -54,6 +59,7 @@
 - Company assignment
 
 ### 4. 📅 Shift Management **[NEW]**
+
 - **Αυτόματη δημιουργία βάρδιων**
 - Βασισμένο σε κρατήσεις
 - Skills matching
@@ -61,6 +67,7 @@
 - Real-time updates
 
 ### 5. 📤 Reservation System **[NEW]**
+
 - **Excel bulk upload**
 - Flexible format support
 - Auto-validation
@@ -68,6 +75,7 @@
 - Error handling
 
 ### 6. 🏖️ Leave Management **[NEW]**
+
 - Αιτήματα αδειών
 - Approval workflow
 - Αυτόματη προσαρμογή βάρδιων
@@ -75,6 +83,7 @@
 - Multiple leave types
 
 ### 7. 📱 Washer App **[NEW]**
+
 - **Ξεχωριστή mobile εφαρμογή**
 - Γρήγορη καταχώρηση πλύσεων
 - <30s per wash logging
@@ -82,6 +91,7 @@
 - Auto-duration calculation
 
 ### 8. 💬 Team Chat
+
 - Discord-style interface
 - Channels & Direct Messages
 - Real-time messaging
@@ -90,6 +100,7 @@
 - Online status
 
 ### 9. 🤖 AI Chatbot
+
 - Natural language queries
 - Data analysis
 - Insights & suggestions
@@ -97,6 +108,7 @@
 - Report generation
 
 ### 10. 📋 Reporting
+
 - Customizable reports
 - Export to CSV/Excel/PDF
 - Performance metrics
@@ -104,6 +116,7 @@
 - Trend analysis
 
 ### 11. 🔄 Bulk Operations
+
 - Mass import/export
 - Batch updates
 - Data migration
@@ -114,6 +127,7 @@
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 ```bash
 - Node.js 18+
 - npm or yarn
@@ -121,6 +135,7 @@
 ```
 
 ### Installation
+
 ```bash
 # Clone repository
 git clone https://github.com/your-repo/carwash-pro
@@ -133,12 +148,14 @@ npm run dev
 ```
 
 ### Access
+
 ```
 Local: http://localhost:3000
 Production: https://your-domain.vercel.app
 ```
 
 ### First Steps
+
 1. **Add Staff** → Navigation → "Προσωπικό"
 2. **Upload Reservations** → "Κρατήσεις" → Upload Excel
 3. **Generate Shifts** → "Βάρδιες" → Auto-generate
@@ -151,15 +168,15 @@ Production: https://your-domain.vercel.app
 
 ### Πλήρης Οδηγοί
 
-| Document | Description | For |
-|----------|-------------|-----|
-| [QUICK_START.md](./QUICK_START.md) | Γρήγορος οδηγός χρήσης | All Users |
-| [SHIFT_MANAGEMENT_GUIDE.md](./SHIFT_MANAGEMENT_GUIDE.md) | Σύστημα βάρδιων | Managers |
-| [WASHER_APP_GUIDE.md](./WASHER_APP_GUIDE.md) | Mobile εφαρμογή πλυντών | Washers |
-| [TEAM_CHAT_GUIDE.md](./TEAM_CHAT_GUIDE.md) | Team collaboration | All Users |
-| [IMPLEMENTATION_GUIDE.md](./IMPLEMENTATION_GUIDE.md) | Technical details | Developers |
-| [APP_SUMMARY.md](./APP_SUMMARY.md) | System overview | Management |
-| [CHANGELOG.md](./CHANGELOG.md) | Version history | All |
+| Document                                                 | Description             | For        |
+| -------------------------------------------------------- | ----------------------- | ---------- |
+| [QUICK_START.md](./QUICK_START.md)                       | Γρήγορος οδηγός χρήσης  | All Users  |
+| [SHIFT_MANAGEMENT_GUIDE.md](./SHIFT_MANAGEMENT_GUIDE.md) | Σύστημα βάρδιων         | Managers   |
+| [WASHER_APP_GUIDE.md](./WASHER_APP_GUIDE.md)             | Mobile εφαρμογή πλυντών | Washers    |
+| [TEAM_CHAT_GUIDE.md](./TEAM_CHAT_GUIDE.md)               | Team collaboration      | All Users  |
+| [IMPLEMENTATION_GUIDE.md](./IMPLEMENTATION_GUIDE.md)     | Technical details       | Developers |
+| [APP_SUMMARY.md](./APP_SUMMARY.md)                       | System overview         | Management |
+| [CHANGELOG.md](./CHANGELOG.md)                           | Version history         | All        |
 
 ---
 
@@ -168,6 +185,7 @@ Production: https://your-domain.vercel.app
 ### Tech Stack
 
 **Frontend:**
+
 - React 18
 - TypeScript
 - Tailwind CSS v4
@@ -176,18 +194,21 @@ Production: https://your-domain.vercel.app
 - date-fns for dates
 
 **Backend (Future):**
+
 - Supabase (PostgreSQL)
 - Real-time subscriptions
 - Row Level Security
 - Storage for images
 
 **Deployment:**
+
 - Vercel (Frontend)
 - Edge Functions
 - CI/CD automated
 - Preview deployments
 
 ### File Structure
+
 ```
 /
 ├── App.tsx                 # Main application
@@ -305,18 +326,21 @@ Friday:
 ## 🎨 UI/UX Highlights
 
 ### Mobile-First Design
+
 - Touch-friendly buttons
 - Responsive layouts
 - Optimized για tablets
 - PWA support
 
 ### Color Scheme
+
 - **Goldcar**: Warm Orange (#F59E0B)
 - **Europcar**: Fresh Green (#10B981)
 - **UI**: Soft grays, blue accents
 - **Dark Mode**: Coming soon
 
 ### Performance
+
 - Fast load times (<2s)
 - Optimized renders
 - Lazy loading
@@ -327,12 +351,14 @@ Friday:
 ## 🔐 Security & Privacy
 
 ### Data Protection
+
 - HTTPS everywhere
 - Secure API calls
 - Data validation
 - SQL injection prevention
 
 ### User Roles
+
 ```
 Admin:
   ✓ Full access
@@ -353,6 +379,7 @@ Washer:
 ```
 
 ### Privacy
+
 - GDPR compliant
 - Data retention policies
 - User consent
@@ -398,6 +425,7 @@ feature/* → Preview
 ## 📈 Roadmap
 
 ### Phase 1: Core (✅ Completed)
+
 - [x] Vehicle management
 - [x] Work entry logging
 - [x] Dashboard & reports
@@ -406,6 +434,7 @@ feature/* → Preview
 - [x] Bulk operations
 
 ### Phase 2: Automation (✅ Completed)
+
 - [x] Staff management
 - [x] Shift auto-generation
 - [x] Excel import
@@ -413,6 +442,7 @@ feature/* → Preview
 - [x] Washer App
 
 ### Phase 3: Integration (🔄 In Progress)
+
 - [ ] Supabase backend
 - [ ] Real-time sync
 - [ ] User authentication
@@ -420,6 +450,7 @@ feature/* → Preview
 - [ ] Advanced AI features
 
 ### Phase 4: Enhancement (📅 Planned)
+
 - [ ] Customer portal
 - [ ] Online booking
 - [ ] Payment integration
@@ -431,6 +462,7 @@ feature/* → Preview
 ## 🤝 Contributing
 
 ### Development Setup
+
 ```bash
 # Fork & clone
 git clone your-fork-url
@@ -446,6 +478,7 @@ git push origin feature/amazing-feature
 ```
 
 ### Code Style
+
 - TypeScript strict mode
 - ESLint configuration
 - Prettier formatting
@@ -458,16 +491,19 @@ git push origin feature/amazing-feature
 ### Get Help
 
 **Documentation:**
+
 - Check relevant guide in `/docs`
 - Search in Team Chat history
 - Ask AI Chatbot
 
 **Community:**
+
 - Team Chat → #τεχνική-υποστήριξη
 - GitHub Issues
 - Email: support@carwash.com
 
 **Emergency:**
+
 - Phone: +30 210 123 4567
 - Direct message admin
 
@@ -489,6 +525,7 @@ of this software...
 ## 🙏 Acknowledgments
 
 ### Built With
+
 - [React](https://react.dev)
 - [Tailwind CSS](https://tailwindcss.com)
 - [Shadcn/ui](https://ui.shadcn.com)
@@ -497,6 +534,7 @@ of this software...
 - [Supabase](https://supabase.com)
 
 ### Special Thanks
+
 - Figma Make AI
 - Open source community
 - Beta testers
@@ -531,6 +569,7 @@ open http://localhost:3000
 ---
 
 ### Quick Links
+
 - 📖 [Quick Start Guide](./QUICK_START.md)
 - 📅 [Shift Management](./SHIFT_MANAGEMENT_GUIDE.md)
 - 📱 [Washer App](./WASHER_APP_GUIDE.md)

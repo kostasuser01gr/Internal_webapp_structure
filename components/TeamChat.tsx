@@ -1,15 +1,15 @@
-import { useState, useRef, useEffect } from 'react';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
-import { 
-  Send, 
-  Paperclip, 
-  Smile, 
-  Hash, 
+import { useState, useRef, useEffect } from "react";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import {
+  Send,
+  Paperclip,
+  Smile,
+  Hash,
   Search,
   MoreVertical,
   Pin,
@@ -18,19 +18,23 @@ import {
   Plus,
   Phone,
   Video,
-  MessageSquare
-} from 'lucide-react';
-import { TeamUser, TeamMessage, ChatChannel } from '@/components/types';
-import { mockTeamUsers, mockChatChannels, mockTeamMessages } from '@/components/lib/mockData';
+  MessageSquare,
+} from "lucide-react";
+import { TeamUser, TeamMessage, ChatChannel } from "@/components/types";
+import { mockTeamUsers, mockChatChannels, mockTeamMessages } from "@/components/lib/mockData";
 
-const CURRENT_USER_ID = 'user-1'; // Logged in user
+const CURRENT_USER_ID = "user-1"; // Logged in user
 
 export function TeamChat() {
-  const [selectedChannel, setSelectedChannel] = useState<ChatChannel | null>(mockChatChannels[0] || null);
-  const [messages, setMessages] = useState<TeamMessage[]>(selectedChannel ? (mockTeamMessages[selectedChannel.id] || []) : []);
-  const [inputValue, setInputValue] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedChannel, setSelectedChannel] = useState<ChatChannel | null>(
+    mockChatChannels[0] || null
+  );
+  const [messages, setMessages] = useState<TeamMessage[]>(
+    selectedChannel ? mockTeamMessages[selectedChannel.id] || [] : []
+  );
+  const [inputValue, setInputValue] = useState("");
+  const [isTyping, _setIsTyping] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -57,69 +61,73 @@ export function TeamChat() {
     };
 
     setMessages([...messages, newMessage]);
-    setInputValue('');
+    setInputValue("");
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
   };
 
   const getUserById = (userId: string): TeamUser | undefined => {
-    return mockTeamUsers.find(u => u.id === userId);
+    return mockTeamUsers.find((u) => u.id === userId);
   };
 
   const getInitials = (name: string): string => {
     return name
-      .split(' ')
-      .map(n => n[0])
-      .join('')
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
       .toUpperCase()
       .slice(0, 2);
   };
 
   const getStatusColor = (status: string): string => {
     switch (status) {
-      case 'online': return 'bg-green-500';
-      case 'away': return 'bg-yellow-500';
-      case 'offline': return 'bg-gray-400';
-      default: return 'bg-gray-400';
+      case "online":
+        return "bg-green-500";
+      case "away":
+        return "bg-yellow-500";
+      case "offline":
+        return "bg-gray-400";
+      default:
+        return "bg-gray-400";
     }
   };
 
   const formatTime = (date: Date): string => {
-    return new Date(date).toLocaleTimeString('el-GR', {
-      hour: '2-digit',
-      minute: '2-digit',
+    return new Date(date).toLocaleTimeString("el-GR", {
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
   const formatChannelName = (channel: ChatChannel): string => {
-    if (channel.type === 'direct') {
-      const otherUserId = channel.participants.find(id => id !== CURRENT_USER_ID);
-      const otherUser = getUserById(otherUserId || '');
+    if (channel.type === "direct") {
+      const otherUserId = channel.participants.find((id) => id !== CURRENT_USER_ID);
+      const otherUser = getUserById(otherUserId || "");
       return otherUser?.name || channel.name;
     }
     return channel.name;
   };
 
   const getChannelUser = (channel: ChatChannel): TeamUser | null => {
-    if (channel.type === 'direct') {
-      const otherUserId = channel.participants.find(id => id !== CURRENT_USER_ID);
-      return getUserById(otherUserId || '') || null;
+    if (channel.type === "direct") {
+      const otherUserId = channel.participants.find((id) => id !== CURRENT_USER_ID);
+      return getUserById(otherUserId || "") || null;
     }
     return null;
   };
 
-  const filteredChannels = mockChatChannels.filter(channel => {
+  const filteredChannels = mockChatChannels.filter((channel) => {
     const channelName = formatChannelName(channel).toLowerCase();
     return channelName.includes(searchQuery.toLowerCase());
   });
 
-  const channelChannels = filteredChannels.filter(c => c.type === 'channel');
-  const directMessages = filteredChannels.filter(c => c.type === 'direct');
+  const channelChannels = filteredChannels.filter((c) => c.type === "channel");
+  const directMessages = filteredChannels.filter((c) => c.type === "direct");
 
   // Empty state - no channels created yet
   if (mockChatChannels.length === 0) {
@@ -129,7 +137,8 @@ export function TeamChat() {
           <MessageSquare className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
           <h3 className="text-xl mb-2">Δεν Υπάρχουν Κανάλια</h3>
           <p className="text-muted-foreground mb-6">
-            Δημιουργήστε το πρώτο κανάλι ομαδικής συνομιλίας για να ξεκινήσετε την επικοινωνία με την ομάδα σας.
+            Δημιουργήστε το πρώτο κανάλι ομαδικής συνομιλίας για να ξεκινήσετε την επικοινωνία με
+            την ομάδα σας.
           </p>
           <Button>
             <Plus className="h-4 w-4 mr-2" />
@@ -182,7 +191,9 @@ export function TeamChat() {
                     key={channel.id}
                     onClick={() => setSelectedChannel(channel)}
                     className={`w-full flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-200 transition-colors mb-0.5 ${
-                      selectedChannel?.id === channel.id ? 'bg-blue-100 text-blue-700' : 'text-gray-700'
+                      selectedChannel?.id === channel.id
+                        ? "bg-blue-100 text-blue-700"
+                        : "text-gray-700"
                     }`}
                   >
                     <Hash className="h-4 w-4 flex-shrink-0" />
@@ -218,7 +229,9 @@ export function TeamChat() {
                       key={channel.id}
                       onClick={() => setSelectedChannel(channel)}
                       className={`w-full flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-200 transition-colors mb-0.5 ${
-                        selectedChannel?.id === channel.id ? 'bg-blue-100 text-blue-700' : 'text-gray-700'
+                        selectedChannel?.id === channel.id
+                          ? "bg-blue-100 text-blue-700"
+                          : "text-gray-700"
                       }`}
                     >
                       <div className="relative">
@@ -228,10 +241,14 @@ export function TeamChat() {
                           </AvatarFallback>
                         </Avatar>
                         {user && (
-                          <div className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white ${getStatusColor(user.status)}`} />
+                          <div
+                            className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white ${getStatusColor(user.status)}`}
+                          />
                         )}
                       </div>
-                      <span className="text-sm flex-1 text-left truncate">{formatChannelName(channel)}</span>
+                      <span className="text-sm flex-1 text-left truncate">
+                        {formatChannelName(channel)}
+                      </span>
                       {channel.unreadCount! > 0 && (
                         <Badge variant="destructive" className="h-5 px-1.5 text-xs">
                           {channel.unreadCount}
@@ -252,7 +269,9 @@ export function TeamChat() {
               <Avatar className="h-8 w-8">
                 <AvatarFallback>U</AvatarFallback>
               </Avatar>
-              <div className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white ${getStatusColor('online')}`} />
+              <div
+                className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white ${getStatusColor("online")}`}
+              />
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm truncate">Χρήστης</p>
@@ -271,7 +290,7 @@ export function TeamChat() {
         <div className="h-14 px-4 border-b flex items-center justify-between bg-white">
           <div className="flex items-center gap-3">
             {selectedChannel ? (
-              selectedChannel.type === 'channel' ? (
+              selectedChannel.type === "channel" ? (
                 <>
                   <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
                     <Hash className="h-5 w-5 text-blue-600" />
@@ -285,17 +304,23 @@ export function TeamChat() {
                 <>
                   <div className="relative">
                     <Avatar className="h-8 w-8">
-                      <AvatarFallback>{getInitials(formatChannelName(selectedChannel))}</AvatarFallback>
+                      <AvatarFallback>
+                        {getInitials(formatChannelName(selectedChannel))}
+                      </AvatarFallback>
                     </Avatar>
                     {getChannelUser(selectedChannel) && (
-                      <div className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white ${getStatusColor(getChannelUser(selectedChannel)!.status)}`} />
+                      <div
+                        className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white ${getStatusColor(getChannelUser(selectedChannel)!.status)}`}
+                      />
                     )}
                   </div>
                   <div>
                     <h3 className="text-base">{formatChannelName(selectedChannel)}</h3>
                     {getChannelUser(selectedChannel) && (
                       <p className="text-xs text-gray-600">
-                        {getChannelUser(selectedChannel)!.status === 'online' ? 'Ενεργός' : 'Εκτός σύνδεσης'}
+                        {getChannelUser(selectedChannel)!.status === "online"
+                          ? "Ενεργός"
+                          : "Εκτός σύνδεσης"}
                       </p>
                     )}
                   </div>
@@ -328,95 +353,107 @@ export function TeamChat() {
               <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-4">
                 <Hash className="h-8 w-8 text-gray-400" />
               </div>
-              <h3 className="text-lg mb-2">Καλώς ήρθατε στο {selectedChannel ? formatChannelName(selectedChannel) : ''}!</h3>
+              <h3 className="text-lg mb-2">
+                Καλώς ήρθατε στο {selectedChannel ? formatChannelName(selectedChannel) : ""}!
+              </h3>
               <p className="text-sm text-gray-600 max-w-md">
-                {selectedChannel?.type === 'channel' 
-                  ? 'Αυτή είναι η αρχή του καναλιού. Στείλτε το πρώτο σας μήνυμα!'
-                  : 'Αυτή είναι η αρχή της συνομιλίας σας. Πείτε γεια!'}
+                {selectedChannel?.type === "channel"
+                  ? "Αυτή είναι η αρχή του καναλιού. Στείλτε το πρώτο σας μήνυμα!"
+                  : "Αυτή είναι η αρχή της συνομιλίας σας. Πείτε γεια!"}
               </p>
             </div>
           ) : (
             <div className="space-y-4">
               {messages.map((message, index) => {
-              const sender = getUserById(message.senderId);
-              const isCurrentUser = message.senderId === CURRENT_USER_ID;
-              const showAvatar = index === 0 || messages[index - 1]?.senderId !== message.senderId;
-              const showTimestamp = index === 0 || 
-                new Date(message.timestamp).getTime() - new Date(messages[index - 1]?.timestamp || 0).getTime() > 300000; // 5 min
+                const sender = getUserById(message.senderId);
+                const isCurrentUser = message.senderId === CURRENT_USER_ID;
+                const showAvatar =
+                  index === 0 || messages[index - 1]?.senderId !== message.senderId;
+                const showTimestamp =
+                  index === 0 ||
+                  new Date(message.timestamp).getTime() -
+                    new Date(messages[index - 1]?.timestamp || 0).getTime() >
+                    300000; // 5 min
 
-              return (
-                <div key={message.id}>
-                  {showTimestamp && (
-                    <div className="flex items-center justify-center my-4">
-                      <div className="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                        {new Date(message.timestamp).toLocaleDateString('el-GR', {
-                          weekday: 'long',
-                          day: 'numeric',
-                          month: 'long',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })}
+                return (
+                  <div key={message.id}>
+                    {showTimestamp && (
+                      <div className="flex items-center justify-center my-4">
+                        <div className="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                          {new Date(message.timestamp).toLocaleDateString("el-GR", {
+                            weekday: "long",
+                            day: "numeric",
+                            month: "long",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </div>
                       </div>
-                    </div>
-                  )}
-                  <div className={`flex gap-3 group ${isCurrentUser ? 'flex-row-reverse' : ''}`}>
-                    {showAvatar && !isCurrentUser ? (
-                      <Avatar className="h-8 w-8 flex-shrink-0">
-                        <AvatarFallback className="text-xs">
-                          {getInitials(sender?.name || 'User')}
-                        </AvatarFallback>
-                      </Avatar>
-                    ) : !isCurrentUser ? (
-                      <div className="w-8 flex-shrink-0" />
-                    ) : null}
-                    
-                    <div className={`flex-1 ${isCurrentUser ? 'flex justify-end' : ''}`}>
-                      {showAvatar && !isCurrentUser && (
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="text-sm">{sender?.name}</span>
-                          <span className="text-xs text-gray-500">{formatTime(message.timestamp)}</span>
-                        </div>
-                      )}
-                      <div className={`inline-block max-w-[70%] ${isCurrentUser ? 'text-right' : ''}`}>
-                        <div className={`rounded-lg px-4 py-2 ${
-                          isCurrentUser 
-                            ? 'bg-blue-600 text-white' 
-                            : 'bg-gray-100 text-gray-900'
-                        }`}>
-                          <p className="text-sm whitespace-pre-wrap break-words">{message.content}</p>
-                        </div>
-                        {message.reactions && message.reactions.length > 0 && (
-                          <div className="flex gap-1 mt-1">
-                            {message.reactions.map((reaction, idx) => (
-                              <button
-                                key={idx}
-                                className="inline-flex items-center gap-1 px-2 py-0.5 bg-white border rounded-full hover:border-blue-500 transition-colors"
-                              >
-                                <span className="text-sm">{reaction.emoji}</span>
-                                <span className="text-xs text-gray-600">{reaction.count}</span>
-                              </button>
-                            ))}
+                    )}
+                    <div className={`flex gap-3 group ${isCurrentUser ? "flex-row-reverse" : ""}`}>
+                      {showAvatar && !isCurrentUser ? (
+                        <Avatar className="h-8 w-8 flex-shrink-0">
+                          <AvatarFallback className="text-xs">
+                            {getInitials(sender?.name || "User")}
+                          </AvatarFallback>
+                        </Avatar>
+                      ) : !isCurrentUser ? (
+                        <div className="w-8 flex-shrink-0" />
+                      ) : null}
+
+                      <div className={`flex-1 ${isCurrentUser ? "flex justify-end" : ""}`}>
+                        {showAvatar && !isCurrentUser && (
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-sm">{sender?.name}</span>
+                            <span className="text-xs text-gray-500">
+                              {formatTime(message.timestamp)}
+                            </span>
                           </div>
                         )}
-                        {message.edited && (
-                          <p className="text-xs text-gray-500 mt-1">(επεξεργασμένο)</p>
-                        )}
+                        <div
+                          className={`inline-block max-w-[70%] ${isCurrentUser ? "text-right" : ""}`}
+                        >
+                          <div
+                            className={`rounded-lg px-4 py-2 ${
+                              isCurrentUser ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-900"
+                            }`}
+                          >
+                            <p className="text-sm whitespace-pre-wrap break-words">
+                              {message.content}
+                            </p>
+                          </div>
+                          {message.reactions && message.reactions.length > 0 && (
+                            <div className="flex gap-1 mt-1">
+                              {message.reactions.map((reaction, idx) => (
+                                <button
+                                  key={idx}
+                                  className="inline-flex items-center gap-1 px-2 py-0.5 bg-white border rounded-full hover:border-blue-500 transition-colors"
+                                >
+                                  <span className="text-sm">{reaction.emoji}</span>
+                                  <span className="text-xs text-gray-600">{reaction.count}</span>
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                          {message.edited && (
+                            <p className="text-xs text-gray-500 mt-1">(επεξεργασμένο)</p>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Message actions on hover */}
+                      <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-start gap-1">
+                        <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
+                          <Smile className="h-3 w-3" />
+                        </Button>
+                        <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
+                          <MoreVertical className="h-3 w-3" />
+                        </Button>
                       </div>
                     </div>
-
-                    {/* Message actions on hover */}
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-start gap-1">
-                      <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
-                        <Smile className="h-3 w-3" />
-                      </Button>
-                      <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
-                        <MoreVertical className="h-3 w-3" />
-                      </Button>
-                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
 
               {isTyping && (
                 <div className="flex gap-3">
@@ -426,8 +463,14 @@ export function TeamChat() {
                   <div className="bg-gray-100 rounded-lg px-4 py-2">
                     <div className="flex gap-1">
                       <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }} />
+                      <div
+                        className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                        style={{ animationDelay: "0.2s" }}
+                      />
+                      <div
+                        className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                        style={{ animationDelay: "0.4s" }}
+                      />
                     </div>
                   </div>
                 </div>
@@ -444,7 +487,7 @@ export function TeamChat() {
             </Button>
             <div className="flex-1 relative">
               <Input
-                placeholder={`Μήνυμα σε ${selectedChannel ? formatChannelName(selectedChannel) : ''}`}
+                placeholder={`Μήνυμα σε ${selectedChannel ? formatChannelName(selectedChannel) : ""}`}
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
@@ -458,7 +501,7 @@ export function TeamChat() {
                 <Smile className="h-4 w-4" />
               </Button>
             </div>
-            <Button 
+            <Button
               onClick={handleSendMessage}
               disabled={!inputValue.trim()}
               className="flex-shrink-0"
@@ -491,7 +534,9 @@ export function TeamChat() {
                     <Avatar className="h-7 w-7">
                       <AvatarFallback className="text-xs">{getInitials(user.name)}</AvatarFallback>
                     </Avatar>
-                    <div className={`absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2 border-white ${getStatusColor(user.status)}`} />
+                    <div
+                      className={`absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2 border-white ${getStatusColor(user.status)}`}
+                    />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm truncate">{user.name}</p>

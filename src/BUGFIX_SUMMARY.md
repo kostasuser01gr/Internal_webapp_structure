@@ -5,8 +5,9 @@
 ### 1. React Ref Warning in Dialog Components ✅
 
 **Error Message:**
+
 ```
-Warning: Function components cannot be given refs. Attempts to access this ref will fail. 
+Warning: Function components cannot be given refs. Attempts to access this ref will fail.
 Did you mean to use React.forwardRef()?
 Check the render method of `SlotClone`.
 ```
@@ -15,6 +16,7 @@ Check the render method of `SlotClone`.
 Dialog components had Button triggers placed outside the Dialog wrapper, causing Radix UI to be unable to properly pass refs to the trigger elements.
 
 **Files Fixed:**
+
 - `/components/StaffManagement.tsx` (lines 113-117)
 - `/components/LeaveRequests.tsx` (lines 96-100)
 
@@ -22,6 +24,7 @@ Dialog components had Button triggers placed outside the Dialog wrapper, causing
 Moved the Button triggers inside the Dialog wrapper so that Radix UI can properly manage refs.
 
 **Before:**
+
 ```tsx
 <Button onClick={() => setIsDialogOpen(true)}>
   <Plus className="mr-2 h-4 w-4" />
@@ -35,15 +38,14 @@ Moved the Button triggers inside the Dialog wrapper so that Radix UI can properl
 ```
 
 **After:**
+
 ```tsx
 <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
   <Button onClick={() => setIsDialogOpen(true)}>
     <Plus className="mr-2 h-4 w-4" />
     Νέο Μέλος
   </Button>
-  <DialogContent>
-    ...
-  </DialogContent>
+  <DialogContent>...</DialogContent>
 </Dialog>
 ```
 
@@ -52,9 +54,10 @@ Moved the Button triggers inside the Dialog wrapper so that Radix UI can properl
 ### 2. Select Component Empty String Value Error ✅
 
 **Error Message:**
+
 ```
-Error: A <Select.Item /> must have a value prop that is not an empty string. 
-This is because the Select value can be set to an empty string to clear the 
+Error: A <Select.Item /> must have a value prop that is not an empty string.
+This is because the Select value can be set to an empty string to clear the
 selection and show the placeholder.
 ```
 
@@ -62,19 +65,24 @@ selection and show the placeholder.
 Radix UI Select component does not allow empty string (`""`) as a value for SelectItem. This is a design decision to prevent ambiguity with the "cleared" state.
 
 **File Fixed:**
+
 - `/components/StaffManagement.tsx` (line 188)
 
 **Solution:**
 Changed the "no company" option from empty string to `"none"` and updated the value handler to convert back to empty string when needed.
 
 **Before:**
+
 ```tsx
-<Select value={formData.companyId} onValueChange={(value) => setFormData({ ...formData, companyId: value })}>
+<Select
+  value={formData.companyId}
+  onValueChange={(value) => setFormData({ ...formData, companyId: value })}
+>
   <SelectTrigger>
     <SelectValue placeholder="Όλες" />
   </SelectTrigger>
   <SelectContent>
-    <SelectItem value="">Όλες</SelectItem>  {/* ❌ Empty string not allowed */}
+    <SelectItem value="">Όλες</SelectItem> {/* ❌ Empty string not allowed */}
     {companies.map((company) => (
       <SelectItem key={company.id} value={company.id}>
         {company.name}
@@ -85,16 +93,17 @@ Changed the "no company" option from empty string to `"none"` and updated the va
 ```
 
 **After:**
+
 ```tsx
-<Select 
-  value={formData.companyId || 'none'} 
-  onValueChange={(value) => setFormData({ ...formData, companyId: value === 'none' ? '' : value })}
+<Select
+  value={formData.companyId || "none"}
+  onValueChange={(value) => setFormData({ ...formData, companyId: value === "none" ? "" : value })}
 >
   <SelectTrigger>
     <SelectValue placeholder="Όλες" />
   </SelectTrigger>
   <SelectContent>
-    <SelectItem value="none">Όλες</SelectItem>  {/* ✅ Valid value */}
+    <SelectItem value="none">Όλες</SelectItem> {/* ✅ Valid value */}
     {companies.map((company) => (
       <SelectItem key={company.id} value={company.id}>
         {company.name}
@@ -105,6 +114,7 @@ Changed the "no company" option from empty string to `"none"` and updated the va
 ```
 
 **Additional Changes:**
+
 - Updated initial form state: `companyId: undefined` instead of `companyId: ''`
 - Updated resetForm function: `companyId: undefined` instead of `companyId: ''`
 
@@ -113,6 +123,7 @@ Changed the "no company" option from empty string to `"none"` and updated the va
 ## Testing Checklist
 
 ### StaffManagement Component
+
 - [x] Dialog opens correctly when clicking "Νέο Μέλος"
 - [x] No ref warnings in console
 - [x] Company dropdown works with "Όλες" option
@@ -121,6 +132,7 @@ Changed the "no company" option from empty string to `"none"` and updated the va
 - [x] All Select components have valid values
 
 ### LeaveRequests Component
+
 - [x] Dialog opens correctly when clicking "Νέο Αίτημα"
 - [x] No ref warnings in console
 - [x] Form submits correctly
@@ -132,6 +144,7 @@ Changed the "no company" option from empty string to `"none"` and updated the va
 ### Dialog/Sheet/AlertDialog Pattern
 
 **✅ Correct Pattern:**
+
 ```tsx
 <Dialog open={isOpen} onOpenChange={setIsOpen}>
   {/* Trigger can be a Button or DialogTrigger */}
@@ -140,14 +153,13 @@ Changed the "no company" option from empty string to `"none"` and updated the va
   <DialogTrigger asChild>
     <Button>Open</Button>
   </DialogTrigger>
-  
-  <DialogContent>
-    {/* Content here */}
-  </DialogContent>
+
+  <DialogContent>{/* Content here */}</DialogContent>
 </Dialog>
 ```
 
 **❌ Incorrect Pattern:**
+
 ```tsx
 {/* Button outside Dialog wrapper - causes ref errors */}
 <Button onClick={() => setIsOpen(true)}>Open</Button>
@@ -161,6 +173,7 @@ Changed the "no company" option from empty string to `"none"` and updated the va
 ### Select Component Values
 
 **✅ Valid Values:**
+
 ```tsx
 <SelectItem value="option1">Option 1</SelectItem>
 <SelectItem value="none">No selection</SelectItem>
@@ -168,17 +181,16 @@ Changed the "no company" option from empty string to `"none"` and updated the va
 ```
 
 **❌ Invalid Values:**
+
 ```tsx
 <SelectItem value="">Empty</SelectItem>  {/* Not allowed */}
 ```
 
 **✅ Handling Optional Values:**
+
 ```tsx
 // Use a sentinel value like "none" and convert in the handler
-<Select 
-  value={value || 'none'} 
-  onValueChange={(v) => setValue(v === 'none' ? undefined : v)}
->
+<Select value={value || "none"} onValueChange={(v) => setValue(v === "none" ? undefined : v)}>
   <SelectItem value="none">No selection</SelectItem>
   <SelectItem value="option1">Option 1</SelectItem>
 </Select>
@@ -189,14 +201,17 @@ Changed the "no company" option from empty string to `"none"` and updated the va
 ## Impact Assessment
 
 ### Performance
+
 - ✅ No performance impact
 - ✅ Component rendering remains efficient
 
 ### Functionality
+
 - ✅ All features work as expected
 - ✅ No breaking changes to existing functionality
 
 ### User Experience
+
 - ✅ No visible changes to UI/UX
 - ✅ Console is now clean (no warnings/errors)
 
@@ -215,8 +230,9 @@ Changed the "no company" option from empty string to `"none"` and updated the va
 ### 3. ScrollArea Ref Warning in ChatBot ✅
 
 **Error Message:**
+
 ```
-Warning: Function components cannot be given refs. Attempts to access this ref will fail. 
+Warning: Function components cannot be given refs. Attempts to access this ref will fail.
 Did you mean to use React.forwardRef()?
 
 Check the render method of `ChatBot`.
@@ -227,12 +243,14 @@ Check the render method of `ChatBot`.
 The `ScrollArea` component from Shadcn UI was defined as a regular function component and did not use `React.forwardRef()`, so it couldn't accept refs. The ChatBot component needed to pass a ref to ScrollArea to implement auto-scrolling to the latest message.
 
 **File Fixed:**
+
 - `/components/ui/scroll-area.tsx` (lines 8-30)
 
 **Solution:**
 Converted both `ScrollArea` and `ScrollBar` components to use `React.forwardRef()` and added display names for better debugging.
 
 **Before:**
+
 ```tsx
 function ScrollArea({
   className,
@@ -245,10 +263,7 @@ function ScrollArea({
       className={cn("relative", className)}
       {...props}
     >
-      <ScrollAreaPrimitive.Viewport
-        data-slot="scroll-area-viewport"
-        className="..."
-      >
+      <ScrollAreaPrimitive.Viewport data-slot="scroll-area-viewport" className="...">
         {children}
       </ScrollAreaPrimitive.Viewport>
       <ScrollBar />
@@ -259,6 +274,7 @@ function ScrollArea({
 ```
 
 **After:**
+
 ```tsx
 const ScrollArea = React.forwardRef<
   HTMLDivElement,
@@ -271,7 +287,7 @@ const ScrollArea = React.forwardRef<
       {...props}
     >
       <ScrollAreaPrimitive.Viewport
-        ref={ref}  // ✅ Now forwards ref to viewport
+        ref={ref} // ✅ Now forwards ref to viewport
         data-slot="scroll-area-viewport"
         className="..."
       >
@@ -282,14 +298,16 @@ const ScrollArea = React.forwardRef<
     </ScrollAreaPrimitive.Root>
   );
 });
-ScrollArea.displayName = "ScrollArea";  // ✅ Added display name
+ScrollArea.displayName = "ScrollArea"; // ✅ Added display name
 ```
 
 **Additional Changes:**
+
 - Also converted `ScrollBar` component to use `React.forwardRef()`
 - Added `displayName` to both components for better React DevTools debugging
 
 **Usage in ChatBot:**
+
 ```tsx
 // ChatBot.tsx line 905
 <ScrollArea className="h-[480px] p-4" ref={scrollRef}>
@@ -316,6 +334,7 @@ The ref now properly points to the ScrollArea viewport, allowing the auto-scroll
 ## Notes
 
 Three error types were found and fixed in the application:
+
 1. Dialog component ref issues (2 components)
 2. Select component empty string value error (1 component)
 3. ScrollArea component ref forwarding (1 UI component)

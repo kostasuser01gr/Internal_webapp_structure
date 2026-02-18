@@ -1,24 +1,24 @@
-import { companies } from './mockData';
+import { companies } from "./mockData";
 
 /**
  * Get company information by ID
  */
 export function getCompanyById(companyId: string) {
-  return companies.find(c => c.id === companyId);
+  return companies.find((c) => c.id === companyId);
 }
 
 /**
  * Get company name by ID
  */
 export function getCompanyName(companyId: string): string {
-  return getCompanyById(companyId)?.name || 'N/A';
+  return getCompanyById(companyId)?.name || "N/A";
 }
 
 /**
  * Get company color by ID
  */
 export function getCompanyColor(companyId: string): string {
-  return getCompanyById(companyId)?.color || '#6B7280';
+  return getCompanyById(companyId)?.color || "#6B7280";
 }
 
 /**
@@ -55,9 +55,9 @@ export function calculateAverageDuration(entries: Array<{ duration: number }>): 
  * Format currency to Euro
  */
 export function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat('el-GR', {
-    style: 'currency',
-    currency: 'EUR',
+  return new Intl.NumberFormat("el-GR", {
+    style: "currency",
+    currency: "EUR",
   }).format(amount);
 }
 
@@ -65,10 +65,10 @@ export function formatCurrency(amount: number): string {
  * Format date to Greek locale
  */
 export function formatDate(date: Date | string): string {
-  return new Date(date).toLocaleDateString('el-GR', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
+  return new Date(date).toLocaleDateString("el-GR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
   });
 }
 
@@ -76,12 +76,12 @@ export function formatDate(date: Date | string): string {
  * Format datetime to Greek locale
  */
 export function formatDateTime(date: Date | string): string {
-  return new Date(date).toLocaleDateString('el-GR', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
+  return new Date(date).toLocaleDateString("el-GR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
   });
 }
 
@@ -96,11 +96,11 @@ export function getTimeAgo(date: Date | string): string {
   const diffHours = Math.floor(diffMins / 60);
   const diffDays = Math.floor(diffHours / 24);
 
-  if (diffMins < 1) return 'τώρα';
+  if (diffMins < 1) return "τώρα";
   if (diffMins < 60) return `${diffMins} λεπτά πριν`;
   if (diffHours < 24) return `${diffHours} ώρες πριν`;
   if (diffDays < 7) return `${diffDays} μέρες πριν`;
-  
+
   return formatDate(date);
 }
 
@@ -109,7 +109,7 @@ export function getTimeAgo(date: Date | string): string {
  */
 export function truncateText(text: string, maxLength: number): string {
   if (text.length <= maxLength) return text;
-  return text.slice(0, maxLength) + '...';
+  return text.slice(0, maxLength) + "...";
 }
 
 /**
@@ -117,9 +117,9 @@ export function truncateText(text: string, maxLength: number): string {
  */
 export function getInitials(name: string): string {
   return name
-    .split(' ')
-    .map(n => n[0])
-    .join('')
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
     .toUpperCase()
     .slice(0, 2);
 }

@@ -9,6 +9,7 @@
 ## 📊 Αλλαγές
 
 ### Before (Vite)
+
 - ❌ Vite 6.3.5
 - ❌ Client-side only
 - ❌ No PWA support
@@ -17,6 +18,7 @@
 - ❌ Manual deployment
 
 ### After (Next.js PWA)
+
 - ✅ Next.js 16.0.0 (App Router)
 - ✅ SSR + Static Generation
 - ✅ Full PWA (installable, offline)
@@ -29,6 +31,7 @@
 ## 🎯 Completed Phases
 
 ### ✅ Phase 1: Next.js Scaffold
+
 - App Router structure (`app/`)
 - TypeScript strict mode
 - Tailwind CSS v4
@@ -36,6 +39,7 @@
 - Component migration (62 files)
 
 ### ✅ Phase 2: PWA Implementation
+
 - `@ducanh2912/next-pwa`
 - Web manifest with shortcuts
 - Service worker auto-generation
@@ -44,6 +48,7 @@
 - SEO optimization
 
 ### ✅ Phase 3: Code Quality
+
 - ESLint flat config
 - TypeScript-eslint
 - React + jsx-a11y plugins
@@ -51,12 +56,14 @@
 - Pre-configured scripts
 
 ### ✅ Phase 4: CI/CD
+
 - GitHub Actions workflow
 - Automated: lint, typecheck, build
 - Artifact upload
 - Branch protection ready
 
 ### ✅ Phase 5: Documentation
+
 - Comprehensive README
 - Deployment guide
 - PWA installation instructions
@@ -66,34 +73,37 @@
 
 ## 🔧 Configuration Files
 
-| File | Purpose |
-|------|---------|
-| `next.config.mjs` | Next.js + PWA config |
-| `tsconfig.json` | TypeScript strict settings |
-| `tailwind.config.ts` | Tailwind CSS v4 |
-| `postcss.config.mjs` | PostCSS with @tailwindcss/postcss |
-| `eslint.config.mjs` | ESLint flat config |
-| `.prettierrc.json` | Prettier formatting |
-| `.github/workflows/ci.yml` | CI/CD pipeline |
-| `public/manifest.json` | PWA manifest |
+| File                       | Purpose                           |
+| -------------------------- | --------------------------------- |
+| `next.config.mjs`          | Next.js + PWA config              |
+| `tsconfig.json`            | TypeScript strict settings        |
+| `tailwind.config.ts`       | Tailwind CSS v4                   |
+| `postcss.config.mjs`       | PostCSS with @tailwindcss/postcss |
+| `eslint.config.mjs`        | ESLint flat config                |
+| `.prettierrc.json`         | Prettier formatting               |
+| `.github/workflows/ci.yml` | CI/CD pipeline                    |
+| `public/manifest.json`     | PWA manifest                      |
 
 ---
 
 ## 📈 Metrics
 
 ### Build
+
 - **Build Time**: ~10s (Turbopack)
 - **TypeScript**: No errors (strict mode)
 - **Bundle**: Optimized with code splitting
 - **Static**: Pre-rendered pages
 
 ### PWA
+
 - **Manifest**: ✅ Complete with shortcuts
 - **Service Worker**: ✅ Auto-generated
 - **Offline**: ✅ Custom fallback page
 - **Installable**: ✅ Mobile + Desktop
 
 ### Code Quality
+
 - **ESLint**: ~60 warnings (unused vars, console)
 - **TypeScript**: ✅ All errors fixed
 - **Prettier**: ✅ Ready to format
@@ -104,6 +114,7 @@
 ## 🚀 Usage
 
 ### Development
+
 ```bash
 npm run dev          # Start dev server
 npm run build        # Production build
@@ -113,6 +124,7 @@ npm run format       # Prettier format
 ```
 
 ### Deployment
+
 ```bash
 vercel login
 vercel link
@@ -124,6 +136,7 @@ vercel --prod
 ## 🎉 Benefits
 
 ### For Developers
+
 - ✅ Type safety (TypeScript strict)
 - ✅ Modern tooling (ESLint, Prettier)
 - ✅ Fast builds (Turbopack)
@@ -131,6 +144,7 @@ vercel --prod
 - ✅ Auto-completion
 
 ### For Users
+
 - ✅ Installable app
 - ✅ Offline support
 - ✅ Fast loading
@@ -138,6 +152,7 @@ vercel --prod
 - ✅ Accessible
 
 ### For Business
+
 - ✅ SEO optimized
 - ✅ CI/CD automation
 - ✅ Production ready
@@ -157,17 +172,20 @@ vercel --prod
 ## 🔮 Future Enhancements
 
 ### High Priority
+
 - [ ] Generate real PWA icons
 - [ ] Add unit tests (Vitest)
 - [ ] Add e2e tests (Playwright)
 
 ### Medium Priority
+
 - [ ] Dark mode toggle
 - [ ] Performance monitoring
 - [ ] Error boundaries
 - [ ] Analytics integration
 
 ### Low Priority
+
 - [ ] i18n support (el/en)
 - [ ] Push notifications
 - [ ] Background sync
@@ -178,18 +196,21 @@ vercel --prod
 ## 📝 Notes
 
 ### Dependencies
+
 - React upgraded to 19.2.0
 - Next.js 16.0.0 (Turbopack enabled)
 - Tailwind CSS v4 (new PostCSS plugin)
 - Use `--legacy-peer-deps` for npm install
 
 ### Breaking Changes
+
 - Vite config removed
 - `index.html` no longer used
 - `src/main.tsx` replaced by App Router
 - Components moved to `/components`
 
 ### Compatibility
+
 - ✅ Node.js 20.x+
 - ✅ npm 10.x+
 - ✅ All modern browsers
@@ -200,6 +221,6 @@ vercel --prod
 
 **Migration completed successfully! 🎊**
 
-*Date: October 22, 2025*  
-*Framework: Next.js 16.0.0*  
-*Status: Production Ready*
+_Date: October 22, 2025_  
+_Framework: Next.js 16.0.0_  
+_Status: Production Ready_

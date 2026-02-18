@@ -1,42 +1,56 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
-import { TrendingUp, TrendingDown, DollarSign, Clock } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  PieChart,
+  Pie,
+  Cell,
+} from "recharts";
+import { TrendingUp, DollarSign, Clock } from "lucide-react";
 
 export function ReportsAnalytics() {
   // Mock data for charts
   const dailyData = [
-    { day: 'Δευτ', vehicles: 45, revenue: 520 },
-    { day: 'Τρίτ', vehicles: 52, revenue: 680 },
-    { day: 'Τετ', vehicles: 38, revenue: 450 },
-    { day: 'Πέμ', vehicles: 61, revenue: 790 },
-    { day: 'Παρ', vehicles: 73, revenue: 950 },
-    { day: 'Σάβ', vehicles: 85, revenue: 1120 },
-    { day: 'Κυρ', vehicles: 42, revenue: 530 },
+    { day: "Δευτ", vehicles: 45, revenue: 520 },
+    { day: "Τρίτ", vehicles: 52, revenue: 680 },
+    { day: "Τετ", vehicles: 38, revenue: 450 },
+    { day: "Πέμ", vehicles: 61, revenue: 790 },
+    { day: "Παρ", vehicles: 73, revenue: 950 },
+    { day: "Σάβ", vehicles: 85, revenue: 1120 },
+    { day: "Κυρ", vehicles: 42, revenue: 530 },
   ];
 
   const workTypeData = [
-    { name: 'Premium Πλήρης', value: 35, color: '#3B82F6' },
-    { name: 'Εξωτερικό', value: 45, color: '#10B981' },
-    { name: 'Εσωτερικό', value: 25, color: '#F59E0B' },
-    { name: 'Απολύμανση', value: 20, color: '#EF4444' },
-    { name: 'Detailing', value: 15, color: '#8B5CF6' },
+    { name: "Premium Πλήρης", value: 35, color: "#3B82F6" },
+    { name: "Εξωτερικό", value: 45, color: "#10B981" },
+    { name: "Εσωτερικό", value: 25, color: "#F59E0B" },
+    { name: "Απολύμανση", value: 20, color: "#EF4444" },
+    { name: "Detailing", value: 15, color: "#8B5CF6" },
   ];
 
   const companyComparison = [
-    { month: 'Ιαν', company1: 450, company2: 380 },
-    { month: 'Φεβ', company1: 520, company2: 420 },
-    { month: 'Μαρ', company1: 580, company2: 490 },
-    { month: 'Απρ', company1: 620, company2: 550 },
-    { month: 'Μάι', company1: 690, company2: 610 },
-    { month: 'Ιούν', company1: 720, company2: 680 },
+    { month: "Ιαν", company1: 450, company2: 380 },
+    { month: "Φεβ", company1: 520, company2: 420 },
+    { month: "Μαρ", company1: 580, company2: 490 },
+    { month: "Απρ", company1: 620, company2: 550 },
+    { month: "Μάι", company1: 690, company2: 610 },
+    { month: "Ιούν", company1: 720, company2: 680 },
   ];
 
   const performanceMetrics = [
-    { title: 'Μέση Ανάπτυξη', value: '+15.3%', trend: 'up', icon: TrendingUp },
-    { title: 'Μείωση Χρόνου', value: '-8.5%', trend: 'down', icon: Clock },
-    { title: 'Αύξηση Εσόδων', value: '+22.7%', trend: 'up', icon: DollarSign },
-    { title: 'Ικανοποίηση', value: '94%', trend: 'up', icon: TrendingUp },
+    { title: "Μέση Ανάπτυξη", value: "+15.3%", trend: "up", icon: TrendingUp },
+    { title: "Μείωση Χρόνου", value: "-8.5%", trend: "down", icon: Clock },
+    { title: "Αύξηση Εσόδων", value: "+22.7%", trend: "up", icon: DollarSign },
+    { title: "Ικανοποίηση", value: "94%", trend: "up", icon: TrendingUp },
   ];
 
   return (
@@ -56,12 +70,16 @@ export function ReportsAnalytics() {
                   <p className="text-sm text-gray-600">{metric.title}</p>
                   <p className="text-2xl mt-1">{metric.value}</p>
                 </div>
-                <div className={`p-3 rounded-full ${
-                  metric.trend === 'up' ? 'bg-green-100' : 'bg-blue-100'
-                }`}>
-                  <metric.icon className={`h-5 w-5 ${
-                    metric.trend === 'up' ? 'text-green-600' : 'text-blue-600'
-                  }`} />
+                <div
+                  className={`p-3 rounded-full ${
+                    metric.trend === "up" ? "bg-green-100" : "bg-blue-100"
+                  }`}
+                >
+                  <metric.icon
+                    className={`h-5 w-5 ${
+                      metric.trend === "up" ? "text-green-600" : "text-blue-600"
+                    }`}
+                  />
                 </div>
               </div>
             </CardContent>
@@ -129,10 +147,7 @@ export function ReportsAnalytics() {
                 <div className="space-y-3">
                   {workTypeData.map((item, index) => (
                     <div key={index} className="flex items-center gap-3">
-                      <div
-                        className="w-4 h-4 rounded"
-                        style={{ backgroundColor: item.color }}
-                      />
+                      <div className="w-4 h-4 rounded" style={{ backgroundColor: item.color }} />
                       <div>
                         <p className="text-sm">{item.name}</p>
                         <p className="text-xs text-gray-600">{item.value} εργασίες</p>
