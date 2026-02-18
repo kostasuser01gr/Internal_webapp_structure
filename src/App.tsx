@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { 
   LayoutDashboard, 
@@ -36,7 +36,6 @@ import { LeaveRequests } from '@/components/LeaveRequests';
 import { HealthCheck } from '@/components/HealthCheck';
 import { 
   mockVehicles, 
-  mockDashboardStats, 
   mockWorkEntries, 
   companies,
   mockStaff,
@@ -103,7 +102,7 @@ export default function App() {
   };
 
   // Handle chatbot actions
-  const handleChatbotAction = (action: string, data?: any) => {
+  const handleChatbotAction = (action: string, data?: Record<string, unknown>) => {
     switch (action) {
       case 'bulk-operation':
         setCurrentView('bulk');
@@ -143,7 +142,7 @@ export default function App() {
         setIsChatMinimized(true);
         break;
       default:
-        console.log('Chatbot action:', action, data);
+        console.warn('Chatbot action:', action, data);
     }
   };
 
@@ -175,18 +174,18 @@ export default function App() {
 
   const handleDelete = (id: string) => {
     if (confirm('Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το όχημα;')) {
-      console.log('Delete vehicle:', id);
+      console.warn('Delete vehicle:', id);
     }
   };
 
   const handleSubmitVehicle = (data: Partial<Vehicle>) => {
-    console.log('Submit vehicle:', data);
+    console.warn('Submit vehicle:', data);
     setCurrentView('vehicles');
     setSelectedVehicle(null);
   };
 
   const handleSubmitWork = (data: Partial<WorkEntry>) => {
-    console.log('Submit work entry:', data);
+    console.warn('Submit work entry:', data);
     setShowWorkEntryForm(false);
   };
 
@@ -520,7 +519,7 @@ export default function App() {
             reservations={reservations}
             leaveRequests={leaveRequests}
             onAutoFix={(issueId) => {
-              console.log('Auto-fix issue:', issueId);
+              console.warn('Auto-fix issue:', issueId);
               // Auto-fix logic will be handled here
               alert('Αυτόματη διόρθωση ενεργοποιήθηκε για το θέμα: ' + issueId);
             }}

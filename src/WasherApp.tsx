@@ -3,12 +3,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { CheckCircle2, Car, Clock, User, Calendar } from 'lucide-react';
 import { companies, workTypeLabels } from '@/components/lib/mockData';
-import { WorkEntry, WorkType } from '@/components/types';
+import { WorkType } from '@/components/types';
 
 // Lightweight Washer App για γρήγορη καταχώρηση πλύσεων
 export default function WasherApp() {
@@ -52,7 +52,7 @@ export default function WasherApp() {
 
   const handleConfirm = () => {
     // Εδώ θα γίνει το actual submit στο backend
-    console.log('Submitting wash entry:', {
+    console.warn('Submitting wash entry:', {
       ...formData,
       technicianName: currentUser.name,
       date: new Date(),

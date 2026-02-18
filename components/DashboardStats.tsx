@@ -1,7 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Car, ClipboardList, Clock, DollarSign, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { DashboardStats as Stats } from '@/components/types';
-import { companies } from '@/components/lib/mockData';
 
 interface DashboardStatsProps {
   stats: Stats;

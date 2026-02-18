@@ -153,7 +153,7 @@ export function StaffManagement({ staff, onAddStaff, onUpdateStaff, onDeleteStaf
                 </div>
                 <div>
                   <Label>Ρόλος *</Label>
-                  <Select value={formData.role} onValueChange={(value: any) => setFormData({ ...formData, role: value })}>
+                  <Select value={formData.role} onValueChange={(value: Staff['role']) => setFormData({ ...formData, role: value })}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -168,7 +168,7 @@ export function StaffManagement({ staff, onAddStaff, onUpdateStaff, onDeleteStaf
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label>Κατάσταση</Label>
-                  <Select value={formData.status} onValueChange={(value: any) => setFormData({ ...formData, status: value })}>
+                  <Select value={formData.status} onValueChange={(value: Staff['status']) => setFormData({ ...formData, status: value })}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>

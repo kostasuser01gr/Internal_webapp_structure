@@ -60,7 +60,7 @@ export type ChatMessage = {
 export type ChatAction = {
   type: 'bulk-operation' | 'report' | 'analysis' | 'suggestion';
   label: string;
-  data?: any;
+  data?: Record<string, unknown>;
 };
 
 // Team Chat Types

@@ -9,7 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
 export function BulkOperations() {
-  const [selectedOperation, setSelectedOperation] = useState('import');
+  const [_selectedOperation, _setSelectedOperation] = useState('import');
   const [importFile, setImportFile] = useState<File | null>(null);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {

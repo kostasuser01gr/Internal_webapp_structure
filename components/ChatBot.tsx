@@ -4,8 +4,6 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { Separator } from '@/components/ui/separator';
 import { 
   Bot, 
   Send, 
@@ -13,21 +11,8 @@ import {
   Minimize2, 
   Maximize2, 
   Sparkles, 
-  TrendingUp,
-  AlertTriangle,
-  CheckCircle2,
-  Clock,
-  DollarSign,
-  Users,
-  Calendar,
-  BarChart3,
-  Download,
-  Lightbulb,
-  Zap,
-  FileText,
-  RefreshCw
 } from 'lucide-react';
-import { ChatMessage, Vehicle, WorkEntry, Staff, Shift, Reservation, LeaveRequest, DashboardStats } from '@/components/types';
+import { ChatMessage, ChatAction, Vehicle, WorkEntry, Staff, Shift, Reservation, LeaveRequest, DashboardStats } from '@/components/types';
 
 interface ChatBotProps {
   isOpen: boolean;
@@ -42,7 +27,7 @@ interface ChatBotProps {
   reservations?: Reservation[];
   leaveRequests?: LeaveRequest[];
   stats?: DashboardStats;
-  onActionTrigger?: (action: string, data?: any) => void;
+  onActionTrigger?: (action: string, data?: Record<string, unknown>) => void;
 }
 
 type QueryCategory = 
@@ -59,6 +44,7 @@ type QueryCategory =
 interface AnalysisResult {
   category: QueryCategory;
   insights: string[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: any;
   suggestions?: string[];
   warnings?: string[];
@@ -75,7 +61,7 @@ export function ChatBot({
   shifts = [],
   reservations = [],
   leaveRequests = [],
-  stats,
+  stats: _stats,
   onActionTrigger
 }: ChatBotProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([
@@ -88,7 +74,7 @@ export function ChatBot({
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [conversationContext, setConversationContext] = useState<string[]>([]);
+  const [_conversationContext, setConversationContext] = useState<string[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -342,7 +328,7 @@ export function ChatBot({
     };
   };
 
-  const generateShiftsResponse = (query: string): ChatMessage => {
+  const generateShiftsResponse = (_query: string): ChatMessage => {
     const today = new Date();
     const todayShifts = shifts.filter(s => s.date.toDateString() === today.toDateString());
     const upcomingShifts = shifts.filter(s => s.date > today).slice(0, 5);
@@ -408,7 +394,7 @@ export function ChatBot({
     };
   };
 
-  const generateStaffResponse = (query: string): ChatMessage => {
+  const generateStaffResponse = (_query: string): ChatMessage => {
     const activeStaff = staff.filter(s => s.status === 'active');
     const onLeaveStaff = staff.filter(s => s.status === 'on-leave');
     const pendingLeaveRequests = leaveRequests.filter(r => r.status === 'pending');
@@ -489,7 +475,7 @@ export function ChatBot({
     };
   };
 
-  const generateReservationsResponse = (query: string): ChatMessage => {
+  const generateReservationsResponse = (_query: string): ChatMessage => {
     const today = new Date();
     const todayReservations = reservations.filter(r => 
       r.reservationDate.toDateString() === today.toDateString()
@@ -808,10 +794,10 @@ export function ChatBot({
     }
   };
 
-  const handleActionClick = (action: any) => {
+  const handleActionClick = (action: ChatAction) => {
     if (action.data?.query) {
       // Auto-fill suggested query
-      setInput(action.data.query);
+      setInput(String(action.data.query));
     } else if (onActionTrigger) {
       // Trigger action in parent component
       onActionTrigger(action.type, action.data);

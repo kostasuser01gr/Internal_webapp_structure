@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Calendar } from '@/components/ui/calendar';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Calendar as CalendarIcon, Zap, Users, Clock, AlertCircle } from 'lucide-react';
 import { Shift, Staff, Reservation } from '@/components/types';
 import { format, startOfWeek, endOfWeek, eachDayOfInterval, isSameDay } from 'date-fns';
@@ -22,7 +21,7 @@ export function ShiftManagement({
   staff, 
   reservations, 
   onGenerateShifts,
-  onUpdateShift 
+  onUpdateShift: _onUpdateShift 
 }: ShiftManagementProps) {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [viewMode, setViewMode] = useState<'week' | 'day'>('week');
