@@ -1,13 +1,12 @@
-import { useState, useMemo } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Calendar } from '@/components/ui/calendar';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Calendar as CalendarIcon, Zap, Users, Clock, AlertCircle } from 'lucide-react';
-import { Shift, Staff, Reservation } from '@/components/types';
-import { format, startOfWeek, endOfWeek, eachDayOfInterval, isSameDay } from 'date-fns';
-import { el } from 'date-fns/locale';
+import { useState, useMemo } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Calendar } from "@/components/ui/calendar";
+import { Calendar as CalendarIcon, Zap, Users, Clock, AlertCircle } from "lucide-react";
+import { Shift, Staff, Reservation } from "@/components/types";
+import { format, startOfWeek, endOfWeek, eachDayOfInterval, isSameDay } from "date-fns";
+import { el } from "date-fns/locale";
 
 interface ShiftManagementProps {
   shifts: Shift[];
@@ -17,17 +16,17 @@ interface ShiftManagementProps {
   onUpdateShift: (id: string, shift: Partial<Shift>) => void;
 }
 
-export function ShiftManagement({ 
-  shifts, 
-  staff, 
-  reservations, 
+export function ShiftManagement({
+  shifts,
+  staff,
+  reservations,
   onGenerateShifts,
-  onUpdateShift 
+  onUpdateShift: _onUpdateShift,
 }: ShiftManagementProps) {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  const [viewMode, setViewMode] = useState<'week' | 'day'>('week');
+  const [viewMode, setViewMode] = useState<"week" | "day">("week");
 
-  const activeStaff = staff.filter(s => s.status === 'active');
+  const activeStaff = staff.filter((s) => s.status === "active");
 
   // Get week range
   const weekStart = startOfWeek(selectedDate, { weekStartsOn: 1 });
@@ -36,10 +35,10 @@ export function ShiftManagement({
 
   // Get shifts for selected period
   const periodShifts = useMemo(() => {
-    if (viewMode === 'day') {
-      return shifts.filter(s => isSameDay(new Date(s.date), selectedDate));
+    if (viewMode === "day") {
+      return shifts.filter((s) => isSameDay(new Date(s.date), selectedDate));
     }
-    return shifts.filter(s => {
+    return shifts.filter((s) => {
       const shiftDate = new Date(s.date);
       return shiftDate >= weekStart && shiftDate <= weekEnd;
     });
@@ -47,23 +46,23 @@ export function ShiftManagement({
 
   // Get reservations for selected period
   const periodReservations = useMemo(() => {
-    if (viewMode === 'day') {
-      return reservations.filter(r => isSameDay(new Date(r.reservationDate), selectedDate));
+    if (viewMode === "day") {
+      return reservations.filter((r) => isSameDay(new Date(r.reservationDate), selectedDate));
     }
-    return reservations.filter(r => {
+    return reservations.filter((r) => {
       const resDate = new Date(r.reservationDate);
       return resDate >= weekStart && resDate <= weekEnd;
     });
   }, [reservations, selectedDate, viewMode, weekStart, weekEnd]);
 
-  const getStaffById = (id: string) => staff.find(s => s.id === id);
+  const getStaffById = (id: string) => staff.find((s) => s.id === id);
 
   const getShiftsForDay = (date: Date) => {
-    return periodShifts.filter(s => isSameDay(new Date(s.date), date));
+    return periodShifts.filter((s) => isSameDay(new Date(s.date), date));
   };
 
   const getReservationsForDay = (date: Date) => {
-    return periodReservations.filter(r => isSameDay(new Date(r.reservationDate), date));
+    return periodReservations.filter((r) => isSameDay(new Date(r.reservationDate), date));
   };
 
   const handleAutoGenerate = () => {
@@ -72,21 +71,31 @@ export function ShiftManagement({
 
   const getShiftTypeColor = (type: string) => {
     switch (type) {
-      case 'morning': return 'bg-yellow-100 text-yellow-800';
-      case 'afternoon': return 'bg-orange-100 text-orange-800';
-      case 'night': return 'bg-indigo-100 text-indigo-800';
-      case 'full-day': return 'bg-blue-100 text-blue-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case "morning":
+        return "bg-yellow-100 text-yellow-800";
+      case "afternoon":
+        return "bg-orange-100 text-orange-800";
+      case "night":
+        return "bg-indigo-100 text-indigo-800";
+      case "full-day":
+        return "bg-blue-100 text-blue-800";
+      default:
+        return "bg-gray-100 text-gray-800";
     }
   };
 
   const getShiftStatusColor = (status: string) => {
     switch (status) {
-      case 'scheduled': return 'bg-blue-100 text-blue-800';
-      case 'confirmed': return 'bg-green-100 text-green-800';
-      case 'completed': return 'bg-gray-100 text-gray-800';
-      case 'cancelled': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case "scheduled":
+        return "bg-blue-100 text-blue-800";
+      case "confirmed":
+        return "bg-green-100 text-green-800";
+      case "completed":
+        return "bg-gray-100 text-gray-800";
+      case "cancelled":
+        return "bg-red-100 text-red-800";
+      default:
+        return "bg-gray-100 text-gray-800";
     }
   };
 
@@ -145,7 +154,7 @@ export function ShiftManagement({
               <div>
                 <p className="text-sm text-gray-600">Εκκρεμείς</p>
                 <p className="text-2xl">
-                  {periodShifts.filter(s => s.status === 'scheduled').length}
+                  {periodShifts.filter((s) => s.status === "scheduled").length}
                 </p>
               </div>
               <AlertCircle className="h-8 w-8 text-orange-600" />
@@ -169,17 +178,17 @@ export function ShiftManagement({
               className="rounded-md border"
             />
             <div className="mt-4 space-y-2">
-              <Button 
-                variant={viewMode === 'day' ? 'default' : 'outline'} 
+              <Button
+                variant={viewMode === "day" ? "default" : "outline"}
                 className="w-full"
-                onClick={() => setViewMode('day')}
+                onClick={() => setViewMode("day")}
               >
                 Ημερήσια Προβολή
               </Button>
-              <Button 
-                variant={viewMode === 'week' ? 'default' : 'outline'} 
+              <Button
+                variant={viewMode === "week" ? "default" : "outline"}
                 className="w-full"
-                onClick={() => setViewMode('week')}
+                onClick={() => setViewMode("week")}
               >
                 Εβδομαδιαία Προβολή
               </Button>
@@ -191,35 +200,30 @@ export function ShiftManagement({
         <Card className="lg:col-span-2">
           <CardHeader>
             <CardTitle>
-              {viewMode === 'day' 
-                ? format(selectedDate, 'EEEE, d MMMM yyyy', { locale: el })
-                : `Εβδομάδα ${format(weekStart, 'd MMM', { locale: el })} - ${format(weekEnd, 'd MMM', { locale: el })}`
-              }
+              {viewMode === "day"
+                ? format(selectedDate, "EEEE, d MMMM yyyy", { locale: el })
+                : `Εβδομάδα ${format(weekStart, "d MMM", { locale: el })} - ${format(weekEnd, "d MMM", { locale: el })}`}
             </CardTitle>
           </CardHeader>
           <CardContent>
-            {viewMode === 'week' ? (
+            {viewMode === "week" ? (
               <div className="space-y-4">
                 {weekDays.map((day) => {
                   const dayShifts = getShiftsForDay(day);
                   const dayReservations = getReservationsForDay(day);
-                  
+
                   return (
                     <div key={day.toString()} className="border rounded-lg p-4">
                       <div className="flex items-center justify-between mb-3">
                         <h3 className="font-medium">
-                          {format(day, 'EEEE, d MMM', { locale: el })}
+                          {format(day, "EEEE, d MMM", { locale: el })}
                         </h3>
                         <div className="flex gap-2 text-sm">
-                          <Badge variant="outline">
-                            {dayShifts.length} βάρδιες
-                          </Badge>
-                          <Badge variant="outline">
-                            {dayReservations.length} κρατήσεις
-                          </Badge>
+                          <Badge variant="outline">{dayShifts.length} βάρδιες</Badge>
+                          <Badge variant="outline">{dayReservations.length} κρατήσεις</Badge>
                         </div>
                       </div>
-                      
+
                       {dayShifts.length === 0 ? (
                         <p className="text-sm text-gray-500 text-center py-4">
                           Δεν υπάρχουν προγραμματισμένες βάρδιες
@@ -231,8 +235,8 @@ export function ShiftManagement({
                             return (
                               <div key={shift.id} className="border rounded p-3 space-y-2">
                                 <div className="flex items-center justify-between">
-                                  <span className="text-sm">{staffMember?.name || 'N/A'}</span>
-                                  <Badge className={getShiftStatusColor(shift.status)} >
+                                  <span className="text-sm">{staffMember?.name || "N/A"}</span>
+                                  <Badge className={getShiftStatusColor(shift.status)}>
                                     {shift.status}
                                   </Badge>
                                 </div>
@@ -278,7 +282,7 @@ export function ShiftManagement({
                           <div key={shift.id} className="border rounded-lg p-4">
                             <div className="flex items-center justify-between mb-2">
                               <div>
-                                <h5 className="font-medium">{staffMember?.name || 'N/A'}</h5>
+                                <h5 className="font-medium">{staffMember?.name || "N/A"}</h5>
                                 <p className="text-sm text-gray-600">{staffMember?.role}</p>
                               </div>
                               <Badge className={getShiftStatusColor(shift.status)}>
@@ -287,7 +291,8 @@ export function ShiftManagement({
                             </div>
                             <div className="grid grid-cols-2 gap-4 text-sm">
                               <div>
-                                <span className="text-gray-600">Ώρες:</span> {shift.startTime} - {shift.endTime}
+                                <span className="text-gray-600">Ώρες:</span> {shift.startTime} -{" "}
+                                {shift.endTime}
                               </div>
                               <div>
                                 <Badge className={getShiftTypeColor(shift.type)}>
@@ -321,7 +326,10 @@ export function ShiftManagement({
                   ) : (
                     <div className="space-y-2">
                       {periodReservations.map((res) => (
-                        <div key={res.id} className="flex items-center justify-between p-3 border rounded">
+                        <div
+                          key={res.id}
+                          className="flex items-center justify-between p-3 border rounded"
+                        >
                           <div>
                             <p className="font-medium">{res.vehicleLicensePlate}</p>
                             <p className="text-sm text-gray-600">{res.timeSlot}</p>
@@ -347,16 +355,21 @@ export function ShiftManagement({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
             <div className="space-y-2">
               <h4 className="font-medium flex items-center gap-2">
-                <span className="bg-blue-100 text-blue-800 rounded-full w-6 h-6 flex items-center justify-center">1</span>
+                <span className="bg-blue-100 text-blue-800 rounded-full w-6 h-6 flex items-center justify-center">
+                  1
+                </span>
                 Ανάλυση Κρατήσεων
               </h4>
               <p className="text-gray-600 ml-8">
-                Το σύστημα αναλύει όλες τις κρατήσεις της περιόδου και υπολογίζει τις ανάγκες σε προσωπικό.
+                Το σύστημα αναλύει όλες τις κρατήσεις της περιόδου και υπολογίζει τις ανάγκες σε
+                προσωπικό.
               </p>
             </div>
             <div className="space-y-2">
               <h4 className="font-medium flex items-center gap-2">
-                <span className="bg-blue-100 text-blue-800 rounded-full w-6 h-6 flex items-center justify-center">2</span>
+                <span className="bg-blue-100 text-blue-800 rounded-full w-6 h-6 flex items-center justify-center">
+                  2
+                </span>
                 Matching Δεξιοτήτων
               </h4>
               <p className="text-gray-600 ml-8">
@@ -365,7 +378,9 @@ export function ShiftManagement({
             </div>
             <div className="space-y-2">
               <h4 className="font-medium flex items-center gap-2">
-                <span className="bg-blue-100 text-blue-800 rounded-full w-6 h-6 flex items-center justify-center">3</span>
+                <span className="bg-blue-100 text-blue-800 rounded-full w-6 h-6 flex items-center justify-center">
+                  3
+                </span>
                 Δημιουργία Βάρδιων
               </h4>
               <p className="text-gray-600 ml-8">

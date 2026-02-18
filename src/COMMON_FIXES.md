@@ -3,28 +3,30 @@
 ## React ForwardRef Warnings
 
 ### Problem
+
 ```
-Warning: Function components cannot be given refs. 
-Attempts to access this ref will fail. 
+Warning: Function components cannot be given refs.
+Attempts to access this ref will fail.
 Did you mean to use React.forwardRef()?
 ```
 
 ### Common Causes
 
 #### 1. DialogTrigger with asChild + Button
+
 **❌ Wrong:**
+
 ```tsx
 <Dialog open={isOpen} onOpenChange={setIsOpen}>
   <DialogTrigger asChild>
-    <Button onClick={handleClick}>
-      Open Dialog
-    </Button>
+    <Button onClick={handleClick}>Open Dialog</Button>
   </DialogTrigger>
   <DialogContent>...</DialogContent>
 </Dialog>
 ```
 
 **✅ Correct:**
+
 ```tsx
 <Button onClick={() => setIsOpen(true)}>
   Open Dialog
@@ -35,7 +37,9 @@ Did you mean to use React.forwardRef()?
 ```
 
 #### 2. SheetTrigger with asChild + Button
+
 **❌ Wrong:**
+
 ```tsx
 <Sheet open={isOpen} onOpenChange={setIsOpen}>
   <SheetTrigger asChild>
@@ -46,6 +50,7 @@ Did you mean to use React.forwardRef()?
 ```
 
 **✅ Correct:**
+
 ```tsx
 <Button onClick={() => setIsOpen(true)}>Open</Button>
 <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -54,7 +59,9 @@ Did you mean to use React.forwardRef()?
 ```
 
 #### 3. DropdownMenuTrigger with asChild
+
 **❌ Wrong:**
+
 ```tsx
 <DropdownMenu>
   <DropdownMenuTrigger asChild>
@@ -65,6 +72,7 @@ Did you mean to use React.forwardRef()?
 ```
 
 **✅ Correct - Option 1 (Remove asChild):**
+
 ```tsx
 <DropdownMenu>
   <DropdownMenuTrigger>
@@ -75,6 +83,7 @@ Did you mean to use React.forwardRef()?
 ```
 
 **✅ Correct - Option 2 (Use controlled state):**
+
 ```tsx
 const [isOpen, setIsOpen] = useState(false);
 
@@ -91,11 +100,13 @@ const [isOpen, setIsOpen] = useState(false);
 ### When to Use `asChild`
 
 **✅ Use asChild when:**
+
 - Wrapping a custom component that forwards refs properly
 - Using with `React.forwardRef()` components
 - Radix UI documentation specifically requires it
 
 **❌ Avoid asChild when:**
+
 - Using with standard Button components
 - You can use controlled state instead
 - Getting ref warnings
@@ -122,17 +133,19 @@ const [isOpen, setIsOpen] = useState(false);
 ## Date-fns Import Errors
 
 ### Problem
+
 ```
 Module not found: date-fns/locale
 ```
 
 ### Solution
+
 ```tsx
 // ✅ Correct import
-import { el } from 'date-fns/locale';
+import { el } from "date-fns/locale";
 
 // ✅ Or with default import
-import { el as elLocale } from 'date-fns/locale';
+import { el as elLocale } from "date-fns/locale";
 ```
 
 ---
@@ -140,25 +153,27 @@ import { el as elLocale } from 'date-fns/locale';
 ## Missing Dependencies
 
 ### Problem
+
 ```
 Cannot find module 'X'
 ```
 
 ### Solution
+
 Check if you need to import from the correct path:
 
 ```tsx
 // Components
-import { Button } from './components/ui/button';
+import { Button } from "./components/ui/button";
 
 // Types
-import { Vehicle } from '../types';
+import { Vehicle } from "../types";
 
 // Utils
-import { cn } from '../lib/utils';
+import { cn } from "../lib/utils";
 
 // Data
-import { companies } from '../lib/mockData';
+import { companies } from "../lib/mockData";
 ```
 
 ---
@@ -168,31 +183,35 @@ import { companies } from '../lib/mockData';
 ### Problem: Type 'string' is not assignable to type 'WorkType'
 
 **❌ Wrong:**
+
 ```tsx
-const workType = 'premium-full'; // string
+const workType = "premium-full"; // string
 ```
 
 **✅ Correct:**
-```tsx
-import { WorkType } from '../types';
 
-const workType: WorkType = 'premium-full';
+```tsx
+import { WorkType } from "../types";
+
+const workType: WorkType = "premium-full";
 // or
-const workType = 'premium-full' as WorkType;
+const workType = "premium-full" as WorkType;
 ```
 
 ### Problem: Object is possibly 'undefined'
 
 **❌ Wrong:**
+
 ```tsx
 const name = user.name; // if user can be undefined
 ```
 
 **✅ Correct:**
+
 ```tsx
-const name = user?.name || 'Unknown';
+const name = user?.name || "Unknown";
 // or
-const name = user ? user.name : 'Unknown';
+const name = user ? user.name : "Unknown";
 ```
 
 ---
@@ -202,6 +221,7 @@ const name = user ? user.name : 'Unknown';
 ### Problem: Styles not applying
 
 **Check these:**
+
 1. Tailwind classes are correct
 2. No conflicting styles
 3. `className` not `class`
@@ -256,18 +276,18 @@ setState(state.push(newItem));
 setState([...state, newItem]);
 
 // ❌ Wrong: Mutating object
-setState({ ...state, name: 'New Name' }); // if nested objects
-setState(state.property = 'new value');
+setState({ ...state, name: "New Name" }); // if nested objects
+setState((state.property = "new value"));
 
 // ✅ Correct: Creating new object
-setState({ ...state, name: 'New Name' });
+setState({ ...state, name: "New Name" });
 // For nested:
 setState({
   ...state,
   nested: {
     ...state.nested,
-    property: 'new value'
-  }
+    property: "new value",
+  },
 });
 ```
 
@@ -299,18 +319,28 @@ setState({
 
 ```tsx
 // ❌ Wrong: Can render 0
-{count && <div>{count} items</div>}
+{
+  count && <div>{count} items</div>;
+}
 
 // ✅ Correct
-{count > 0 && <div>{count} items</div>}
+{
+  count > 0 && <div>{count} items</div>;
+}
 // or
-{!!count && <div>{count} items</div>}
+{
+  !!count && <div>{count} items</div>;
+}
 
 // ❌ Wrong: Can render "false"
-{isActive && <Badge>Active</Badge>}
+{
+  isActive && <Badge>Active</Badge>;
+}
 
 // ✅ Correct: Use ternary for boolean
-{isActive ? <Badge>Active</Badge> : null}
+{
+  isActive ? <Badge>Active</Badge> : null;
+}
 ```
 
 ---
@@ -338,19 +368,19 @@ setState({
 
 ```tsx
 // ❌ Wrong: Using index as key
-{items.map((item, index) => (
-  <div key={index}>{item.name}</div>
-))}
+{
+  items.map((item, index) => <div key={index}>{item.name}</div>);
+}
 
 // ✅ Correct: Using unique identifier
-{items.map((item) => (
-  <div key={item.id}>{item.name}</div>
-))}
+{
+  items.map((item) => <div key={item.id}>{item.name}</div>);
+}
 
 // ✅ Acceptable: If items never reorder and have no ID
-{items.map((item, index) => (
-  <div key={`${item.name}-${index}`}>{item.name}</div>
-))}
+{
+  items.map((item, index) => <div key={`${item.name}-${index}`}>{item.name}</div>);
+}
 ```
 
 ---
@@ -370,9 +400,9 @@ const handleSubmit = async () => {
 const handleSubmit = async () => {
   try {
     await api.submit(data);
-    toast.success('Success!');
+    toast.success("Success!");
   } catch (error) {
-    toast.error('Error: ' + error.message);
+    toast.error("Error: " + error.message);
   }
 };
 ```
@@ -407,8 +437,8 @@ if (isAfter(parseISO(date1), parseISO(date2)))
 console.log(data);
 
 // ✅ More useful
-console.log('User data:', data);
-console.log('Props:', { prop1, prop2, prop3 });
+console.log("User data:", data);
+console.log("Props:", { prop1, prop2, prop3 });
 console.table(arrayData); // For arrays
 console.dir(object, { depth: null }); // For deep objects
 ```
@@ -428,16 +458,16 @@ console.dir(object, { depth: null }); // For deep objects
 
 ```tsx
 // ✅ Proper test setup
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
-test('button click works', async () => {
+test("button click works", async () => {
   const handleClick = jest.fn();
   render(<Button onClick={handleClick}>Click me</Button>);
-  
-  const button = screen.getByRole('button', { name: /click me/i });
+
+  const button = screen.getByRole("button", { name: /click me/i });
   await userEvent.click(button);
-  
+
   expect(handleClick).toHaveBeenCalledTimes(1);
 });
 ```
@@ -447,29 +477,30 @@ test('button click works', async () => {
 ## Quick Reference
 
 ### Import Paths
+
 ```tsx
 // UI Components
-import { Button } from './components/ui/button';
+import { Button } from "./components/ui/button";
 
-// Custom Components  
-import { StaffManagement } from './components/StaffManagement';
+// Custom Components
+import { StaffManagement } from "./components/StaffManagement";
 
 // Types
-import { Staff, Vehicle } from './types';
-import type { Staff } from './types'; // type-only import
+import { Staff, Vehicle } from "./types";
+import type { Staff } from "./types"; // type-only import
 
 // Utils
-import { cn, generateId } from './lib/utils';
+import { cn, generateId } from "./lib/utils";
 
 // Data
-import { companies, mockStaff } from './lib/mockData';
+import { companies, mockStaff } from "./lib/mockData";
 
 // Icons
-import { Plus, Edit, Trash } from 'lucide-react';
+import { Plus, Edit, Trash } from "lucide-react";
 
 // External
-import { format } from 'date-fns';
-import { el } from 'date-fns/locale';
+import { format } from "date-fns";
+import { el } from "date-fns/locale";
 ```
 
 ### Common Patterns
@@ -502,4 +533,4 @@ const ref = useRef<HTMLDivElement>(null);
 
 **Keep this guide handy for quick fixes!** 🔧
 
-*Last updated: October 21, 2025*
+_Last updated: October 21, 2025_

@@ -1,13 +1,19 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Upload, X } from 'lucide-react';
-import { Vehicle } from '@/components/types';
-import { companies } from '@/components/lib/mockData';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Upload, X } from "lucide-react";
+import { Vehicle } from "@/components/types";
+import { companies } from "@/components/lib/mockData";
 
 interface VehicleFormProps {
   vehicle?: Vehicle;
@@ -17,11 +23,11 @@ interface VehicleFormProps {
 
 export function VehicleForm({ vehicle, onSubmit, onCancel }: VehicleFormProps) {
   const [formData, setFormData] = useState<Partial<Vehicle>>({
-    licensePlate: vehicle?.licensePlate || '',
-    companyId: vehicle?.companyId || '',
-    status: vehicle?.status || 'pending',
-    notes: vehicle?.notes || '',
-    imageUrl: vehicle?.imageUrl || '',
+    licensePlate: vehicle?.licensePlate || "",
+    companyId: vehicle?.companyId || "",
+    status: vehicle?.status || "pending",
+    notes: vehicle?.notes || "",
+    imageUrl: vehicle?.imageUrl || "",
   });
 
   const [imagePreview, setImagePreview] = useState<string | null>(vehicle?.imageUrl || null);
@@ -47,7 +53,7 @@ export function VehicleForm({ vehicle, onSubmit, onCancel }: VehicleFormProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{vehicle ? 'Επεξεργασία Οχήματος' : 'Νέο Όχημα'}</CardTitle>
+        <CardTitle>{vehicle ? "Επεξεργασία Οχήματος" : "Νέο Όχημα"}</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -95,7 +101,9 @@ export function VehicleForm({ vehicle, onSubmit, onCancel }: VehicleFormProps) {
             <Label htmlFor="status">Κατάσταση</Label>
             <Select
               value={formData.status}
-              onValueChange={(value: any) => setFormData({ ...formData, status: value })}
+              onValueChange={(value: Vehicle["status"]) =>
+                setFormData({ ...formData, status: value })
+              }
             >
               <SelectTrigger>
                 <SelectValue />
@@ -126,7 +134,7 @@ export function VehicleForm({ vehicle, onSubmit, onCancel }: VehicleFormProps) {
                   className="absolute top-2 right-2"
                   onClick={() => {
                     setImagePreview(null);
-                    setFormData({ ...formData, imageUrl: '' });
+                    setFormData({ ...formData, imageUrl: "" });
                   }}
                 >
                   <X className="h-4 w-4" />
@@ -168,7 +176,7 @@ export function VehicleForm({ vehicle, onSubmit, onCancel }: VehicleFormProps) {
           {/* Actions */}
           <div className="flex gap-3">
             <Button type="submit" className="flex-1">
-              {vehicle ? 'Αποθήκευση' : 'Καταχώρηση'}
+              {vehicle ? "Αποθήκευση" : "Καταχώρηση"}
             </Button>
             <Button type="button" variant="outline" onClick={onCancel}>
               Ακύρωση

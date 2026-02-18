@@ -110,7 +110,8 @@ Use this checklist to verify the application is working correctly after the empt
 - [ ] No issues detected
 - [ ] "Εκτέλεση Ελέγχου" button works
 
-**Expected**: 
+**Expected**:
+
 ```
 Status: Healthy ✅
 Score: 100/100
@@ -225,6 +226,7 @@ Open browser console (F12) and verify:
 ## 🎯 Quick Pass/Fail Criteria
 
 ### ✅ PASS if:
+
 - All 17 sections checked
 - No red errors in console
 - All pages load
@@ -234,6 +236,7 @@ Open browser console (F12) and verify:
 - Health Check shows "Healthy"
 
 ### ❌ FAIL if:
+
 - Any red errors in console
 - Page crashes or won't load
 - Missing empty state messages
@@ -246,18 +249,23 @@ Open browser console (F12) and verify:
 ## 🐛 Common Issues to Check
 
 ### Issue: Page shows blank white screen
+
 **Solution**: Check console for errors, verify imports
 
 ### Issue: "Cannot read property of undefined"
+
 **Solution**: Check null safety, optional chaining
 
 ### Issue: Map/filter errors on arrays
+
 **Solution**: Verify array initialization, check for undefined
 
 ### Issue: Team Chat crashes
+
 **Solution**: Verify empty state implementation, check selectedChannel
 
 ### Issue: Health Check errors
+
 **Solution**: Verify all data arrays are defined (even if empty)
 
 ---
@@ -286,6 +294,7 @@ Open browser console (F12) and verify:
 ## 🔒 Type Safety Checks
 
 If you have TypeScript:
+
 - [ ] Run `tsc --noEmit` (should have no errors)
 - [ ] No red squiggly lines in IDE
 - [ ] All imports resolved
@@ -297,15 +306,17 @@ If you have TypeScript:
 
 After completing all checks:
 
-1. **Count your checkmarks**: ____ / 60+
+1. **Count your checkmarks**: \_\_\_\_ / 60+
 2. **Any FAIL items?**: Yes / No
 3. **Console clean?**: Yes / No
 4. **Ready for data entry?**: Yes / No
 
 ### If 90%+ checked and no FAIL items:
+
 ## ✅ **VERIFICATION PASSED** ✅
 
 ### If < 90% or any FAIL items:
+
 ## ⚠️ **NEEDS ATTENTION** ⚠️
 
 ---
@@ -341,12 +352,14 @@ If verification fails:
 If all checks pass:
 
 **Your application is:**
+
 - ✅ Error-free
 - ✅ Empty state ready
 - ✅ Production quality
 - ✅ Ready for real data
 
 **You can now:**
+
 - Add staff members
 - Upload reservations
 - Create shifts

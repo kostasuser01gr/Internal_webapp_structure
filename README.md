@@ -65,10 +65,12 @@ vercel --prod
 ## 📱 PWA Installation
 
 ### Mobile
+
 1. Open in Safari/Chrome
 2. Tap Share → "Add to Home Screen"
 
 ### Desktop
+
 1. Click install icon in address bar
 2. Click "Install"
 

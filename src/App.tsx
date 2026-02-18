@@ -1,13 +1,19 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { 
-  LayoutDashboard, 
-  Car, 
-  Plus, 
-  Settings, 
-  FileSpreadsheet, 
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  LayoutDashboard,
+  Car,
+  Plus,
+  Settings,
+  FileSpreadsheet,
   BarChart3,
   Menu,
   Bot,
@@ -18,52 +24,51 @@ import {
   CalendarClock,
   Upload,
   CalendarDays,
-  Activity
-} from 'lucide-react';
-import { DashboardStats } from '@/components/DashboardStats';
-import { VehicleTable } from '@/components/VehicleTable';
-import { VehicleForm } from '@/components/VehicleForm';
-import { VehicleHistory } from '@/components/VehicleHistory';
-import { ChatBot } from '@/components/ChatBot';
-import { BulkOperations } from '@/components/BulkOperations';
-import { ReportsAnalytics } from '@/components/ReportsAnalytics';
-import { WorkEntryForm } from '@/components/WorkEntryForm';
-import { TeamChat } from '@/components/TeamChat';
-import { StaffManagement } from '@/components/StaffManagement';
-import { ShiftManagement } from '@/components/ShiftManagement';
-import { ReservationUpload } from '@/components/ReservationUpload';
-import { LeaveRequests } from '@/components/LeaveRequests';
-import { HealthCheck } from '@/components/HealthCheck';
-import { 
-  mockVehicles, 
-  mockDashboardStats, 
-  mockWorkEntries, 
+  Activity,
+} from "lucide-react";
+import { DashboardStats } from "@/components/DashboardStats";
+import { VehicleTable } from "@/components/VehicleTable";
+import { VehicleForm } from "@/components/VehicleForm";
+import { VehicleHistory } from "@/components/VehicleHistory";
+import { ChatBot } from "@/components/ChatBot";
+import { BulkOperations } from "@/components/BulkOperations";
+import { ReportsAnalytics } from "@/components/ReportsAnalytics";
+import { WorkEntryForm } from "@/components/WorkEntryForm";
+import { TeamChat } from "@/components/TeamChat";
+import { StaffManagement } from "@/components/StaffManagement";
+import { ShiftManagement } from "@/components/ShiftManagement";
+import { ReservationUpload } from "@/components/ReservationUpload";
+import { LeaveRequests } from "@/components/LeaveRequests";
+import { HealthCheck } from "@/components/HealthCheck";
+import {
+  mockVehicles,
+  mockWorkEntries,
   companies,
   mockStaff,
   mockShifts,
   mockReservations,
-  mockLeaveRequests
-} from '@/components/lib/mockData';
-import { Vehicle, WorkEntry, Staff, Shift, Reservation, LeaveRequest } from '@/components/types';
-import { generateId } from '@/components/lib/utils';
+  mockLeaveRequests,
+} from "@/components/lib/mockData";
+import { Vehicle, WorkEntry, Staff, Shift, Reservation, LeaveRequest } from "@/components/types";
+import { generateId } from "@/components/lib/utils";
 
-type View = 
-  | 'dashboard' 
-  | 'vehicles' 
-  | 'add-vehicle' 
-  | 'vehicle-detail' 
-  | 'bulk' 
-  | 'reports' 
-  | 'chat'
-  | 'staff'
-  | 'shifts'
-  | 'reservations'
-  | 'leave-requests'
-  | 'health-check';
+type View =
+  | "dashboard"
+  | "vehicles"
+  | "add-vehicle"
+  | "vehicle-detail"
+  | "bulk"
+  | "reports"
+  | "chat"
+  | "staff"
+  | "shifts"
+  | "reservations"
+  | "leave-requests"
+  | "health-check";
 
 export default function App() {
-  const [currentView, setCurrentView] = useState<View>('dashboard');
-  const [selectedCompany, setSelectedCompany] = useState<string>('all');
+  const [currentView, setCurrentView] = useState<View>("dashboard");
+  const [selectedCompany, setSelectedCompany] = useState<string>("all");
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isChatMinimized, setIsChatMinimized] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
@@ -77,116 +82,118 @@ export default function App() {
   const [leaveRequests, setLeaveRequests] = useState<LeaveRequest[]>(mockLeaveRequests);
 
   // Filter vehicles by selected company
-  const filteredVehicles = selectedCompany === 'all' 
-    ? mockVehicles 
-    : mockVehicles.filter(v => v.companyId === selectedCompany);
+  const filteredVehicles =
+    selectedCompany === "all"
+      ? mockVehicles
+      : mockVehicles.filter((v) => v.companyId === selectedCompany);
 
   // Calculate real-time dashboard stats
   const calculateStats = () => {
     const today = new Date();
-    const todayEntries = mockWorkEntries.filter(w => 
-      w.date.toDateString() === today.toDateString()
+    const todayEntries = mockWorkEntries.filter(
+      (w) => w.date.toDateString() === today.toDateString()
     );
-    
+
     return {
       totalVehicles: mockVehicles.length,
       todayEntries: todayEntries.length,
-      pendingWork: mockVehicles.filter(v => v.status === 'pending').length,
-      avgDuration: todayEntries.length > 0 
-        ? todayEntries.reduce((sum, w) => sum + w.duration, 0) / todayEntries.length 
-        : 0,
-      company1Count: mockVehicles.filter(v => v.companyId === '1').length,
-      company2Count: mockVehicles.filter(v => v.companyId === '2').length,
-      completedToday: mockVehicles.filter(v => v.status === 'completed').length,
+      pendingWork: mockVehicles.filter((v) => v.status === "pending").length,
+      avgDuration:
+        todayEntries.length > 0
+          ? todayEntries.reduce((sum, w) => sum + w.duration, 0) / todayEntries.length
+          : 0,
+      company1Count: mockVehicles.filter((v) => v.companyId === "1").length,
+      company2Count: mockVehicles.filter((v) => v.companyId === "2").length,
+      completedToday: mockVehicles.filter((v) => v.status === "completed").length,
       revenue: todayEntries.reduce((sum, w) => sum + w.cost, 0),
     };
   };
 
   // Handle chatbot actions
-  const handleChatbotAction = (action: string, data?: any) => {
+  const handleChatbotAction = (action: string, data?: Record<string, unknown>) => {
     switch (action) {
-      case 'bulk-operation':
-        setCurrentView('bulk');
+      case "bulk-operation":
+        setCurrentView("bulk");
         setIsChatMinimized(true);
         break;
-      case 'report':
-        setCurrentView('reports');
+      case "report":
+        setCurrentView("reports");
         setIsChatMinimized(true);
         break;
-      case 'health-check':
-        setCurrentView('health-check');
+      case "health-check":
+        setCurrentView("health-check");
         setIsChatMinimized(true);
         break;
-      case 'suggestion':
-        if (data?.action === 'add-vehicle') {
-          setCurrentView('add-vehicle');
+      case "suggestion":
+        if (data?.action === "add-vehicle") {
+          setCurrentView("add-vehicle");
           setIsChatMinimized(true);
-        } else if (data?.action === 'create-shift') {
-          setCurrentView('shifts');
+        } else if (data?.action === "create-shift") {
+          setCurrentView("shifts");
           setIsChatMinimized(true);
-        } else if (data?.action === 'add-staff') {
-          setCurrentView('staff');
+        } else if (data?.action === "add-staff") {
+          setCurrentView("staff");
           setIsChatMinimized(true);
-        } else if (data?.action === 'upload-reservations') {
-          setCurrentView('reservations');
+        } else if (data?.action === "upload-reservations") {
+          setCurrentView("reservations");
           setIsChatMinimized(true);
-        } else if (data?.action === 'approve-leaves') {
-          setCurrentView('leave-requests');
+        } else if (data?.action === "approve-leaves") {
+          setCurrentView("leave-requests");
           setIsChatMinimized(true);
-        } else if (data?.action === 'health-check') {
-          setCurrentView('health-check');
+        } else if (data?.action === "health-check") {
+          setCurrentView("health-check");
           setIsChatMinimized(true);
         }
         break;
-      case 'analysis':
-        setCurrentView('reports');
+      case "analysis":
+        setCurrentView("reports");
         setIsChatMinimized(true);
         break;
       default:
-        console.log('Chatbot action:', action, data);
+        console.warn("Chatbot action:", action, data);
     }
   };
 
   const navigation = [
-    { id: 'dashboard', name: 'Επισκόπηση', icon: LayoutDashboard },
-    { id: 'vehicles', name: 'Οχήματα', icon: Car },
-    { id: 'add-vehicle', name: 'Νέο Όχημα', icon: Plus },
-    { id: 'staff', name: 'Προσωπικό', icon: Users },
-    { id: 'reservations', name: 'Κρατήσεις', icon: Upload },
-    { id: 'shifts', name: 'Βάρδιες', icon: CalendarClock },
-    { id: 'leave-requests', name: 'Αιτήματα Αδειών', icon: CalendarDays },
-    { id: 'health-check', name: 'Έλεγχος Υγείας', icon: Activity },
-    { id: 'chat', name: 'Team Chat', icon: MessageSquare },
-    { id: 'bulk', name: 'Μαζικές Λειτουργίες', icon: FileSpreadsheet },
-    { id: 'reports', name: 'Αναφορές', icon: BarChart3 },
+    { id: "dashboard", name: "Επισκόπηση", icon: LayoutDashboard },
+    { id: "vehicles", name: "Οχήματα", icon: Car },
+    { id: "add-vehicle", name: "Νέο Όχημα", icon: Plus },
+    { id: "staff", name: "Προσωπικό", icon: Users },
+    { id: "reservations", name: "Κρατήσεις", icon: Upload },
+    { id: "shifts", name: "Βάρδιες", icon: CalendarClock },
+    { id: "leave-requests", name: "Αιτήματα Αδειών", icon: CalendarDays },
+    { id: "health-check", name: "Έλεγχος Υγείας", icon: Activity },
+    { id: "chat", name: "Team Chat", icon: MessageSquare },
+    { id: "bulk", name: "Μαζικές Λειτουργίες", icon: FileSpreadsheet },
+    { id: "reports", name: "Αναφορές", icon: BarChart3 },
   ];
 
   const handleViewDetails = (vehicle: Vehicle) => {
     setSelectedVehicle(vehicle);
-    setCurrentView('vehicle-detail');
+    setCurrentView("vehicle-detail");
     setMobileMenuOpen(false);
   };
 
   const handleEdit = (vehicle: Vehicle) => {
     setSelectedVehicle(vehicle);
-    setCurrentView('add-vehicle');
+    setCurrentView("add-vehicle");
     setMobileMenuOpen(false);
   };
 
   const handleDelete = (id: string) => {
-    if (confirm('Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το όχημα;')) {
-      console.log('Delete vehicle:', id);
+    if (confirm("Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το όχημα;")) {
+      console.warn("Delete vehicle:", id);
     }
   };
 
   const handleSubmitVehicle = (data: Partial<Vehicle>) => {
-    console.log('Submit vehicle:', data);
-    setCurrentView('vehicles');
+    console.warn("Submit vehicle:", data);
+    setCurrentView("vehicles");
     setSelectedVehicle(null);
   };
 
   const handleSubmitWork = (data: Partial<WorkEntry>) => {
-    console.log('Submit work entry:', data);
+    console.warn("Submit work entry:", data);
     setShowWorkEntryForm(false);
   };
 
@@ -194,11 +201,11 @@ export default function App() {
   const handleAddStaff = (data: Partial<Staff>) => {
     const newStaff: Staff = {
       id: generateId(),
-      name: data.name || '',
-      email: data.email || '',
-      phone: data.phone || '',
-      role: data.role || 'washer',
-      status: data.status || 'active',
+      name: data.name || "",
+      email: data.email || "",
+      phone: data.phone || "",
+      role: data.role || "washer",
+      status: data.status || "active",
       companyId: data.companyId,
       skills: data.skills || [],
       createdAt: new Date(),
@@ -207,23 +214,26 @@ export default function App() {
   };
 
   const handleUpdateStaff = (id: string, data: Partial<Staff>) => {
-    setStaff(staff.map(s => s.id === id ? { ...s, ...data } : s));
+    setStaff(staff.map((s) => (s.id === id ? { ...s, ...data } : s)));
   };
 
   const handleDeleteStaff = (id: string) => {
-    if (confirm('Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το μέλος προσωπικού;')) {
-      setStaff(staff.filter(s => s.id !== id));
+    if (confirm("Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το μέλος προσωπικού;")) {
+      setStaff(staff.filter((s) => s.id !== id));
     }
   };
 
   // Reservation Handlers
   const handleImportReservations = (newReservations: Partial<Reservation>[]) => {
-    const reservationsWithIds = newReservations.map(r => ({
-      ...r,
-      id: generateId(),
-      status: r.status || 'pending',
-    } as Reservation));
-    
+    const reservationsWithIds = newReservations.map(
+      (r) =>
+        ({
+          ...r,
+          id: generateId(),
+          status: r.status || "pending",
+        }) as Reservation
+    );
+
     setReservations([...reservations, ...reservationsWithIds]);
     alert(`Εισήχθησαν ${reservationsWithIds.length} κρατήσεις επιτυχώς!`);
   };
@@ -231,21 +241,21 @@ export default function App() {
   // Shift Management Handlers
   const handleGenerateShifts = (date: Date) => {
     // Algorithm για auto-generation βάρδιων
-    const activeStaff = staff.filter(s => s.status === 'active');
-    
+    const activeStaff = staff.filter((s) => s.status === "active");
+
     if (activeStaff.length === 0) {
-      alert('Δεν υπάρχει διαθέσιμο προσωπικό!');
+      alert("Δεν υπάρχει διαθέσιμο προσωπικό!");
       return;
     }
 
     // Βρες κρατήσεις για την ημέρα/εβδομάδα
-    const dayReservations = reservations.filter(r => {
+    const dayReservations = reservations.filter((r) => {
       const resDate = new Date(r.reservationDate);
       return resDate.toDateString() === date.toDateString();
     });
 
     if (dayReservations.length === 0) {
-      alert('Δεν υπάρχουν κρατήσεις για αυτή την ημέρα!');
+      alert("Δεν υπάρχουν κρατήσεις για αυτή την ημέρα!");
       return;
     }
 
@@ -254,8 +264,12 @@ export default function App() {
     let staffIndex = 0;
 
     // Group reservations by time slot
-    const morningRes = dayReservations.filter(r => r.timeSlot.startsWith('0') || r.timeSlot.startsWith('1'));
-    const afternoonRes = dayReservations.filter(r => r.timeSlot.startsWith('1') || r.timeSlot.startsWith('2'));
+    const morningRes = dayReservations.filter(
+      (r) => r.timeSlot.startsWith("0") || r.timeSlot.startsWith("1")
+    );
+    const afternoonRes = dayReservations.filter(
+      (r) => r.timeSlot.startsWith("1") || r.timeSlot.startsWith("2")
+    );
 
     // Create morning shifts
     if (morningRes.length > 0) {
@@ -263,16 +277,16 @@ export default function App() {
       for (let i = 0; i < Math.min(staffNeeded, activeStaff.length); i++) {
         const staff = activeStaff[staffIndex % activeStaff.length];
         if (!staff) continue;
-        
+
         newShifts.push({
           id: generateId(),
           staffId: staff.id,
           date: date,
-          startTime: '08:00',
-          endTime: '14:00',
-          type: 'morning',
-          status: 'scheduled',
-          assignedReservations: morningRes.slice(i * 3, (i + 1) * 3).map(r => r.id),
+          startTime: "08:00",
+          endTime: "14:00",
+          type: "morning",
+          status: "scheduled",
+          assignedReservations: morningRes.slice(i * 3, (i + 1) * 3).map((r) => r.id),
           autoGenerated: true,
         });
         staffIndex++;
@@ -285,16 +299,16 @@ export default function App() {
       for (let i = 0; i < Math.min(staffNeeded, activeStaff.length); i++) {
         const staff = activeStaff[staffIndex % activeStaff.length];
         if (!staff) continue;
-        
+
         newShifts.push({
           id: generateId(),
           staffId: staff.id,
           date: date,
-          startTime: '14:00',
-          endTime: '20:00',
-          type: 'afternoon',
-          status: 'scheduled',
-          assignedReservations: afternoonRes.slice(i * 3, (i + 1) * 3).map(r => r.id),
+          startTime: "14:00",
+          endTime: "20:00",
+          type: "afternoon",
+          status: "scheduled",
+          assignedReservations: afternoonRes.slice(i * 3, (i + 1) * 3).map((r) => r.id),
           autoGenerated: true,
         });
         staffIndex++;
@@ -306,7 +320,7 @@ export default function App() {
   };
 
   const handleUpdateShift = (id: string, data: Partial<Shift>) => {
-    setShifts(shifts.map(s => s.id === id ? { ...s, ...data } : s));
+    setShifts(shifts.map((s) => (s.id === id ? { ...s, ...data } : s)));
   };
 
   // Leave Request Handlers
@@ -314,34 +328,36 @@ export default function App() {
     const newRequest: LeaveRequest = {
       ...data,
       id: generateId(),
-      status: 'pending',
+      status: "pending",
       createdAt: new Date(),
     } as LeaveRequest;
-    
+
     setLeaveRequests([...leaveRequests, newRequest]);
   };
 
   const handleApproveLeave = (id: string) => {
-    setLeaveRequests(leaveRequests.map(r => 
-      r.id === id ? { ...r, status: 'approved' as const } : r
-    ));
+    setLeaveRequests(
+      leaveRequests.map((r) => (r.id === id ? { ...r, status: "approved" as const } : r))
+    );
   };
 
   const handleRejectLeave = (id: string) => {
-    setLeaveRequests(leaveRequests.map(r => 
-      r.id === id ? { ...r, status: 'rejected' as const } : r
-    ));
+    setLeaveRequests(
+      leaveRequests.map((r) => (r.id === id ? { ...r, status: "rejected" as const } : r))
+    );
   };
 
   const renderContent = () => {
     switch (currentView) {
-      case 'dashboard':
+      case "dashboard":
         return (
           <div className="space-y-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
                 <h1 className="text-3xl">Επισκόπηση</h1>
-                <p className="text-gray-600">Σύστημα Διαχείρισης Πλυντηρίου Οχημάτων - Goldcar/Europcar</p>
+                <p className="text-gray-600">
+                  Σύστημα Διαχείρισης Πλυντηρίου Οχημάτων - Goldcar/Europcar
+                </p>
               </div>
               <div className="flex items-center gap-2">
                 <Building2 className="h-5 w-5 text-gray-500" />
@@ -361,7 +377,7 @@ export default function App() {
               </div>
             </div>
             <DashboardStats stats={calculateStats()} />
-            
+
             {/* Quick Health Check Status */}
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 border border-blue-200 dark:border-blue-900 rounded-lg p-4">
               <div className="flex items-center justify-between">
@@ -374,20 +390,17 @@ export default function App() {
                     </p>
                   </div>
                 </div>
-                <Button 
-                  variant="outline" 
-                  onClick={() => setCurrentView('health-check')}
-                >
+                <Button variant="outline" onClick={() => setCurrentView("health-check")}>
                   Προβολή Ελέγχου
                 </Button>
               </div>
             </div>
-            
+
             <div className="mt-8">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl">Πρόσφατα Οχήματα</h2>
                 {mockVehicles.length === 0 && (
-                  <Button onClick={() => setCurrentView('add-vehicle')} size="sm">
+                  <Button onClick={() => setCurrentView("add-vehicle")} size="sm">
                     <Plus className="mr-2 h-4 w-4" />
                     Προσθήκη Οχήματος
                   </Button>
@@ -403,7 +416,7 @@ export default function App() {
           </div>
         );
 
-      case 'vehicles':
+      case "vehicles":
         return (
           <div className="space-y-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -411,7 +424,7 @@ export default function App() {
                 <h1 className="text-3xl">Διαχείριση Οχημάτων</h1>
                 <p className="text-gray-600">Προβολή και επεξεργασία όλων των οχημάτων</p>
               </div>
-              <Button onClick={() => setCurrentView('add-vehicle')}>
+              <Button onClick={() => setCurrentView("add-vehicle")}>
                 <Plus className="mr-2 h-4 w-4" />
                 Νέο Όχημα
               </Button>
@@ -425,23 +438,23 @@ export default function App() {
           </div>
         );
 
-      case 'add-vehicle':
+      case "add-vehicle":
         return (
           <div className="max-w-2xl mx-auto">
             <VehicleForm
               vehicle={selectedVehicle || undefined}
               onSubmit={handleSubmitVehicle}
               onCancel={() => {
-                setCurrentView('vehicles');
+                setCurrentView("vehicles");
                 setSelectedVehicle(null);
               }}
             />
           </div>
         );
 
-      case 'vehicle-detail':
+      case "vehicle-detail":
         if (!selectedVehicle) {
-          setCurrentView('dashboard');
+          setCurrentView("dashboard");
           return null;
         }
         return (
@@ -449,7 +462,7 @@ export default function App() {
             <Button
               variant="outline"
               onClick={() => {
-                setCurrentView('vehicles');
+                setCurrentView("vehicles");
                 setSelectedVehicle(null);
               }}
             >
@@ -464,14 +477,14 @@ export default function App() {
             ) : (
               <VehicleHistory
                 vehicle={selectedVehicle}
-                workEntries={mockWorkEntries.filter(e => e.vehicleId === selectedVehicle.id)}
+                workEntries={mockWorkEntries.filter((e) => e.vehicleId === selectedVehicle.id)}
                 onAddWork={() => setShowWorkEntryForm(true)}
               />
             )}
           </div>
         );
 
-      case 'staff':
+      case "staff":
         return (
           <StaffManagement
             staff={staff}
@@ -481,14 +494,10 @@ export default function App() {
           />
         );
 
-      case 'reservations':
-        return (
-          <ReservationUpload
-            onImport={handleImportReservations}
-          />
-        );
+      case "reservations":
+        return <ReservationUpload onImport={handleImportReservations} />;
 
-      case 'shifts':
+      case "shifts":
         return (
           <ShiftManagement
             shifts={shifts}
@@ -499,7 +508,7 @@ export default function App() {
           />
         );
 
-      case 'leave-requests':
+      case "leave-requests":
         return (
           <LeaveRequests
             requests={leaveRequests}
@@ -511,7 +520,7 @@ export default function App() {
           />
         );
 
-      case 'health-check':
+      case "health-check":
         return (
           <HealthCheck
             vehicles={mockVehicles}
@@ -520,20 +529,20 @@ export default function App() {
             reservations={reservations}
             leaveRequests={leaveRequests}
             onAutoFix={(issueId) => {
-              console.log('Auto-fix issue:', issueId);
+              console.warn("Auto-fix issue:", issueId);
               // Auto-fix logic will be handled here
-              alert('Αυτόματη διόρθωση ενεργοποιήθηκε για το θέμα: ' + issueId);
+              alert("Αυτόματη διόρθωση ενεργοποιήθηκε για το θέμα: " + issueId);
             }}
           />
         );
 
-      case 'bulk':
+      case "bulk":
         return <BulkOperations />;
 
-      case 'reports':
+      case "reports":
         return <ReportsAnalytics />;
 
-      case 'chat':
+      case "chat":
         return <TeamChat />;
 
       default:
@@ -567,8 +576,8 @@ export default function App() {
             }}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
               currentView === item.id
-                ? 'bg-blue-50 text-blue-600'
-                : 'text-gray-700 hover:bg-gray-100'
+                ? "bg-blue-50 text-blue-600"
+                : "text-gray-700 hover:bg-gray-100"
             }`}
           >
             <item.icon className="h-5 w-5" />
@@ -619,9 +628,7 @@ export default function App() {
         </header>
 
         {/* Main Content Area */}
-        <main className="flex-1 overflow-auto p-6">
-          {renderContent()}
-        </main>
+        <main className="flex-1 overflow-auto p-6">{renderContent()}</main>
       </div>
 
       {/* AI Chatbot */}

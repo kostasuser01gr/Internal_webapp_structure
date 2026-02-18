@@ -1,15 +1,34 @@
-import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Plus, Edit, Trash2, UserCheck, UserX, Search } from 'lucide-react';
-import { Staff, WorkType } from '@/components/types';
-import { companies, workTypeLabels } from '@/components/lib/mockData';
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Plus, Edit, Trash2, UserCheck, UserX, Search } from "lucide-react";
+import { Staff, WorkType } from "@/components/types";
+import { companies, workTypeLabels } from "@/components/lib/mockData";
 
 interface StaffManagementProps {
   staff: Staff[];
@@ -18,28 +37,34 @@ interface StaffManagementProps {
   onDeleteStaff: (id: string) => void;
 }
 
-export function StaffManagement({ staff, onAddStaff, onUpdateStaff, onDeleteStaff }: StaffManagementProps) {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filterRole, setFilterRole] = useState<string>('all');
-  const [filterStatus, setFilterStatus] = useState<string>('all');
+export function StaffManagement({
+  staff,
+  onAddStaff,
+  onUpdateStaff,
+  onDeleteStaff,
+}: StaffManagementProps) {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterRole, setFilterRole] = useState<string>("all");
+  const [filterStatus, setFilterStatus] = useState<string>("all");
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [editingStaff, setEditingStaff] = useState<Staff | null>(null);
 
   const [formData, setFormData] = useState<Partial<Staff>>({
-    name: '',
-    email: '',
-    phone: '',
-    role: 'washer',
-    status: 'active',
+    name: "",
+    email: "",
+    phone: "",
+    role: "washer",
+    status: "active",
     companyId: undefined,
     skills: [],
   });
 
   const filteredStaff = staff.filter((s) => {
-    const matchesSearch = s.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          s.email.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesRole = filterRole === 'all' || s.role === filterRole;
-    const matchesStatus = filterStatus === 'all' || s.status === filterStatus;
+    const matchesSearch =
+      s.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      s.email.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesRole = filterRole === "all" || s.role === filterRole;
+    const matchesStatus = filterStatus === "all" || s.status === filterStatus;
     return matchesSearch && matchesRole && matchesStatus;
   });
 
@@ -56,11 +81,11 @@ export function StaffManagement({ staff, onAddStaff, onUpdateStaff, onDeleteStaf
 
   const resetForm = () => {
     setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      role: 'washer',
-      status: 'active',
+      name: "",
+      email: "",
+      phone: "",
+      role: "washer",
+      status: "active",
       companyId: undefined,
       skills: [],
     });
@@ -83,7 +108,7 @@ export function StaffManagement({ staff, onAddStaff, onUpdateStaff, onDeleteStaf
   const toggleSkill = (skill: WorkType) => {
     const currentSkills = formData.skills || [];
     if (currentSkills.includes(skill)) {
-      setFormData({ ...formData, skills: currentSkills.filter(s => s !== skill) });
+      setFormData({ ...formData, skills: currentSkills.filter((s) => s !== skill) });
     } else {
       setFormData({ ...formData, skills: [...currentSkills, skill] });
     }
@@ -91,14 +116,21 @@ export function StaffManagement({ staff, onAddStaff, onUpdateStaff, onDeleteStaf
 
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
-      case 'staff': return 'bg-blue-100 text-blue-800';
-      case 'washer': return 'bg-green-100 text-green-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case "staff":
+        return "bg-blue-100 text-blue-800";
+      case "washer":
+        return "bg-green-100 text-green-800";
+      default:
+        return "bg-gray-100 text-gray-800";
     }
   };
 
   const getStatusIcon = (status: string) => {
-    return status === 'active' ? <UserCheck className="h-4 w-4 text-green-600" /> : <UserX className="h-4 w-4 text-gray-400" />;
+    return status === "active" ? (
+      <UserCheck className="h-4 w-4 text-green-600" />
+    ) : (
+      <UserX className="h-4 w-4 text-gray-400" />
+    );
   };
 
   return (
@@ -110,15 +142,25 @@ export function StaffManagement({ staff, onAddStaff, onUpdateStaff, onDeleteStaf
           <p className="text-gray-600">Προσθήκη και διαχείριση μελών προσωπικού</p>
         </div>
         <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-          <Button onClick={() => { resetForm(); setEditingStaff(null); setIsAddDialogOpen(true); }}>
+          <Button
+            onClick={() => {
+              resetForm();
+              setEditingStaff(null);
+              setIsAddDialogOpen(true);
+            }}
+          >
             <Plus className="mr-2 h-4 w-4" />
             Νέο Μέλος
           </Button>
           <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle>{editingStaff ? 'Επεξεργασία Μέλους' : 'Νέο Μέλος Προσωπικού'}</DialogTitle>
+              <DialogTitle>
+                {editingStaff ? "Επεξεργασία Μέλους" : "Νέο Μέλος Προσωπικού"}
+              </DialogTitle>
               <DialogDescription>
-                {editingStaff ? 'Επεξεργαστείτε τα στοιχεία του μέλους του προσωπικού.' : 'Προσθέστε ένα νέο μέλος στο προσωπικό της εταιρείας.'}
+                {editingStaff
+                  ? "Επεξεργαστείτε τα στοιχεία του μέλους του προσωπικού."
+                  : "Προσθέστε ένα νέο μέλος στο προσωπικό της εταιρείας."}
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-4">
@@ -153,7 +195,12 @@ export function StaffManagement({ staff, onAddStaff, onUpdateStaff, onDeleteStaf
                 </div>
                 <div>
                   <Label>Ρόλος *</Label>
-                  <Select value={formData.role} onValueChange={(value: any) => setFormData({ ...formData, role: value })}>
+                  <Select
+                    value={formData.role}
+                    onValueChange={(value: Staff["role"]) =>
+                      setFormData({ ...formData, role: value })
+                    }
+                  >
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -168,7 +215,12 @@ export function StaffManagement({ staff, onAddStaff, onUpdateStaff, onDeleteStaf
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label>Κατάσταση</Label>
-                  <Select value={formData.status} onValueChange={(value: any) => setFormData({ ...formData, status: value })}>
+                  <Select
+                    value={formData.status}
+                    onValueChange={(value: Staff["status"]) =>
+                      setFormData({ ...formData, status: value })
+                    }
+                  >
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -181,7 +233,12 @@ export function StaffManagement({ staff, onAddStaff, onUpdateStaff, onDeleteStaf
                 </div>
                 <div>
                   <Label>Εταιρεία (Προαιρετικό)</Label>
-                  <Select value={formData.companyId || 'none'} onValueChange={(value) => setFormData({ ...formData, companyId: value === 'none' ? '' : value })}>
+                  <Select
+                    value={formData.companyId || "none"}
+                    onValueChange={(value) =>
+                      setFormData({ ...formData, companyId: value === "none" ? "" : value })
+                    }
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Όλες" />
                     </SelectTrigger>
@@ -197,7 +254,7 @@ export function StaffManagement({ staff, onAddStaff, onUpdateStaff, onDeleteStaf
                 </div>
               </div>
 
-              {formData.role === 'washer' && (
+              {formData.role === "washer" && (
                 <div>
                   <Label>Δεξιότητες (Τύποι Εργασίας)</Label>
                   <div className="grid grid-cols-2 gap-2 mt-2">
@@ -205,7 +262,7 @@ export function StaffManagement({ staff, onAddStaff, onUpdateStaff, onDeleteStaf
                       <Button
                         key={key}
                         type="button"
-                        variant={formData.skills?.includes(key as WorkType) ? 'default' : 'outline'}
+                        variant={formData.skills?.includes(key as WorkType) ? "default" : "outline"}
                         size="sm"
                         onClick={() => toggleSkill(key as WorkType)}
                         className="justify-start"
@@ -221,9 +278,7 @@ export function StaffManagement({ staff, onAddStaff, onUpdateStaff, onDeleteStaf
                 <Button variant="outline" onClick={() => setIsAddDialogOpen(false)}>
                   Ακύρωση
                 </Button>
-                <Button onClick={handleSubmit}>
-                  {editingStaff ? 'Ενημέρωση' : 'Προσθήκη'}
-                </Button>
+                <Button onClick={handleSubmit}>{editingStaff ? "Ενημέρωση" : "Προσθήκη"}</Button>
               </div>
             </div>
           </DialogContent>
@@ -293,9 +348,9 @@ export function StaffManagement({ staff, onAddStaff, onUpdateStaff, onDeleteStaf
                       <div>
                         <p className="text-gray-900 mb-1">Δεν βρέθηκε προσωπικό</p>
                         <p className="text-sm text-gray-500">
-                          {staff.length === 0 
-                            ? 'Ξεκινήστε προσθέτοντας το πρώτο μέλος' 
-                            : 'Δοκιμάστε να αλλάξετε τα φίλτρα'}
+                          {staff.length === 0
+                            ? "Ξεκινήστε προσθέτοντας το πρώτο μέλος"
+                            : "Δοκιμάστε να αλλάξετε τα φίλτρα"}
                         </p>
                       </div>
                     </div>
@@ -310,7 +365,7 @@ export function StaffManagement({ staff, onAddStaff, onUpdateStaff, onDeleteStaf
                     <TableCell>{s.phone}</TableCell>
                     <TableCell>
                       <Badge className={getRoleBadgeColor(s.role)}>
-                        {s.role === 'washer' ? 'Πλύντης' : 'Προσωπικό'}
+                        {s.role === "washer" ? "Πλύντης" : "Προσωπικό"}
                       </Badge>
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
