@@ -51,18 +51,10 @@ git checkout main
 
 ### Step 4: Rewrite history using `git filter-repo` (Recommended)
 
-Create a file called `mailmap` with the following content:
-
-```
-Konstantinos Foskolakis - Full Stack Web Engineer (Certified by Micro1) <75499796+kostasuser01gr@users.noreply.github.com> copilot-swe-agent[bot] <198982749+Copilot@users.noreply.github.com>
-Konstantinos Foskolakis - Full Stack Web Engineer (Certified by Micro1) <75499796+kostasuser01gr@users.noreply.github.com> GitHub <noreply@github.com>
-Konstantinos Foskolakis - Full Stack Web Engineer (Certified by Micro1) <75499796+kostasuser01gr@users.noreply.github.com> K1 <75499796+kostasuser01gr@users.noreply.github.com>
-```
-
-Then run:
+The repository already contains a `.mailmap` file with all required identity mappings. Use it directly:
 
 ```bash
-git filter-repo --mailmap mailmap --force
+git filter-repo --mailmap .mailmap --force
 ```
 
 ### Step 4 (Alternative): Rewrite history using `git filter-branch` (Fallback)
@@ -92,10 +84,12 @@ You should now see only:
      N  Konstantinos Foskolakis - Full Stack Web Engineer (Certified by Micro1) <75499796+kostasuser01gr@users.noreply.github.com>
 ```
 
-Also verify with:
+Also verify with the included verification script:
 ```bash
-git log --format="%H %an <%ae> | %cn <%ce>" | head -20
+./scripts/verify-commit-metadata.sh
 ```
+
+The script checks all author/committer names and emails across the entire history and reports any non-canonical identities.
 
 ### Step 6: Clean up
 
