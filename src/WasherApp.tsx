@@ -1,66 +1,66 @@
-import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { CheckCircle2, Car, Clock, User, Calendar } from 'lucide-react';
-import { companies, workTypeLabels } from '@/components/lib/mockData';
-import { WorkType } from '@/components/types';
+import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { CheckCircle2, Car, Clock, User, Calendar } from "lucide-react";
+import { companies, workTypeLabels } from "@/components/lib/mockData";
+import { WorkType } from "@/components/types";
 
 // Lightweight Washer App για γρήγορη καταχώρηση πλύσεων
 export default function WasherApp() {
   const [currentUser] = useState({
-    id: 'washer-1',
-    name: 'Πλύντης',
-    role: 'washer' as const,
+    id: "washer-1",
+    name: "Πλύντης",
+    role: "washer" as const,
   });
 
-  const [step, setStep] = useState<'input' | 'confirm' | 'success'>('input');
+  const [step, setStep] = useState<"input" | "confirm" | "success">("input");
   const [formData, setFormData] = useState({
-    licensePlate: '',
-    companyId: '',
-    workType: '' as WorkType | '',
-    duration: '',
-    notes: '',
+    licensePlate: "",
+    companyId: "",
+    workType: "" as WorkType | "",
+    duration: "",
+    notes: "",
   });
 
   const [todayCount, setTodayCount] = useState(0);
 
   const workTypeDurations: Record<string, number> = {
-    'premium-full': 75,
-    'exterior-only': 30,
-    'interior-only': 45,
-    'disinfection': 20,
-    'wax': 25,
-    'detailing': 120,
+    "premium-full": 75,
+    "exterior-only": 30,
+    "interior-only": 45,
+    disinfection: 20,
+    wax: 25,
+    detailing: 120,
   };
 
   const handleWorkTypeChange = (type: WorkType) => {
     setFormData({
       ...formData,
       workType: type,
-      duration: workTypeDurations[type]?.toString() || '',
+      duration: workTypeDurations[type]?.toString() || "",
     });
   };
 
   const handleSubmit = () => {
-    setStep('confirm');
+    setStep("confirm");
   };
 
   const handleConfirm = () => {
     // Εδώ θα γίνει το actual submit στο backend
-    console.warn('Submitting wash entry:', {
+    console.warn("Submitting wash entry:", {
       ...formData,
       technicianName: currentUser.name,
       date: new Date(),
     });
-    
-    setTodayCount(prev => prev + 1);
-    setStep('success');
-    
+
+    setTodayCount((prev) => prev + 1);
+    setStep("success");
+
     // Auto-reset after 3 seconds
     setTimeout(() => {
       resetForm();
@@ -69,16 +69,16 @@ export default function WasherApp() {
 
   const resetForm = () => {
     setFormData({
-      licensePlate: '',
-      companyId: '',
-      workType: '' as WorkType | '',
-      duration: '',
-      notes: '',
+      licensePlate: "",
+      companyId: "",
+      workType: "" as WorkType | "",
+      duration: "",
+      notes: "",
     });
-    setStep('input');
+    setStep("input");
   };
 
-  if (step === 'success') {
+  if (step === "success") {
     return (
       <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center p-4">
         <Card className="w-full max-w-md">
@@ -90,9 +90,7 @@ export default function WasherApp() {
             <p className="text-gray-600 mb-6">
               Το όχημα {formData.licensePlate} καταχωρήθηκε επιτυχώς
             </p>
-            <Badge className="text-lg py-2 px-4">
-              Πλύσεις Σήμερα: {todayCount}
-            </Badge>
+            <Badge className="text-lg py-2 px-4">Πλύσεις Σήμερα: {todayCount}</Badge>
           </CardContent>
         </Card>
       </div>
@@ -117,7 +115,7 @@ export default function WasherApp() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
-                  <span className="text-sm">{new Date().toLocaleDateString('el-GR')}</span>
+                  <span className="text-sm">{new Date().toLocaleDateString("el-GR")}</span>
                 </div>
               </div>
             </div>
@@ -151,7 +149,7 @@ export default function WasherApp() {
         </div>
 
         {/* Main Form */}
-        {step === 'input' ? (
+        {step === "input" ? (
           <Card>
             <CardHeader>
               <CardTitle>Νέα Πλύση Οχήματος</CardTitle>
@@ -162,7 +160,9 @@ export default function WasherApp() {
                 <Label className="text-lg">Αριθμός Κυκλοφορίας</Label>
                 <Input
                   value={formData.licensePlate}
-                  onChange={(e) => setFormData({ ...formData, licensePlate: e.target.value.toUpperCase() })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, licensePlate: e.target.value.toUpperCase() })
+                  }
                   placeholder="π.χ. ΑΒΓ-1234"
                   className="text-2xl h-16 text-center tracking-wider"
                   autoFocus
@@ -176,7 +176,7 @@ export default function WasherApp() {
                   {companies.map((company) => (
                     <Button
                       key={company.id}
-                      variant={formData.companyId === company.id ? 'default' : 'outline'}
+                      variant={formData.companyId === company.id ? "default" : "outline"}
                       onClick={() => setFormData({ ...formData, companyId: company.id })}
                       className="h-20 text-lg"
                       style={
@@ -205,14 +205,12 @@ export default function WasherApp() {
                   {Object.entries(workTypeLabels).map(([key, label]) => (
                     <Button
                       key={key}
-                      variant={formData.workType === key ? 'default' : 'outline'}
+                      variant={formData.workType === key ? "default" : "outline"}
                       onClick={() => handleWorkTypeChange(key as WorkType)}
                       className="h-16 flex flex-col items-center justify-center gap-1"
                     >
                       <span className="text-sm">{label}</span>
-                      <span className="text-xs opacity-70">
-                        {workTypeDurations[key]} λεπτά
-                      </span>
+                      <span className="text-xs opacity-70">{workTypeDurations[key]} λεπτά</span>
                     </Button>
                   ))}
                 </div>
@@ -275,11 +273,11 @@ export default function WasherApp() {
                   <span className="text-gray-600">Εταιρεία:</span>
                   <Badge
                     style={{
-                      backgroundColor: `${companies.find(c => c.id === formData.companyId)?.color}20`,
-                      color: companies.find(c => c.id === formData.companyId)?.color,
+                      backgroundColor: `${companies.find((c) => c.id === formData.companyId)?.color}20`,
+                      color: companies.find((c) => c.id === formData.companyId)?.color,
                     }}
                   >
-                    {companies.find(c => c.id === formData.companyId)?.name}
+                    {companies.find((c) => c.id === formData.companyId)?.name}
                   </Badge>
                 </div>
 
@@ -302,10 +300,13 @@ export default function WasherApp() {
               </div>
 
               <div className="grid grid-cols-2 gap-3">
-                <Button variant="outline" onClick={() => setStep('input')} className="h-14">
+                <Button variant="outline" onClick={() => setStep("input")} className="h-14">
                   Πίσω
                 </Button>
-                <Button onClick={handleConfirm} className="h-14 text-lg bg-green-600 hover:bg-green-700">
+                <Button
+                  onClick={handleConfirm}
+                  className="h-14 text-lg bg-green-600 hover:bg-green-700"
+                >
                   <CheckCircle2 className="mr-2 h-5 w-5" />
                   Καταχώρηση
                 </Button>

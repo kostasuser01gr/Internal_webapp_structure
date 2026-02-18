@@ -7,6 +7,7 @@ Quick solutions to common issues after the empty state update.
 ## 🚨 Emergency Quick Fixes
 
 ### Application won't load / White screen
+
 ```bash
 1. Check browser console (F12)
 2. Look for red errors
@@ -17,6 +18,7 @@ Quick solutions to common issues after the empty state update.
 ```
 
 ### "Cannot read property of undefined"
+
 ```bash
 Cause: Missing null safety check
 Solution: Verify optional chaining (?.) used
@@ -24,6 +26,7 @@ Location: Check the line number in error message
 ```
 
 ### Page crashes when clicking menu item
+
 ```bash
 1. Check which view is selected
 2. Open browser console
@@ -38,8 +41,10 @@ Location: Check the line number in error message
 ### Dashboard
 
 #### Issue: Stats not showing
+
 **Symptoms**: Blank stat cards  
-**Solution**: 
+**Solution**:
+
 ```javascript
 Verify in App.tsx:
 - calculateStats() function exists
@@ -48,6 +53,7 @@ Verify in App.tsx:
 ```
 
 #### Issue: Health Check widget error
+
 **Solution**: Navigate to Health Check page directly to see detailed error
 
 ---
@@ -55,8 +61,10 @@ Verify in App.tsx:
 ### Vehicles
 
 #### Issue: "Δεν βρέθηκαν οχήματα" not showing
+
 **Symptoms**: Blank page instead of empty state  
 **Solution**:
+
 ```javascript
 Check VehicleTable.tsx:
 - Line ~105: Empty state condition present
@@ -65,7 +73,9 @@ Check VehicleTable.tsx:
 ```
 
 #### Issue: Add vehicle form won't open
+
 **Solution**:
+
 ```javascript
 1. Check App.tsx setCurrentView works
 2. Verify VehicleForm component imported
@@ -77,7 +87,9 @@ Check VehicleTable.tsx:
 ### Staff Management
 
 #### Issue: Empty state not displaying
+
 **Solution**:
+
 ```javascript
 StaffManagement.tsx line ~286:
 - Verify filteredStaff.length === 0 check
@@ -86,7 +98,9 @@ StaffManagement.tsx line ~286:
 ```
 
 #### Issue: "Νέο Μέλος" button not working
+
 **Solution**:
+
 ```javascript
 1. Check Dialog component imported
 2. Verify isAddDialogOpen state
@@ -94,7 +108,9 @@ StaffManagement.tsx line ~286:
 ```
 
 #### Issue: Skills not selectable
+
 **Solution**:
+
 ```javascript
 1. Verify workTypeLabels imported
 2. Check toggleSkill function
@@ -106,8 +122,10 @@ StaffManagement.tsx line ~286:
 ### Team Chat
 
 #### Issue: Page crashes on load
+
 **Symptoms**: Error about selectedChannel  
 **Solution**:
+
 ```javascript
 TeamChat.tsx:
 1. Line ~28: selectedChannel should allow null
@@ -117,7 +135,9 @@ TeamChat.tsx:
 ```
 
 #### Issue: Empty state not showing
+
 **Solution**:
+
 ```javascript
 Line ~124-138: Check for empty state code:
 if (mockChatChannels.length === 0) {
@@ -126,6 +146,7 @@ if (mockChatChannels.length === 0) {
 ```
 
 #### Issue: "Δημιουργία Καναλιού" button does nothing
+
 **Expected**: Button is currently a placeholder  
 **Future**: Will open dialog to create channel
 
@@ -134,7 +155,9 @@ if (mockChatChannels.length === 0) {
 ### Shifts
 
 #### Issue: Stats showing NaN
+
 **Solution**:
+
 ```javascript
 1. Verify all .length operations
 2. Check .filter() returns array
@@ -142,7 +165,9 @@ if (mockChatChannels.length === 0) {
 ```
 
 #### Issue: Calendar not displaying
+
 **Solution**:
+
 ```javascript
 1. Check date-fns imported
 2. Verify Calendar component from ui
@@ -150,6 +175,7 @@ if (mockChatChannels.length === 0) {
 ```
 
 #### Issue: Auto-generate doesn't work
+
 **Expected**: Currently logs to console  
 **Solution**: Check console for message
 
@@ -158,7 +184,9 @@ if (mockChatChannels.length === 0) {
 ### Health Check
 
 #### Issue: Always shows errors
+
 **Solution**:
+
 ```javascript
 healthCheck.ts:
 1. Verify all check methods handle empty arrays
@@ -167,7 +195,9 @@ healthCheck.ts:
 ```
 
 #### Issue: Performance score incorrect
+
 **Solution**:
+
 ```javascript
 Line ~49: calculatePerformanceScore
 - Should return 100 for empty data
@@ -179,8 +209,10 @@ Line ~49: calculatePerformanceScore
 ## 🐛 Common Error Messages
 
 ### "map is not a function"
+
 **Cause**: Variable is not an array  
 **Solution**:
+
 ```javascript
 // Before
 {items.map(...)}
@@ -191,19 +223,23 @@ Line ~49: calculatePerformanceScore
 ```
 
 ### "Cannot read property 'id' of null"
+
 **Cause**: Missing null check  
 **Solution**:
+
 ```javascript
 // Before
-selectedItem.id
+selectedItem.id;
 
 // After
-selectedItem?.id
+selectedItem?.id;
 ```
 
 ### "undefined is not an object"
+
 **Cause**: Data not initialized  
 **Solution**:
+
 ```javascript
 // Check mockData.ts
 export const mockVehicles: Vehicle[] = []; // ✅
@@ -211,8 +247,10 @@ export const mockVehicles; // ❌
 ```
 
 ### "Maximum update depth exceeded"
+
 **Cause**: Infinite re-render loop  
 **Solution**:
+
 ```javascript
 // Check useEffect dependencies
 useEffect(() => {
@@ -225,6 +263,7 @@ useEffect(() => {
 ## 🔍 Debugging Steps
 
 ### Step 1: Identify Location
+
 ```bash
 1. Note error message
 2. Find file name in error
@@ -233,6 +272,7 @@ useEffect(() => {
 ```
 
 ### Step 2: Check Console
+
 ```bash
 1. Open DevTools (F12)
 2. Go to Console tab
@@ -241,14 +281,16 @@ useEffect(() => {
 ```
 
 ### Step 3: Verify Data
+
 ```javascript
 // Add console.logs
-console.log('vehicles:', vehicles);
-console.log('length:', vehicles?.length);
-console.log('type:', typeof vehicles);
+console.log("vehicles:", vehicles);
+console.log("length:", vehicles?.length);
+console.log("type:", typeof vehicles);
 ```
 
 ### Step 4: Check Types
+
 ```typescript
 // Verify types match
 const vehicles: Vehicle[] = mockVehicles; // ✅
@@ -256,9 +298,12 @@ const vehicles = mockVehicles; // Less safe
 ```
 
 ### Step 5: Test Isolation
+
 ```javascript
 // Comment out problematic code
-{/* {vehicles.map(...)} */}
+{
+  /* {vehicles.map(...)} */
+}
 
 // If page loads, issue is in that section
 ```
@@ -268,7 +313,9 @@ const vehicles = mockVehicles; // Less safe
 ## 📱 Mobile Issues
 
 ### Issue: Layout broken on mobile
+
 **Solution**:
+
 ```javascript
 1. Check responsive classes (md:, lg:)
 2. Verify mobile menu toggle
@@ -276,7 +323,9 @@ const vehicles = mockVehicles; // Less safe
 ```
 
 ### Issue: Touch targets too small
+
 **Solution**:
+
 ```javascript
 1. Check button sizes
 2. Add p-3 or p-4 for padding
@@ -288,7 +337,9 @@ const vehicles = mockVehicles; // Less safe
 ## 🎨 UI Issues
 
 ### Issue: Empty state icon not showing
+
 **Solution**:
+
 ```javascript
 1. Verify lucide-react import
 2. Check icon name correct
@@ -296,7 +347,9 @@ const vehicles = mockVehicles; // Less safe
 ```
 
 ### Issue: Colors not displaying
+
 **Solution**:
+
 ```javascript
 1. Check Tailwind classes valid
 2. Verify globals.css loaded
@@ -304,7 +357,9 @@ const vehicles = mockVehicles; // Less safe
 ```
 
 ### Issue: Text overlapping
+
 **Solution**:
+
 ```javascript
 1. Add truncate class
 2. Use max-w-[...] constraint
@@ -316,7 +371,9 @@ const vehicles = mockVehicles; // Less safe
 ## 🔄 Data Flow Issues
 
 ### Issue: Form submits but nothing happens
+
 **Solution**:
+
 ```javascript
 1. Check onSubmit handler exists
 2. Verify state update called
@@ -325,7 +382,9 @@ const vehicles = mockVehicles; // Less safe
 ```
 
 ### Issue: Filter not working
+
 **Solution**:
+
 ```javascript
 1. Check filter function logic
 2. Verify state updates
@@ -338,7 +397,9 @@ const vehicles = mockVehicles; // Less safe
 ## 💾 State Management Issues
 
 ### Issue: State not updating
+
 **Solution**:
+
 ```javascript
 // Check setter is called
 setState(newValue); // ✅
@@ -350,7 +411,9 @@ setState(oldArray.push(newItem)); // ❌
 ```
 
 ### Issue: Props not passing
+
 **Solution**:
+
 ```javascript
 // Verify prop names match
 <Component data={data} /> // ✅
@@ -362,7 +425,9 @@ setState(oldArray.push(newItem)); // ❌
 ## 🔐 Type Safety Issues
 
 ### Issue: TypeScript errors
+
 **Solution**:
+
 ```bash
 1. Run: tsc --noEmit
 2. Read error messages
@@ -371,7 +436,9 @@ setState(oldArray.push(newItem)); // ❌
 ```
 
 ### Issue: "Type 'X' is not assignable to type 'Y'"
+
 **Solution**:
+
 ```typescript
 // Check type definitions in types/index.ts
 // Verify imported types match usage
@@ -382,7 +449,9 @@ setState(oldArray.push(newItem)); // ❌
 ## 📊 Performance Issues
 
 ### Issue: Slow loading
+
 **Solution**:
+
 ```javascript
 1. Check for large arrays being processed
 2. Use useMemo for expensive operations
@@ -391,11 +460,13 @@ setState(oldArray.push(newItem)); // ❌
 ```
 
 ### Issue: Memory leak
+
 **Solution**:
+
 ```javascript
 useEffect(() => {
   const interval = setInterval(...);
-  
+
   return () => clearInterval(interval); // ✅ Cleanup!
 }, []);
 ```
@@ -405,7 +476,9 @@ useEffect(() => {
 ## 🧪 Testing Issues
 
 ### Issue: Can't reproduce error
+
 **Solution**:
+
 ```bash
 1. Clear all browser data
 2. Use incognito mode
@@ -414,7 +487,9 @@ useEffect(() => {
 ```
 
 ### Issue: Works locally, fails in production
+
 **Solution**:
+
 ```bash
 1. Check environment variables
 2. Verify build process
@@ -429,6 +504,7 @@ useEffect(() => {
 ### Nuclear Options
 
 #### 1. Clear Everything
+
 ```bash
 1. Close all browser tabs
 2. Clear browser cache completely
@@ -438,6 +514,7 @@ useEffect(() => {
 ```
 
 #### 2. Verify Files
+
 ```bash
 1. Check all files saved
 2. Verify no uncommitted changes
@@ -446,6 +523,7 @@ useEffect(() => {
 ```
 
 #### 3. Check Environment
+
 ```bash
 1. Node version correct?
 2. Dependencies installed?
@@ -454,6 +532,7 @@ useEffect(() => {
 ```
 
 #### 4. Start Fresh
+
 ```bash
 1. Delete node_modules
 2. Delete package-lock.json
@@ -466,12 +545,14 @@ useEffect(() => {
 ## 📚 Reference Materials
 
 ### Quick Links
+
 - Health Check Report: `/HEALTH_CHECK_RESULT.md`
 - Verification Checklist: `/VERIFICATION_CHECKLIST.md`
 - Status Report: `/STATUS_REPORT.md`
 - App Summary: `/APP_SUMMARY.md`
 
 ### Important Files
+
 - Mock Data: `/lib/mockData.ts`
 - Type Definitions: `/types/index.ts`
 - Main App: `/App.tsx`
@@ -482,18 +563,21 @@ useEffect(() => {
 ## 🎯 Prevention Tips
 
 ### Before Making Changes
+
 1. ✅ Read relevant documentation
 2. ✅ Understand data flow
 3. ✅ Check types match
 4. ✅ Test in isolation
 
 ### After Making Changes
+
 1. ✅ Check browser console
 2. ✅ Test all affected views
 3. ✅ Verify mobile layout
 4. ✅ Run health check
 
 ### Best Practices
+
 1. ✅ Use optional chaining (?.)
 2. ✅ Check array length before map
 3. ✅ Provide default values
@@ -505,6 +589,7 @@ useEffect(() => {
 ## 📞 Getting Help
 
 ### Information to Provide
+
 1. Error message (exact text)
 2. File and line number
 3. What you were trying to do
@@ -513,12 +598,13 @@ useEffect(() => {
 6. Code snippet if relevant
 
 ### Diagnostic Commands
+
 ```javascript
 // In browser console:
-console.log('mockVehicles:', mockVehicles);
-console.log('mockStaff:', mockStaff);
-console.log('mockShifts:', mockShifts);
-console.log('mockChatChannels:', mockChatChannels);
+console.log("mockVehicles:", mockVehicles);
+console.log("mockStaff:", mockStaff);
+console.log("mockShifts:", mockShifts);
+console.log("mockChatChannels:", mockChatChannels);
 ```
 
 ---
@@ -526,6 +612,7 @@ console.log('mockChatChannels:', mockChatChannels);
 ## ✅ Verification After Fix
 
 After applying any fix:
+
 1. [ ] Error gone from console
 2. [ ] Feature works as expected
 3. [ ] No new errors introduced
@@ -538,6 +625,7 @@ After applying any fix:
 ## 🎉 Success!
 
 If issue resolved:
+
 1. Document what fixed it
 2. Test thoroughly
 3. Check for similar issues elsewhere

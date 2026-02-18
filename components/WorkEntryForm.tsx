@@ -1,12 +1,18 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { WorkEntry, WorkType } from '@/components/types';
-import { workTypeLabels } from '@/components/lib/mockData';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { WorkEntry, WorkType } from "@/components/types";
+import { workTypeLabels } from "@/components/lib/mockData";
 
 interface WorkEntryFormProps {
   vehicleId: string;
@@ -17,11 +23,11 @@ interface WorkEntryFormProps {
 export function WorkEntryForm({ vehicleId, onSubmit, onCancel }: WorkEntryFormProps) {
   const [formData, setFormData] = useState<Partial<WorkEntry>>({
     vehicleId,
-    technicianName: '',
-    workType: 'exterior-only',
+    technicianName: "",
+    workType: "exterior-only",
     duration: 30,
     cost: 20,
-    notes: '',
+    notes: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -30,12 +36,12 @@ export function WorkEntryForm({ vehicleId, onSubmit, onCancel }: WorkEntryFormPr
   };
 
   const workTypePricing: Record<WorkType, { duration: number; cost: number }> = {
-    'premium-full': { duration: 75, cost: 45 },
-    'exterior-only': { duration: 30, cost: 20 },
-    'interior-only': { duration: 45, cost: 25 },
-    'disinfection': { duration: 20, cost: 15 },
-    'wax': { duration: 25, cost: 18 },
-    'detailing': { duration: 120, cost: 80 },
+    "premium-full": { duration: 75, cost: 45 },
+    "exterior-only": { duration: 30, cost: 20 },
+    "interior-only": { duration: 45, cost: 25 },
+    disinfection: { duration: 20, cost: 15 },
+    wax: { duration: 25, cost: 18 },
+    detailing: { duration: 120, cost: 80 },
   };
 
   const handleWorkTypeChange = (workType: WorkType) => {

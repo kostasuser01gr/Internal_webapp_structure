@@ -9,12 +9,14 @@
 ## 📋 Πριν Ξεκινήσετε
 
 ### Τι Χρειάζεστε
+
 - ✅ Πρόσβαση στην εφαρμογή (URL: `your-app-url.vercel.app`)
 - ✅ Σύγχρονο browser (Chrome, Firefox, Safari, Edge)
 - ✅ Σύνδεση internet
 - ✅ (Προαιρετικά) Mobile device για field work
 
 ### Υποστηριζόμενες Συσκευές
+
 - 💻 Desktop/Laptop
 - 📱 Smartphone (iOS/Android)
 - 📲 Tablet (iPad, Android tablets)
@@ -25,15 +27,18 @@
 ## 🎯 Βήμα 1: Προσθήκη Πρώτου Οχήματος
 
 ### Μέθοδος A: Από Dashboard
+
 1. Ανοίξτε την εφαρμογή
 2. Στο Dashboard, δείτε το section "Πρόσφατα Οχήματα"
 3. Κλικ στο κουμπί **"Προσθήκη Οχήματος"**
 
 ### Μέθοδος B: Από Navigation
+
 1. Κλικ στο **"Νέο Όχημα"** στο αριστερό μενού
 2. Συμπληρώστε τη φόρμα
 
 ### Πεδία Φόρμας
+
 ```
 📝 Αριθμός Κυκλοφορίας*  → π.χ. ΑΒΓ-1234
 🏢 Εταιρεία*             → Goldcar ή Europcar
@@ -45,6 +50,7 @@
 ```
 
 ### Παράδειγμα
+
 ```
 Αρ. Κυκλοφορίας: ΧΨΖ-8765
 Εταιρεία: Goldcar
@@ -59,15 +65,16 @@
 ## 🎯 Βήμα 2: Καταχώρηση Εργασίας
 
 ### Πότε να Καταχωρήσετε Εργασία
+
 - ✅ Μόλις ολοκληρωθεί ένα πλύσιμο
 - ✅ Πριν παραδώσετε το όχημα
 - ✅ Για documentation & τιμολόγηση
 
 ### Διαδικασία
+
 1. **Βρείτε το Όχημα**
    - Dashboard → "Πρόσφατα Οχήματα"
    - ή Navigation → "Οχήματα"
-   
 2. **Κλικ στο Eye Icon** (👁️) για προβολή λεπτομερειών
 
 3. **Κλικ "Νέα Εργασία"**
@@ -82,14 +89,15 @@
    ```
 
 ### Τύποι Εργασιών
-| Τύπος | Διάρκεια | Κόστος | Περιγραφή |
-|-------|----------|--------|-----------|
-| 🌟 **Premium Πλήρης** | 75 λεπτά | €45 | Πλήρης πλύση + interior + wax |
-| 🚗 **Εξωτερικό Μόνο** | 30 λεπτά | €20 | Μόνο εξωτερική πλύση |
-| 🪑 **Εσωτερικό Μόνο** | 45 λεπτά | €25 | Καθάρισμα εσωτερικού χώρου |
-| 🧼 **Απολύμανση** | 20 λεπτά | €15 | Απολύμανση επιφανειών |
-| 💎 **Κερί** | 25 λεπτά | €18 | Εφαρμογή κεριού |
-| ✨ **Detailing** | 120 λεπτά | €80 | Πλήρης detailing |
+
+| Τύπος                 | Διάρκεια  | Κόστος | Περιγραφή                     |
+| --------------------- | --------- | ------ | ----------------------------- |
+| 🌟 **Premium Πλήρης** | 75 λεπτά  | €45    | Πλήρης πλύση + interior + wax |
+| 🚗 **Εξωτερικό Μόνο** | 30 λεπτά  | €20    | Μόνο εξωτερική πλύση          |
+| 🪑 **Εσωτερικό Μόνο** | 45 λεπτά  | €25    | Καθάρισμα εσωτερικού χώρου    |
+| 🧼 **Απολύμανση**     | 20 λεπτά  | €15    | Απολύμανση επιφανειών         |
+| 💎 **Κερί**           | 25 λεπτά  | €18    | Εφαρμογή κεριού               |
+| ✨ **Detailing**      | 120 λεπτά | €80    | Πλήρης detailing              |
 
 **💡 Tip:** Ο χρόνος και το κόστος υπολογίζονται αυτόματα, αλλά μπορείτε να τα αλλάξετε!
 
@@ -98,6 +106,7 @@
 ## 🎯 Βήμα 3: Χρήση Team Chat
 
 ### Ξεκινώντας
+
 1. Navigation → **"Team Chat"**
 2. Επιλέξτε κανάλι από τα αριστερά:
    - 💬 **Γενικά** - Γενική συζήτηση
@@ -106,6 +115,7 @@
    - 🔧 **Τεχνική Υποστήριξη** - Tech issues
 
 ### Αποστολή Μηνύματος
+
 ```
 1. Επιλέξτε κανάλι
 2. Γράψτε στο κάτω πεδίο
@@ -113,11 +123,13 @@
 ```
 
 ### Shortcuts
+
 - **Enter** → Αποστολή
 - **Shift + Enter** → Νέα γραμμή
 - **Hover** → Reactions & actions
 
 ### Features
+
 - ✅ Real-time messaging
 - ✅ Emoji reactions
 - ✅ Direct messages (1-on-1)
@@ -129,6 +141,7 @@
 ## 🎯 Βήμα 4: Προβολή Στατιστικών
 
 ### Dashboard Overview
+
 ```
 📊 6 Stats Cards:
 ├── Συνολικά Οχήματα
@@ -140,13 +153,14 @@
 ```
 
 ### Αναλυτικές Αναφορές
+
 Navigation → **"Αναφορές"**
 
 #### 3 Tabs:
+
 1. **Ημερήσια Απόδοση**
    - Bar chart οχημάτων & εσόδων
    - 7-day view
-   
 2. **Τύποι Εργασιών**
    - Pie chart κατανομής
    - Ποσοστά & counts
@@ -160,6 +174,7 @@ Navigation → **"Αναφορές"**
 ## 📱 Mobile Tips
 
 ### Για Field Workers
+
 1. **Quick Add Vehicle**
    - Tap "+" στο top bar
    - Χρήση camera για φωτό
@@ -180,6 +195,7 @@ Navigation → **"Αναφορές"**
 ## 🔍 Αναζήτηση & Φίλτρα
 
 ### Vehicle Search
+
 ```
 🔎 Αναζήτηση:
    - Αριθμός κυκλοφορίας
@@ -188,18 +204,19 @@ Navigation → **"Αναφορές"**
 📊 Φίλτρα:
    - Εταιρεία (Goldcar/Europcar/Όλες)
    - Κατάσταση (Ενεργό, Εκκρεμεί, κλπ.)
-   
+
 🔄 Combine:
    - Μπορείτε να συνδυάσετε αναζήτηση + φίλτρα
 ```
 
 ### Παράδειγμα
+
 ```
 Αναζήτηση: "ΧΨΖ"
 Εταιρεία: Goldcar
 Κατάσταση: Εκκρεμεί
 
-→ Αποτέλεσμα: Όλα τα Goldcar οχήματα που 
+→ Αποτέλεσμα: Όλα τα Goldcar οχήματα που
   περιέχουν "ΧΨΖ" και έχουν κατάσταση "Εκκρεμεί"
 ```
 
@@ -208,11 +225,13 @@ Navigation → **"Αναφορές"**
 ## 🤖 AI Chatbot
 
 ### Πώς να το Χρησιμοποιήσετε
+
 1. Κλικ στο floating **Bot icon** (κάτω δεξιά)
 2. Γράψτε την ερώτησή σας
 3. Πάτε Enter
 
 ### Τι Μπορεί να Κάνει
+
 ```
 📊 Στατιστικά:
 "Πόσα οχήματα έχουμε σήμερα;"
@@ -236,6 +255,7 @@ Navigation → **"Αναφορές"**
 ## 🔄 Μαζικές Λειτουργίες
 
 ### Bulk Import
+
 ```
 1. Navigation → "Μαζικές Λειτουργίες"
 2. Tab: "Import"
@@ -246,6 +266,7 @@ Navigation → **"Αναφορές"**
 ```
 
 ### Bulk Export
+
 ```
 1. Tab: "Export"
 2. Επιλέξτε φίλτρα:
@@ -261,6 +282,7 @@ Navigation → **"Αναφορές"**
 ## 🎨 Company Colors
 
 ### Visual Guide
+
 ```
 🟠 Goldcar (#F59E0B)
    - Warm Orange
@@ -274,6 +296,7 @@ Navigation → **"Αναφορές"**
 ```
 
 ### Που τα Βλέπετε
+
 - ✅ Vehicle table (colored dot)
 - ✅ Dashboard stats
 - ✅ Vehicle details header
@@ -285,6 +308,7 @@ Navigation → **"Αναφορές"**
 ## ⚙️ Ρυθμίσεις & Προσαρμογή
 
 ### User Profile
+
 ```
 Bottom sidebar → Settings icon
 ├── Προφίλ χρήστη
@@ -294,13 +318,14 @@ Bottom sidebar → Settings icon
 ```
 
 ### Εταιρεία Settings
+
 ```
 🏢 Default Company:
    - Ορίστε default για γρηγορότερη καταχώρηση
-   
+
 📊 Dashboard:
    - Προσαρμογή cards που εμφανίζονται
-   
+
 🔔 Notifications:
    - Email alerts
    - Browser push (soon)
@@ -313,6 +338,7 @@ Bottom sidebar → Settings icon
 ### Έχετε Πρόβλημα;
 
 #### 1. Check Documentation
+
 ```
 📚 Διαθέσιμα Docs:
 ├── QUICK_START.md (αυτό το αρχείο)
@@ -322,6 +348,7 @@ Bottom sidebar → Settings icon
 ```
 
 #### 2. AI Chatbot
+
 ```
 Ρωτήστε το AI:
 "Πώς κάνω [X];"
@@ -329,12 +356,14 @@ Bottom sidebar → Settings icon
 ```
 
 #### 3. Team Chat
+
 ```
 Κανάλι: Τεχνική Υποστήριξη
 → Ρωτήστε τους συναδέλφους
 ```
 
 #### 4. Contact Admin
+
 ```
 📧 Email: admin@carwash.com
 📞 Phone: +30 210 123 4567
@@ -346,6 +375,7 @@ Bottom sidebar → Settings icon
 ## 📈 Best Practices
 
 ### Daily Workflow
+
 ```
 🌅 Πρωί:
 ├── Check Dashboard stats
@@ -364,6 +394,7 @@ Bottom sidebar → Settings icon
 ```
 
 ### Data Entry Tips
+
 ```
 ✅ DO:
 - Καταχωρήστε αμέσως (real-time)
@@ -382,6 +413,7 @@ Bottom sidebar → Settings icon
 ## 🎓 Training Resources
 
 ### Video Tutorials (Coming Soon)
+
 ```
 📺 Playlists:
 ├── Getting Started (10 min)
@@ -392,6 +424,7 @@ Bottom sidebar → Settings icon
 ```
 
 ### Interactive Guide
+
 ```
 🎮 Η εφαρμογή περιλαμβάνει:
 - Tooltips on hover
@@ -405,21 +438,25 @@ Bottom sidebar → Settings icon
 ## 🚀 Next Steps
 
 ### Week 1
+
 - [ ] Προσθέστε όλα τα τρέχοντα οχήματα
 - [ ] Εξοικειωθείτε με το interface
 - [ ] Setup Team Chat channels
 
 ### Week 2
+
 - [ ] Καταχωρήστε daily work entries
 - [ ] Χρήση AI για insights
 - [ ] Review αναφορών
 
 ### Week 3
+
 - [ ] Optimize workflow
 - [ ] Εκμετάλλευση bulk operations
 - [ ] Train νέα μέλη ομάδας
 
 ### Month 2+
+
 - [ ] Advanced analytics
 - [ ] Custom reports
 - [ ] Process optimization
@@ -428,9 +465,10 @@ Bottom sidebar → Settings icon
 
 ## 🎉 Συγχαρητήρια!
 
-Τώρα γνωρίζετε τα basics! Ξεκινήστε με το **Βήμα 1** και χτίστε το momentum. 
+Τώρα γνωρίζετε τα basics! Ξεκινήστε με το **Βήμα 1** και χτίστε το momentum.
 
 **Remember:**
+
 - 💪 Practice makes perfect
 - 🤝 Ρωτήστε τους συναδέλφους
 - 🤖 Χρησιμοποιήστε το AI
@@ -440,4 +478,4 @@ Bottom sidebar → Settings icon
 
 **Happy Washing! 🚗💦✨**
 
-*Questions? → Team Chat → Τεχνική Υποστήριξη*
+_Questions? → Team Chat → Τεχνική Υποστήριξη_

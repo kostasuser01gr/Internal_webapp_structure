@@ -3,6 +3,7 @@
 ## Επισκόπηση Συστήματος
 
 Το **Shift Management System** δημιουργεί αυτόματα βάρδιες εργασίας βασισμένες σε:
+
 - 📊 Κρατήσεις (από Excel upload)
 - 👥 Διαθέσιμο προσωπικό
 - 🔧 Δεξιότητες προσωπικού
@@ -68,11 +69,13 @@ Algorithm Steps:
 ```
 
 ### Υποστηριζόμενοι Διαχωριστές
+
 - `,` (κόμμα - CSV)
 - `;` (ερωτηματικό)
 - `\t` (tab - Excel)
 
 ### Υποστηριζόμενες Ημερομηνίες
+
 ```
 ✓ DD/MM/YYYY  (21/10/2025)
 ✓ YYYY-MM-DD  (2025-10-21)
@@ -81,14 +84,14 @@ Algorithm Steps:
 
 ### Mapping Τύπων Εργασίας
 
-| Στο Excel | Στο Σύστημα |
-|-----------|-------------|
-| premium, full | premium-full |
-| exterior, εξωτερικό | exterior-only |
-| interior, εσωτερικό | interior-only |
-| disinfection, απολύμανση | disinfection |
-| wax, κερί | wax |
-| detailing | detailing |
+| Στο Excel                | Στο Σύστημα   |
+| ------------------------ | ------------- |
+| premium, full            | premium-full  |
+| exterior, εξωτερικό      | exterior-only |
+| interior, εσωτερικό      | interior-only |
+| disinfection, απολύμανση | disinfection  |
+| wax, κερί                | wax           |
+| detailing                | detailing     |
 
 ### Παράδειγμα Ελληνικά
 
@@ -142,17 +145,18 @@ Skills: [
 
 ### Κατάσταση Προσωπικού
 
-| Κατάσταση | Περιγραφή | Shift Assignment |
-|-----------|-----------|------------------|
-| Ενεργός | Διαθέσιμος για εργασία | ✅ Ναι |
-| Ανενεργός | Προσωρινά μη διαθέσιμος | ❌ Όχι |
-| Σε Άδεια | Εγκεκριμένη άδεια | ❌ Όχι |
+| Κατάσταση | Περιγραφή               | Shift Assignment |
+| --------- | ----------------------- | ---------------- |
+| Ενεργός   | Διαθέσιμος για εργασία  | ✅ Ναι           |
+| Ανενεργός | Προσωρινά μη διαθέσιμος | ❌ Όχι           |
+| Σε Άδεια  | Εγκεκριμένη άδεια       | ❌ Όχι           |
 
 ---
 
 ## 🔄 Αλγόριθμος Δημιουργίας Βάρδιων
 
 ### Input Data
+
 ```typescript
 {
   reservations: Reservation[],  // Από Excel
@@ -164,72 +168,84 @@ Skills: [
 ### Step-by-Step Process
 
 #### Step 1: Φιλτράρισμα Διαθέσιμου Προσωπικού
+
 ```typescript
-availableStaff = staff.filter(s => {
+availableStaff = staff.filter((s) => {
   // Πρέπει να είναι ενεργός
-  if (s.status !== 'active') return false;
-  
+  if (s.status !== "active") return false;
+
   // Δεν πρέπει να έχει άδεια την ημέρα
-  const hasLeave = leaveRequests.some(lr => 
-    lr.staffId === s.id &&
-    lr.status === 'approved' &&
-    isDateInRange(targetDate, lr.startDate, lr.endDate)
+  const hasLeave = leaveRequests.some(
+    (lr) =>
+      lr.staffId === s.id &&
+      lr.status === "approved" &&
+      isDateInRange(targetDate, lr.startDate, lr.endDate)
   );
-  
+
   return !hasLeave;
 });
 ```
 
 #### Step 2: Group Κρατήσεις
+
 ```typescript
 // Ανά ημέρα
-dailyReservations = groupBy(reservations, 'date');
+dailyReservations = groupBy(reservations, "date");
 
 // Ανά time slot
-morningSlots = filter(reservations, r => 
-  r.timeSlot.startsWith('08') || 
-  r.timeSlot.startsWith('09') ||
-  r.timeSlot.startsWith('10') ||
-  r.timeSlot.startsWith('11')
+morningSlots = filter(
+  reservations,
+  (r) =>
+    r.timeSlot.startsWith("08") ||
+    r.timeSlot.startsWith("09") ||
+    r.timeSlot.startsWith("10") ||
+    r.timeSlot.startsWith("11")
 );
 
-afternoonSlots = filter(reservations, r =>
-  r.timeSlot.startsWith('12') ||
-  r.timeSlot.startsWith('13') ||
-  r.timeSlot.startsWith('14') ||
-  r.timeSlot.startsWith('15')
+afternoonSlots = filter(
+  reservations,
+  (r) =>
+    r.timeSlot.startsWith("12") ||
+    r.timeSlot.startsWith("13") ||
+    r.timeSlot.startsWith("14") ||
+    r.timeSlot.startsWith("15")
 );
 
-eveningSlots = filter(reservations, r =>
-  r.timeSlot.startsWith('16') ||
-  r.timeSlot.startsWith('17') ||
-  r.timeSlot.startsWith('18') ||
-  r.timeSlot.startsWith('19')
+eveningSlots = filter(
+  reservations,
+  (r) =>
+    r.timeSlot.startsWith("16") ||
+    r.timeSlot.startsWith("17") ||
+    r.timeSlot.startsWith("18") ||
+    r.timeSlot.startsWith("19")
 );
 ```
 
 #### Step 3: Υπολογισμός Αναγκών
+
 ```typescript
 // Κάθε πλύντης μπορεί να κάνει ~3 πλύσεις ανά shift (4 ώρες)
 staffNeeded = {
   morning: Math.ceil(morningSlots.length / 3),
   afternoon: Math.ceil(afternoonSlots.length / 3),
-  evening: Math.ceil(eveningSlots.length / 3)
+  evening: Math.ceil(eveningSlots.length / 3),
 };
 ```
 
 #### Step 4: Matching Δεξιοτήτων
+
 ```typescript
 function canHandleReservation(staff: Staff, reservation: Reservation): boolean {
   // Αν δεν έχει καθορισμένες δεξιότητες, μπορεί όλα
   if (!staff.skills || staff.skills.length === 0) return true;
-  
+
   // Αλλιώς έλεγξε αν έχει τη δεξιότητα
   return staff.skills.includes(reservation.workType);
 }
 ```
 
 #### Step 5: Δημιουργία Βάρδιων
+
 ```typescript
 shifts = [];
 let staffIndex = 0;
@@ -237,24 +253,24 @@ let staffIndex = 0;
 // Morning Shifts
 for (let i = 0; i < staffNeeded.morning; i++) {
   const staff = availableStaff[staffIndex % availableStaff.length];
-  
+
   // Βρες κρατήσεις που μπορεί να κάνει
-  const assignableReservations = morningSlots.filter(r => 
-    canHandleReservation(staff, r)
-  ).slice(i * 3, (i + 1) * 3);
-  
+  const assignableReservations = morningSlots
+    .filter((r) => canHandleReservation(staff, r))
+    .slice(i * 3, (i + 1) * 3);
+
   shifts.push({
     id: generateId(),
     staffId: staff.id,
     date: targetDate,
-    startTime: '08:00',
-    endTime: '12:00',
-    type: 'morning',
-    status: 'scheduled',
-    assignedReservations: assignableReservations.map(r => r.id),
-    autoGenerated: true
+    startTime: "08:00",
+    endTime: "12:00",
+    type: "morning",
+    status: "scheduled",
+    assignedReservations: assignableReservations.map((r) => r.id),
+    autoGenerated: true,
   });
-  
+
   staffIndex++;
 }
 
@@ -274,16 +290,17 @@ for (let i = 0; i < staffNeeded.morning; i++) {
 
 ### Προκαθορισμένοι Τύποι
 
-| Τύπος | Ώρες | Διάρκεια | Κρατήσεις |
-|-------|------|----------|-----------|
-| **Morning** | 08:00-12:00 | 4h | ~3 οχήματα |
-| **Afternoon** | 12:00-16:00 | 4h | ~3 οχήματα |
-| **Evening** | 16:00-20:00 | 4h | ~3 οχήματα |
-| **Full-Day** | 08:00-16:00 | 8h | ~6 οχήματα |
+| Τύπος         | Ώρες        | Διάρκεια | Κρατήσεις  |
+| ------------- | ----------- | -------- | ---------- |
+| **Morning**   | 08:00-12:00 | 4h       | ~3 οχήματα |
+| **Afternoon** | 12:00-16:00 | 4h       | ~3 οχήματα |
+| **Evening**   | 16:00-20:00 | 4h       | ~3 οχήματα |
+| **Full-Day**  | 08:00-16:00 | 8h       | ~6 οχήματα |
 
 ### Custom Shifts
 
 Μπορείτε να δημιουργήσετε custom βάρδιες:
+
 ```
 Ώρες: Οποιεσδήποτε
 Διάρκεια: 1-12 ώρες
@@ -297,6 +314,7 @@ for (let i = 0; i < staffNeeded.morning; i++) {
 ### Τύποι Αιτημάτων
 
 #### 1. Swap (Ανταλλαγή)
+
 ```
 Πλύντης Α: "Θέλω να ανταλλάξω τη βάρδια μου με τον Β"
 
@@ -310,6 +328,7 @@ After Approval:
 ```
 
 #### 2. Cancel (Ακύρωση)
+
 ```
 Πλύντης: "Δεν μπορώ να δουλέψω αυτή τη βάρδια"
 
@@ -318,6 +337,7 @@ Status: scheduled → cancelled
 ```
 
 #### 3. Time Change (Αλλαγή Ώρας)
+
 ```
 Original: 08:00-12:00
 Request:  10:00-14:00
@@ -362,12 +382,12 @@ Shifts    Staff
 
 ### Τύποι Αδειών
 
-| Τύπος | Περιγραφή | Approval Time |
-|-------|-----------|---------------|
-| **Vacation** | Κανονική άδεια | 2-3 μέρες |
-| **Sick** | Ασθένεια | Άμεσα |
-| **Personal** | Προσωπική | 1-2 μέρες |
-| **Emergency** | Έκτακτη ανάγκη | Άμεσα |
+| Τύπος         | Περιγραφή      | Approval Time |
+| ------------- | -------------- | ------------- |
+| **Vacation**  | Κανονική άδεια | 2-3 μέρες     |
+| **Sick**      | Ασθένεια       | Άμεσα         |
+| **Personal**  | Προσωπική      | 1-2 μέρες     |
+| **Emergency** | Έκτακτη ανάγκη | Άμεσα         |
 
 ### Υποβολή Αιτήματος
 
@@ -491,11 +511,13 @@ Average: 63%
 #### "Δεν δημιουργούνται βάρδιες"
 
 **Πιθανές Αιτίες:**
+
 - Δεν υπάρχει διαθέσιμο προσωπικό
 - Όλοι σε άδεια
 - Δεν υπάρχουν κρατήσεις
 
 **Λύση:**
+
 1. Έλεγχος: Προσωπικό → Status
 2. Έλεγχος: Αιτήματα Αδειών
 3. Προσθήκη προσωπικού αν χρειάζεται
@@ -506,6 +528,7 @@ Average: 63%
 Κρατήσεις για detailing, αλλά κανείς δεν έχει τη δεξιότητα
 
 **Λύση:**
+
 1. Προσθήκη δεξιότητας σε υπάρχον προσωπικό
 2. Hiring νέου ειδικευμένου πλύντη
 3. Training υπάρχοντος προσωπικού
@@ -516,6 +539,7 @@ Average: 63%
 Πολλές κρατήσεις, λίγο προσωπικό
 
 **Λύση:**
+
 ```
 Options:
 1. Προσλήψεις (short-term/part-time)
@@ -553,11 +577,11 @@ Options:
 Before Shift:
   - SMS reminder (1 day before)
   - Confirm attendance
-  
+
 During Shift:
   - Team Chat για coordination
   - Quick updates
-  
+
 After Shift:
   - Feedback collection
   - Issues reporting
@@ -583,6 +607,7 @@ Monthly:
 ## 🚀 Quick Start Checklist
 
 ### Initial Setup
+
 - [ ] Προσθήκη όλου του προσωπικού
 - [ ] Ορισμός δεξιοτήτων
 - [ ] Download Excel template
@@ -591,6 +616,7 @@ Monthly:
 - [ ] Review πρώτες βάρδιες
 
 ### Weekly Process
+
 - [ ] Monday: Upload reservations
 - [ ] Generate shifts
 - [ ] Review & approve
@@ -599,6 +625,7 @@ Monthly:
 - [ ] End-of-week review
 
 ### Monthly Tasks
+
 - [ ] Leave balance check
 - [ ] Performance review
 - [ ] Skill assessment
@@ -608,4 +635,4 @@ Monthly:
 
 **Έτοιμοι για αποδοτική διαχείριση βάρδιων! 📅✨**
 
-*Questions? → Team Chat → Τεχνική Υποστήριξη*
+_Questions? → Team Chat → Τεχνική Υποστήριξη_

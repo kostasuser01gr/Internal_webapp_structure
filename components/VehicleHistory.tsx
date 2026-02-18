@@ -1,9 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Clock, User, DollarSign, FileText, Building2 } from 'lucide-react';
-import { WorkEntry, Vehicle } from '@/components/types';
-import { workTypeLabels, companies } from '@/components/lib/mockData';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Clock, User, DollarSign, FileText, Building2 } from "lucide-react";
+import { WorkEntry, Vehicle } from "@/components/types";
+import { workTypeLabels, companies } from "@/components/lib/mockData";
 
 interface VehicleHistoryProps {
   vehicle: Vehicle;
@@ -29,19 +29,19 @@ export function VehicleHistory({ vehicle, workEntries, onAddWork }: VehicleHisto
               <CardTitle>Όχημα: {vehicle.licensePlate}</CardTitle>
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <Building2 className="h-4 w-4" />
-                <span 
+                <span
                   className="inline-flex items-center gap-2"
-                  style={{ 
-                    color: companies.find(c => c.id === vehicle.companyId)?.color 
+                  style={{
+                    color: companies.find((c) => c.id === vehicle.companyId)?.color,
                   }}
                 >
                   <span
                     className="w-2 h-2 rounded-full"
                     style={{
-                      backgroundColor: companies.find(c => c.id === vehicle.companyId)?.color,
+                      backgroundColor: companies.find((c) => c.id === vehicle.companyId)?.color,
                     }}
                   />
-                  <strong>{companies.find(c => c.id === vehicle.companyId)?.name}</strong>
+                  <strong>{companies.find((c) => c.id === vehicle.companyId)?.name}</strong>
                 </span>
               </div>
             </div>
@@ -87,9 +87,7 @@ export function VehicleHistory({ vehicle, workEntries, onAddWork }: VehicleHisto
         </CardHeader>
         <CardContent>
           {sortedEntries.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
-              Δεν υπάρχει ιστορικό εργασιών
-            </div>
+            <div className="text-center py-8 text-gray-500">Δεν υπάρχει ιστορικό εργασιών</div>
           ) : (
             <div className="space-y-4">
               {sortedEntries.map((entry) => (
@@ -103,12 +101,12 @@ export function VehicleHistory({ vehicle, workEntries, onAddWork }: VehicleHisto
                         {workTypeLabels[entry.workType] || entry.workType}
                       </Badge>
                       <span className="text-sm text-gray-600">
-                        {new Date(entry.date).toLocaleDateString('el-GR', {
-                          day: '2-digit',
-                          month: '2-digit',
-                          year: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit',
+                        {new Date(entry.date).toLocaleDateString("el-GR", {
+                          day: "2-digit",
+                          month: "2-digit",
+                          year: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
                         })}
                       </span>
                     </div>
@@ -118,8 +116,7 @@ export function VehicleHistory({ vehicle, workEntries, onAddWork }: VehicleHisto
                         {entry.duration} λεπτά
                       </span>
                       <span className="flex items-center gap-1">
-                        <DollarSign className="h-4 w-4 text-gray-500" />
-                        €{entry.cost}
+                        <DollarSign className="h-4 w-4 text-gray-500" />€{entry.cost}
                       </span>
                     </div>
                   </div>
@@ -127,9 +124,7 @@ export function VehicleHistory({ vehicle, workEntries, onAddWork }: VehicleHisto
                     <User className="h-4 w-4" />
                     <span>Τεχνικός: {entry.technicianName}</span>
                   </div>
-                  {entry.notes && (
-                    <p className="text-sm text-gray-700 mt-2">{entry.notes}</p>
-                  )}
+                  {entry.notes && <p className="text-sm text-gray-700 mt-2">{entry.notes}</p>}
                 </div>
               ))}
             </div>

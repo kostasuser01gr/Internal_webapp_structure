@@ -1,12 +1,25 @@
-import { useState, useMemo } from 'react';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Eye, Edit, Trash2, Search, Car } from 'lucide-react';
-import { Vehicle } from '@/components/types';
-import { companies, statusLabels } from '@/components/lib/mockData';
+import { useState, useMemo } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Eye, Edit, Trash2, Search, Car } from "lucide-react";
+import { Vehicle } from "@/components/types";
+import { companies, statusLabels } from "@/components/lib/mockData";
 
 interface VehicleTableProps {
   vehicles: Vehicle[];
@@ -16,36 +29,36 @@ interface VehicleTableProps {
 }
 
 export function VehicleTable({ vehicles, onViewDetails, onEdit, onDelete }: VehicleTableProps) {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filterCompany, setFilterCompany] = useState<string>('all');
-  const [filterStatus, setFilterStatus] = useState<string>('all');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterCompany, setFilterCompany] = useState<string>("all");
+  const [filterStatus, setFilterStatus] = useState<string>("all");
 
   const filteredVehicles = useMemo(() => {
     return vehicles.filter((vehicle) => {
       const matchesSearch = vehicle.licensePlate.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesCompany = filterCompany === 'all' || vehicle.companyId === filterCompany;
-      const matchesStatus = filterStatus === 'all' || vehicle.status === filterStatus;
+      const matchesCompany = filterCompany === "all" || vehicle.companyId === filterCompany;
+      const matchesStatus = filterStatus === "all" || vehicle.status === filterStatus;
       return matchesSearch && matchesCompany && matchesStatus;
     });
   }, [vehicles, searchTerm, filterCompany, filterStatus]);
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'completed':
-        return 'bg-green-100 text-green-800';
-      case 'active':
-        return 'bg-blue-100 text-blue-800';
-      case 'pending':
-        return 'bg-orange-100 text-orange-800';
-      case 'maintenance':
-        return 'bg-gray-100 text-gray-800';
+      case "completed":
+        return "bg-green-100 text-green-800";
+      case "active":
+        return "bg-blue-100 text-blue-800";
+      case "pending":
+        return "bg-orange-100 text-orange-800";
+      case "maintenance":
+        return "bg-gray-100 text-gray-800";
       default:
-        return 'bg-gray-100 text-gray-800';
+        return "bg-gray-100 text-gray-800";
     }
   };
 
   const getCompanyName = (companyId: string) => {
-    return companies.find(c => c.id === companyId)?.name || 'N/A';
+    return companies.find((c) => c.id === companyId)?.name || "N/A";
   };
 
   return (
@@ -112,9 +125,9 @@ export function VehicleTable({ vehicles, onViewDetails, onEdit, onDelete }: Vehi
                     <div>
                       <p className="text-gray-900 mb-1">Δεν βρέθηκαν οχήματα</p>
                       <p className="text-sm text-gray-500">
-                        {vehicles.length === 0 
-                          ? 'Ξεκινήστε προσθέτοντας το πρώτο όχημα' 
-                          : 'Δοκιμάστε να αλλάξετε τα φίλτρα αναζήτησης'}
+                        {vehicles.length === 0
+                          ? "Ξεκινήστε προσθέτοντας το πρώτο όχημα"
+                          : "Δοκιμάστε να αλλάξετε τα φίλτρα αναζήτησης"}
                       </p>
                     </div>
                   </div>
@@ -129,7 +142,7 @@ export function VehicleTable({ vehicles, onViewDetails, onEdit, onDelete }: Vehi
                       <span
                         className="w-2 h-2 rounded-full"
                         style={{
-                          backgroundColor: companies.find(c => c.id === vehicle.companyId)?.color,
+                          backgroundColor: companies.find((c) => c.id === vehicle.companyId)?.color,
                         }}
                       />
                       {getCompanyName(vehicle.companyId)}
@@ -141,32 +154,20 @@ export function VehicleTable({ vehicles, onViewDetails, onEdit, onDelete }: Vehi
                     </Badge>
                   </TableCell>
                   <TableCell className="hidden md:table-cell">
-                    {new Date(vehicle.createdAt).toLocaleDateString('el-GR')}
+                    {new Date(vehicle.createdAt).toLocaleDateString("el-GR")}
                   </TableCell>
                   <TableCell className="hidden md:table-cell max-w-[200px] truncate">
-                    {vehicle.notes || '-'}
+                    {vehicle.notes || "-"}
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-2">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => onViewDetails(vehicle)}
-                      >
+                      <Button variant="ghost" size="sm" onClick={() => onViewDetails(vehicle)}>
                         <Eye className="h-4 w-4" />
                       </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => onEdit(vehicle)}
-                      >
+                      <Button variant="ghost" size="sm" onClick={() => onEdit(vehicle)}>
                         <Edit className="h-4 w-4" />
                       </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => onDelete(vehicle.id)}
-                      >
+                      <Button variant="ghost" size="sm" onClick={() => onDelete(vehicle.id)}>
                         <Trash2 className="h-4 w-4 text-red-600" />
                       </Button>
                     </div>

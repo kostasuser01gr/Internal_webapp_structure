@@ -124,8 +124,8 @@ export type TeamUser = {
   id: string;
   name: string;
   avatar?: string;
-  role: 'admin' | 'technician' | 'manager';
-  status: 'online' | 'offline' | 'away';
+  role: "admin" | "technician" | "manager";
+  status: "online" | "offline" | "away";
   lastSeen?: Date;
 };
 
@@ -143,7 +143,7 @@ export type TeamMessage = {
 export type ChatChannel = {
   id: string;
   name: string;
-  type: 'channel' | 'direct' | 'group';
+  type: "channel" | "direct" | "group";
   description?: string;
   icon?: string;
   participants: string[];
@@ -171,17 +171,17 @@ export const mockTeamMessages: Record<string, TeamMessage[]>;
 ### Επιλογή 1: Supabase Realtime
 
 ```typescript
-import { supabase } from './lib/supabase';
+import { supabase } from "./lib/supabase";
 
 // Subscribe to new messages
 const channel = supabase
-  .channel('team-chat')
+  .channel("team-chat")
   .on(
-    'postgres_changes',
+    "postgres_changes",
     {
-      event: 'INSERT',
-      schema: 'public',
-      table: 'messages',
+      event: "INSERT",
+      schema: "public",
+      table: "messages",
       filter: `channel_id=eq.${channelId}`,
     },
     (payload) => {
@@ -191,42 +191,40 @@ const channel = supabase
   .subscribe();
 
 // Send message
-const { data, error } = await supabase
-  .from('messages')
-  .insert({
-    channel_id: channelId,
-    sender_id: userId,
-    content: message,
-  });
+const { data, error } = await supabase.from("messages").insert({
+  channel_id: channelId,
+  sender_id: userId,
+  content: message,
+});
 ```
 
 ### Επιλογή 2: Socket.io
 
 ```typescript
-import io from 'socket.io-client';
+import io from "socket.io-client";
 
-const socket = io('https://your-backend.com');
+const socket = io("https://your-backend.com");
 
 // Listen for messages
-socket.on('message', (message) => {
+socket.on("message", (message) => {
   setMessages((prev) => [...prev, message]);
 });
 
 // Send message
-socket.emit('send-message', {
+socket.emit("send-message", {
   channelId,
   content,
   senderId,
 });
 
 // Typing indicator
-socket.emit('typing', { channelId, userId, userName });
+socket.emit("typing", { channelId, userId, userName });
 ```
 
 ### Επιλογή 3: Firebase Realtime Database
 
 ```typescript
-import { ref, onValue, push } from 'firebase/database';
+import { ref, onValue, push } from "firebase/database";
 
 // Listen for messages
 const messagesRef = ref(db, `channels/${channelId}/messages`);
@@ -417,12 +415,12 @@ npx react-native init CarWashTeamChat
 
 ```typescript
 // Light/Dark mode toggle
-const [theme, setTheme] = useState('light');
+const [theme, setTheme] = useState("light");
 
 // Custom colors per company
 const companyTheme = {
-  'AutoClean Premium': '#3B82F6',
-  'SpeedWash Express': '#10B981',
+  "AutoClean Premium": "#3B82F6",
+  "SpeedWash Express": "#10B981",
 };
 ```
 

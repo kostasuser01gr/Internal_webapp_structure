@@ -39,6 +39,7 @@
 ### Ροές Εργασίας (Workflows)
 
 **Ροή 1: Καταχώρηση Νέου Οχήματος**
+
 ```
 1. Κλικ "Νέο Όχημα" → 2. Εισαγωγή αριθμού κυκλοφορίας
 3. Επιλογή εταιρείας → 4. Φωτογράφηση (mobile)
@@ -46,6 +47,7 @@
 ```
 
 **Ροή 2: Καταχώρηση Εργασίας**
+
 ```
 1. Επιλογή οχήματος από λίστα → 2. Προβολή ιστορικού
 3. "Νέα Εργασία" → 4. Επιλογή τύπου εργασίας (auto-calculate χρόνο/κόστος)
@@ -53,12 +55,14 @@
 ```
 
 **Ροή 3: Χρήση AI Chatbot**
+
 ```
 1. Κλικ floating bot button → 2. Ερώτημα (π.χ. "πόσα οχήματα σήμερα;")
 3. AI response με data και suggestions → 4. Προαιρετικά: εκτέλεση action buttons
 ```
 
 **Ροή 4: Μαζική Εισαγωγή**
+
 ```
 1. "Μαζικές Λειτουργίες" → 2. Tab "Εισαγωγή"
 3. Upload CSV/Excel → 4. Validation & preview
@@ -81,11 +85,11 @@ npm install openai
 
 ```typescript
 // /lib/openai.ts
-import OpenAI from 'openai';
+import OpenAI from "openai";
 
 const openai = new OpenAI({
   apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
-  dangerouslyAllowBrowser: true // Για development - σε production χρησιμοποιήστε API route
+  dangerouslyAllowBrowser: true, // Για development - σε production χρησιμοποιήστε API route
 });
 
 export async function getChatbotResponse(
@@ -120,7 +124,7 @@ export async function getChatbotResponse(
     model: "gpt-4",
     messages: [
       { role: "system", content: systemPrompt },
-      { role: "user", content: message }
+      { role: "user", content: message },
     ],
     temperature: 0.7,
     max_tokens: 500,
@@ -134,20 +138,20 @@ export async function getChatbotResponse(
 
 ```typescript
 // Στο /components/ChatBot.tsx
-import { getChatbotResponse } from '../lib/openai';
+import { getChatbotResponse } from "../lib/openai";
 
 const handleSend = async () => {
   if (!input.trim()) return;
 
   const userMessage: ChatMessage = {
     id: Date.now().toString(),
-    role: 'user',
+    role: "user",
     content: input,
     timestamp: new Date(),
   };
 
   setMessages((prev) => [...prev, userMessage]);
-  setInput('');
+  setInput("");
   setIsTyping(true);
 
   try {
@@ -160,14 +164,14 @@ const handleSend = async () => {
 
     const assistantMessage: ChatMessage = {
       id: Date.now().toString(),
-      role: 'assistant',
-      content: aiResponse || 'Συγνώμη, δεν μπόρεσα να επεξεργαστώ το αίτημα.',
+      role: "assistant",
+      content: aiResponse || "Συγνώμη, δεν μπόρεσα να επεξεργαστώ το αίτημα.",
       timestamp: new Date(),
     };
 
     setMessages((prev) => [...prev, assistantMessage]);
   } catch (error) {
-    console.error('AI Error:', error);
+    console.error("AI Error:", error);
     // Fallback σε mock responses
   } finally {
     setIsTyping(false);
@@ -178,16 +182,19 @@ const handleSend = async () => {
 ### Εναλλακτικές Λύσεις AI
 
 **1. Anthropic Claude API**
+
 - Παρόμοια με OpenAI
 - Εξαιρετικό για πολύπλοκες αναλύσεις
 - `npm install @anthropic-ai/sdk`
 
 **2. Local LLM (Ollama)**
+
 - Πλήρης έλεγχος και privacy
 - Δωρεάν
 - Απαιτεί server infrastructure
 
 **3. Google Gemini**
+
 - Καλή τιμή/απόδοση
 - `npm install @google/generative-ai`
 
@@ -198,6 +205,7 @@ const handleSend = async () => {
 ### Προτεινόμενη Λύση: Supabase
 
 #### Γιατί Supabase;
+
 - ✅ PostgreSQL database (έως 5,000+ εγγραφές)
 - ✅ Real-time subscriptions
 - ✅ Authentication built-in
@@ -284,7 +292,7 @@ CREATE POLICY "Allow authenticated access" ON work_entries
 
 ```typescript
 // /lib/supabase.ts
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
@@ -295,42 +303,35 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 export const vehiclesDB = {
   async getAll(companyId?: string) {
     let query = supabase
-      .from('vehicles')
-      .select('*, companies(name, color)')
-      .order('created_at', { ascending: false });
-    
+      .from("vehicles")
+      .select("*, companies(name, color)")
+      .order("created_at", { ascending: false });
+
     if (companyId) {
-      query = query.eq('company_id', companyId);
+      query = query.eq("company_id", companyId);
     }
-    
+
     const { data, error } = await query;
     return { data, error };
   },
 
   async create(vehicle: Partial<Vehicle>) {
-    const { data, error } = await supabase
-      .from('vehicles')
-      .insert(vehicle)
-      .select()
-      .single();
+    const { data, error } = await supabase.from("vehicles").insert(vehicle).select().single();
     return { data, error };
   },
 
   async update(id: string, updates: Partial<Vehicle>) {
     const { data, error } = await supabase
-      .from('vehicles')
+      .from("vehicles")
       .update(updates)
-      .eq('id', id)
+      .eq("id", id)
       .select()
       .single();
     return { data, error };
   },
 
   async delete(id: string) {
-    const { error } = await supabase
-      .from('vehicles')
-      .delete()
-      .eq('id', id);
+    const { error } = await supabase.from("vehicles").delete().eq("id", id);
     return { error };
   },
 };
@@ -338,19 +339,15 @@ export const vehiclesDB = {
 export const workEntriesDB = {
   async getByVehicle(vehicleId: string) {
     const { data, error } = await supabase
-      .from('work_entries')
-      .select('*')
-      .eq('vehicle_id', vehicleId)
-      .order('date', { ascending: false });
+      .from("work_entries")
+      .select("*")
+      .eq("vehicle_id", vehicleId)
+      .order("date", { ascending: false });
     return { data, error };
   },
 
   async create(entry: Partial<WorkEntry>) {
-    const { data, error } = await supabase
-      .from('work_entries')
-      .insert(entry)
-      .select()
-      .single();
+    const { data, error } = await supabase.from("work_entries").insert(entry).select().single();
     return { data, error };
   },
 };
@@ -360,23 +357,21 @@ export const workEntriesDB = {
 
 ```typescript
 // /lib/storage.ts
-import { supabase } from './supabase';
+import { supabase } from "./supabase";
 
 export async function uploadVehicleImage(file: File, vehicleId: string) {
-  const fileExt = file.name.split('.').pop();
+  const fileExt = file.name.split(".").pop();
   const fileName = `${vehicleId}-${Date.now()}.${fileExt}`;
   const filePath = `vehicles/${fileName}`;
 
-  const { data, error } = await supabase.storage
-    .from('vehicle-images')
-    .upload(filePath, file);
+  const { data, error } = await supabase.storage.from("vehicle-images").upload(filePath, file);
 
   if (error) throw error;
 
   // Get public URL
-  const { data: { publicUrl } } = supabase.storage
-    .from('vehicle-images')
-    .getPublicUrl(filePath);
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from("vehicle-images").getPublicUrl(filePath);
 
   return publicUrl;
 }
@@ -415,6 +410,7 @@ NEXT_PUBLIC_APP_URL=https://your-app.vercel.app
 ```
 
 Στο Vercel Dashboard:
+
 1. Project Settings → Environment Variables
 2. Προσθέστε όλα τα variables για Production, Preview, Development
 
@@ -453,18 +449,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
-      
+          node-version: "18"
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Run tests
         run: npm test
-      
+
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25
         with:
@@ -476,17 +472,20 @@ jobs:
 ### 5. Deployment Environments
 
 **Development**
+
 ```bash
 vercel dev
 ```
 
 **Preview (για testing)**
+
 ```bash
 git push origin feature-branch
 # Αυτόματο preview deployment από Vercel
 ```
 
 **Production**
+
 ```bash
 git push origin main
 # Αυτόματο production deployment
@@ -495,6 +494,7 @@ git push origin main
 ### 6. Custom Domain
 
 Στο Vercel Dashboard:
+
 1. Settings → Domains
 2. Add domain: `carwash.yourcompany.com`
 3. Configure DNS records (Vercel θα δώσει οδηγίες)
@@ -591,11 +591,13 @@ git push origin main
 ### Scalability
 
 Το σύστημα σχεδιάστηκε για:
+
 - **5,000 οχήματα** στη βάση
 - **5,000 καταχωρήσεις/ημέρα**
 - **Πολλαπλούς concurrent users**
 
 Αν χρειαστεί περισσότερη χωρητικότητα:
+
 - Upgrade Supabase tier
 - Database sharding
 - Read replicas
@@ -616,6 +618,7 @@ git push origin main
 ### Contact & Support
 
 Για ερωτήσεις ή βοήθεια, επικοινωνήστε:
+
 - Email: support@carwashpro.com
 - Docs: https://docs.carwashpro.com
 

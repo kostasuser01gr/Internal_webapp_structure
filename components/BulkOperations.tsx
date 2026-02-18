@@ -1,15 +1,21 @@
-import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Upload, Download, Edit3, Trash2, FileSpreadsheet, FileText } from 'lucide-react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Upload, Download, Edit3, Trash2, FileSpreadsheet, FileText } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export function BulkOperations() {
-  const [_selectedOperation, _setSelectedOperation] = useState('import');
+  const [_selectedOperation, _setSelectedOperation] = useState("import");
   const [importFile, setImportFile] = useState<File | null>(null);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +52,8 @@ export function BulkOperations() {
             <CardContent className="space-y-4">
               <Alert>
                 <AlertDescription>
-                  Το αρχείο πρέπει να περιέχει τις στήλες: Αρ. Κυκλοφορίας, Εταιρεία, Κατάσταση, Σημειώσεις
+                  Το αρχείο πρέπει να περιέχει τις στήλες: Αρ. Κυκλοφορίας, Εταιρεία, Κατάσταση,
+                  Σημειώσεις
                 </AlertDescription>
               </Alert>
 
@@ -61,7 +68,7 @@ export function BulkOperations() {
                 <label htmlFor="bulk-import" className="cursor-pointer">
                   <Upload className="mx-auto h-12 w-12 text-gray-400 mb-2" />
                   <p className="text-sm">
-                    {importFile ? importFile.name : 'Επιλέξτε αρχείο CSV ή Excel'}
+                    {importFile ? importFile.name : "Επιλέξτε αρχείο CSV ή Excel"}
                   </p>
                   <p className="text-xs text-gray-500 mt-1">Μέχρι 5,000 εγγραφές</p>
                 </label>
@@ -70,7 +77,7 @@ export function BulkOperations() {
               <div className="flex gap-3">
                 <Button className="flex-1" disabled={!importFile}>
                   <Upload className="mr-2 h-4 w-4" />
-                  Εισαγωγή {importFile ? `(${importFile.name})` : ''}
+                  Εισαγωγή {importFile ? `(${importFile.name})` : ""}
                 </Button>
                 <Button variant="outline">
                   <FileSpreadsheet className="mr-2 h-4 w-4" />
@@ -86,9 +93,7 @@ export function BulkOperations() {
           <Card>
             <CardHeader>
               <CardTitle>Εξαγωγή Δεδομένων</CardTitle>
-              <CardDescription>
-                Κατεβάστε τα δεδομένα σας σε διάφορες μορφές
-              </CardDescription>
+              <CardDescription>Κατεβάστε τα δεδομένα σας σε διάφορες μορφές</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
@@ -163,9 +168,7 @@ export function BulkOperations() {
           <Card>
             <CardHeader>
               <CardTitle>Μαζική Επεξεργασία</CardTitle>
-              <CardDescription>
-                Ενημερώστε πολλά οχήματα ταυτόχρονα
-              </CardDescription>
+              <CardDescription>Ενημερώστε πολλά οχήματα ταυτόχρονα</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <Alert>
@@ -220,9 +223,7 @@ export function BulkOperations() {
           <Card>
             <CardHeader>
               <CardTitle>Μαζική Διαγραφή</CardTitle>
-              <CardDescription>
-                Διαγράψτε πολλά οχήματα με βάση φίλτρα
-              </CardDescription>
+              <CardDescription>Διαγράψτε πολλά οχήματα με βάση φίλτρα</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <Alert className="border-red-200 bg-red-50">

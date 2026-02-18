@@ -9,17 +9,20 @@
 ## 🎯 Χαρακτηριστικά
 
 ### ✨ Απλό & Γρήγορο
+
 - **Minimal Interface**: Μόνο τα απαραίτητα πεδία
 - **Μεγάλα Κουμπιά**: Εύκολη χρήση σε κινητά/tablets
 - **Auto-fill**: Αυτόματη συμπλήρωση διάρκειας βάσει τύπου
 
 ### 🚀 Γρήγορη Καταχώρηση
+
 1. **Αριθμός Κυκλοφορίας** (1 πεδίο)
 2. **Εταιρεία** (2 κουμπιά: Goldcar/Europcar)
 3. **Τύπος Εργασίας** (6 προεπιλεγμένες επιλογές)
 4. **Επιβεβαίωση** και τέλος!
 
 ### 📊 Real-time Stats
+
 - Μετρητής πλύσεων ημέρας
 - Μέσος χρόνος πλύσης
 - Instant feedback
@@ -63,11 +66,13 @@ POST /api/work-entries
 ### Βήμα 1: Άνοιγμα της Εφαρμογής
 
 **Desktop/Laptop:**
+
 ```
 URL: https://your-app.vercel.app/washer
 ```
 
 **Mobile/Tablet:**
+
 ```
 Προσθέστε στην αρχική οθόνη για PWA εμπειρία:
 1. Ανοίξτε το link
@@ -78,6 +83,7 @@ URL: https://your-app.vercel.app/washer
 ### Βήμα 2: Καταχώρηση Πλύσης
 
 #### 🚗 Αριθμός Κυκλοφορίας
+
 ```
 - Πληκτρολογήστε τον αριθμό
 - Αυτόματη μετατροπή σε ΚΕΦΑΛΑΙΑ
@@ -85,6 +91,7 @@ URL: https://your-app.vercel.app/washer
 ```
 
 #### 🏢 Επιλογή Εταιρείας
+
 ```
 Goldcar (🟠)    Europcar (🟢)
    ↓                ↓
@@ -92,6 +99,7 @@ Goldcar (🟠)    Europcar (🟢)
 ```
 
 #### 🔧 Τύπος Εργασίας
+
 ```
 ┌─────────────────┬─────────────────┐
 │ Premium Πλήρης  │ Εξωτερικό Μόνο  │
@@ -114,6 +122,7 @@ Goldcar (🟠)    Europcar (🟢)
 ```
 
 ### Auto-Reset
+
 Η εφαρμογή επιστρέφει αυτόματα στην αρχική οθόνη μετά από 3 δευτερόλεπτα, έτοιμη για την επόμενη πλύση!
 
 ---
@@ -121,6 +130,7 @@ Goldcar (🟠)    Europcar (🟢)
 ## ⚡ Shortcuts & Tips
 
 ### Keyboard Shortcuts
+
 ```
 Enter     → Προχώρηση στο επόμενο βήμα
 Tab       → Μετακίνηση μεταξύ πεδίων
@@ -129,6 +139,7 @@ Esc       → Επιστροφή/Ακύρωση
 ```
 
 ### Pro Tips
+
 ```
 💡 Χρησιμοποιήστε barcode scanner για αριθμούς κυκλοφορίας
 💡 Η διάρκεια υπολογίζεται αυτόματα
@@ -141,6 +152,7 @@ Esc       → Επιστροφή/Ακύρωση
 ## 🎨 UI Overview
 
 ### Mobile View
+
 ```
 ┌─────────────────────────┐
 │  🚗 Car Wash App        │
@@ -171,6 +183,7 @@ Esc       → Επιστροφή/Ακύρωση
 ```
 
 ### Success Screen
+
 ```
 ┌─────────────────────────┐
 │                         │
@@ -198,6 +211,7 @@ Esc       → Επιστροφή/Ακύρωση
 ### Standalone Deployment
 
 #### Option 1: Separate URL
+
 ```bash
 # Deploy washer app separately
 vercel --prod --name washer-app
@@ -207,6 +221,7 @@ https://washer.your-domain.com
 ```
 
 #### Option 2: Same App, Different Route
+
 ```typescript
 // App.tsx or Router
 {
@@ -221,6 +236,7 @@ https://your-domain.com/washer
 ### Progressive Web App (PWA)
 
 Create `manifest.json`:
+
 ```json
 {
   "name": "CarWash Washer App",
@@ -250,6 +266,7 @@ Create `manifest.json`:
 ## 🔐 Security & Permissions
 
 ### User Authentication
+
 ```typescript
 // Simple token-based auth
 const washerToken = localStorage.getItem('washer-token');
@@ -261,6 +278,7 @@ headers: {
 ```
 
 ### Permissions Required
+
 ```
 ✓ Internet access (για sync)
 ✗ Camera (optional - για barcode)
@@ -272,16 +290,19 @@ headers: {
 ## 📊 Data Sync
 
 ### Online Mode
+
 ```
 Καταχώρηση → Instant API Call → Database Update
 ```
 
 ### Offline Mode (Future Feature)
+
 ```
 Καταχώρηση → Local Storage → Sync όταν online
 ```
 
 ### Sync Status Indicator
+
 ```
 🟢 Online  - Instant sync
 🟡 Syncing - Uploading...
@@ -295,6 +316,7 @@ headers: {
 ### Quick Start Guide (5 λεπτά)
 
 #### 1️⃣ Πρώτη Φορά
+
 ```
 1. Άνοιξε το link
 2. Add to Home Screen (mobile)
@@ -303,6 +325,7 @@ headers: {
 ```
 
 #### 2️⃣ Καθημερινή Χρήση
+
 ```
 Start of Day:
   ✓ Open app
@@ -320,6 +343,7 @@ End of Day:
 ```
 
 #### 3️⃣ Troubleshooting
+
 ```
 Πρόβλημα: Δεν καταχωρείται
   → Έλεγξε σύνδεση internet
@@ -337,6 +361,7 @@ End of Day:
 ## 📈 Performance Metrics
 
 ### Target Speed
+
 ```
 Καταχώρηση πλύσης: < 30 δευτερόλεπτα
   - Αριθμός: 5s
@@ -348,6 +373,7 @@ End of Day:
 ```
 
 ### Daily Capacity
+
 ```
 1 washer × 8 hours × 12 washes/hour = 96 washes/day
 ```
@@ -356,16 +382,16 @@ End of Day:
 
 ## 🆚 Washer App vs Main App
 
-| Feature | Washer App | Main App |
-|---------|-----------|----------|
-| **Purpose** | Quick logging | Full management |
-| **Users** | Washers only | Managers, Admins |
-| **Fields** | 4 essential | 20+ detailed |
-| **Speed** | < 30 seconds | 2-3 minutes |
-| **Complexity** | Simple | Complex |
-| **Device** | Mobile-first | Desktop-first |
-| **Offline** | Planned | Not needed |
-| **Features** | Logging only | Everything |
+| Feature        | Washer App    | Main App         |
+| -------------- | ------------- | ---------------- |
+| **Purpose**    | Quick logging | Full management  |
+| **Users**      | Washers only  | Managers, Admins |
+| **Fields**     | 4 essential   | 20+ detailed     |
+| **Speed**      | < 30 seconds  | 2-3 minutes      |
+| **Complexity** | Simple        | Complex          |
+| **Device**     | Mobile-first  | Desktop-first    |
+| **Offline**    | Planned       | Not needed       |
+| **Features**   | Logging only  | Everything       |
 
 ---
 
@@ -388,7 +414,7 @@ End of Day:
          ├→ Update stats
          ├→ Notify managers
          └→ Generate invoice data
-         
+
 ┌─────────────────┐
 │   Main App      │
 │   (Desktop)     │
@@ -407,18 +433,21 @@ End of Day:
 ## 🚀 Future Enhancements
 
 ### Phase 1 (Current)
+
 - ✅ Basic logging
 - ✅ Company selection
 - ✅ Work type selection
 - ✅ Auto duration
 
 ### Phase 2 (Next)
+
 - ⏳ Offline support
 - ⏳ Barcode scanning
 - ⏳ Photo upload
 - ⏳ Voice notes
 
 ### Phase 3 (Future)
+
 - 🔮 GPS check-in
 - 🔮 Quality ratings
 - 🔮 Customer signatures
@@ -429,6 +458,7 @@ End of Day:
 ## 💬 Support
 
 ### For Washers
+
 ```
 Πρόβλημα με την εφαρμογή;
 1. Ρωτήστε τον manager
@@ -437,6 +467,7 @@ End of Day:
 ```
 
 ### For Managers
+
 ```
 Setup νέου washer:
 1. Create user account
@@ -450,6 +481,7 @@ Setup νέου washer:
 ## ✅ Checklist για Go-Live
 
 ### Before Launch
+
 - [ ] Deploy Washer App
 - [ ] Test σε mobile devices
 - [ ] Train 1 washer (pilot)
@@ -458,6 +490,7 @@ Setup νέου washer:
 - [ ] Create backup process
 
 ### Launch Day
+
 - [ ] Deploy για όλους
 - [ ] Training session
 - [ ] Monitor closely
@@ -465,6 +498,7 @@ Setup νέου washer:
 - [ ] Quick fixes
 
 ### Post-Launch
+
 - [ ] Daily check-ins (week 1)
 - [ ] Gather improvements
 - [ ] Update documentation
@@ -474,4 +508,4 @@ Setup νέου washer:
 
 **Ready to wash some cars! 🚗💦✨**
 
-*Questions? Check the Main App docs or contact support.*
+_Questions? Check the Main App docs or contact support._

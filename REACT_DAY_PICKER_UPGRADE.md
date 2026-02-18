@@ -7,6 +7,7 @@ This document summarizes the upgrade from `react-day-picker` v8.10.1 to v9.11.1 
 ## Problem Statement
 
 The repository was using:
+
 - React 19.2.0
 - react-day-picker 8.10.1 (only supports React ^16.8.0 || ^17.0.0 || ^18.0.0)
 
@@ -38,30 +39,31 @@ Upgraded to react-day-picker v9.11.1 which supports React 19.
 
 The v9 API introduced breaking changes to classNames. Here's the mapping:
 
-| v8 ClassNames | v9 ClassNames | Notes |
-|---------------|---------------|-------|
-| `caption` | `month_caption` | Caption wrapper |
-| `nav_button` | `button_previous`, `button_next` | Split into separate buttons |
-| `nav_button_previous` | (merged into `button_previous`) | Positioning now in button class |
-| `nav_button_next` | (merged into `button_next`) | Positioning now in button class |
-| `table` | `month_grid` | Grid container |
-| `head_row` | `weekdays` | Header row |
-| `head_cell` | `weekday` | Individual weekday cell |
-| `row` | `week` | Week row |
-| `cell` | `day` | Day cell container |
-| `day` | `day_button` | Day button element |
-| `day_selected` | `selected` | Selected state |
-| `day_today` | `today` | Today indicator |
-| `day_outside` | `outside` | Outside month days |
-| `day_disabled` | `disabled` | Disabled state |
-| `day_range_start` | `range_start` | Range start |
-| `day_range_end` | `range_end` | Range end |
-| `day_range_middle` | `range_middle` | Range middle |
-| `day_hidden` | `hidden` | Hidden days |
+| v8 ClassNames         | v9 ClassNames                    | Notes                           |
+| --------------------- | -------------------------------- | ------------------------------- |
+| `caption`             | `month_caption`                  | Caption wrapper                 |
+| `nav_button`          | `button_previous`, `button_next` | Split into separate buttons     |
+| `nav_button_previous` | (merged into `button_previous`)  | Positioning now in button class |
+| `nav_button_next`     | (merged into `button_next`)      | Positioning now in button class |
+| `table`               | `month_grid`                     | Grid container                  |
+| `head_row`            | `weekdays`                       | Header row                      |
+| `head_cell`           | `weekday`                        | Individual weekday cell         |
+| `row`                 | `week`                           | Week row                        |
+| `cell`                | `day`                            | Day cell container              |
+| `day`                 | `day_button`                     | Day button element              |
+| `day_selected`        | `selected`                       | Selected state                  |
+| `day_today`           | `today`                          | Today indicator                 |
+| `day_outside`         | `outside`                        | Outside month days              |
+| `day_disabled`        | `disabled`                       | Disabled state                  |
+| `day_range_start`     | `range_start`                    | Range start                     |
+| `day_range_end`       | `range_end`                      | Range end                       |
+| `day_range_middle`    | `range_middle`                   | Range middle                    |
+| `day_hidden`          | `hidden`                         | Hidden days                     |
 
 ### 3. Components API Changes
 
 **v8:**
+
 ```tsx
 components={{
   IconLeft: ({ className, ...props }) => <ChevronLeft className={cn("size-4", className)} {...props} />,
@@ -70,6 +72,7 @@ components={{
 ```
 
 **v9:**
+
 ```tsx
 components={{
   Chevron: ({ orientation, ...props }) =>
@@ -84,12 +87,14 @@ components={{
 ### 4. CI/CD Changes
 
 **Before:**
+
 ```yaml
 - name: Install dependencies
   run: npm ci --legacy-peer-deps
 ```
 
 **After:**
+
 ```yaml
 - name: Install dependencies
   run: npm ci
@@ -98,6 +103,7 @@ components={{
 ### 5. Vercel Configuration
 
 Created `vercel.json` to ensure consistent builds:
+
 ```json
 {
   "installCommand": "npm ci",
@@ -117,14 +123,8 @@ import { useState } from "react";
 
 function DatePicker() {
   const [date, setDate] = useState<Date | undefined>(undefined);
-  
-  return (
-    <Calendar
-      mode="single"
-      selected={date}
-      onSelect={setDate}
-    />
-  );
+
+  return <Calendar mode="single" selected={date} onSelect={setDate} />;
 }
 ```
 
@@ -137,20 +137,15 @@ import { DateRange } from "react-day-picker";
 
 function RangePicker() {
   const [range, setRange] = useState<DateRange | undefined>(undefined);
-  
-  return (
-    <Calendar
-      mode="range"
-      selected={range}
-      onSelect={setRange}
-    />
-  );
+
+  return <Calendar mode="range" selected={range} onSelect={setRange} />;
 }
 ```
 
 ## Verification
 
 All checks passed:
+
 - ✅ `npm install` - No ERESOLVE errors
 - ✅ `npm ci` - Lockfile works correctly
 - ✅ `npm run lint` - No new linting errors
